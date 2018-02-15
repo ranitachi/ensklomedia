@@ -10,16 +10,17 @@
     <body>
       <!--======= header =======-->
         @include('includes.header')
-
+     
 	  <div class="site-output">
-        @include('includes.sidebar')  
         @yield('content')
       </div>
 
       @include('includes.scripts')
-
+      @yield('footscript')
 	</body>
 </html>
+@include('includes.modal')
+
 <script type="text/javascript">
   var APP_URL = {!! json_encode(url('/')) !!}
   $.ajaxSetup({

@@ -9,5 +9,5 @@ class Category extends Model
     use SoftDeletes;
     protected $table = 'category';
     protected $dates = ['deleted_at'];
-    protected $fillable =  ['category','desc','flag','created_at','updated_at'];
+    protected $fillable =  ['code','category','desc','flag','created_at','updated_at'];
 }
