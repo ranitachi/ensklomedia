@@ -3,8 +3,6 @@
             	<div id="sidebar-stick" >
             	<ul class="menu-sidebar">
                 	<li><a href="01-home.html"><i class="fa fa-home"></i>Home</a></li>
-                	<li><a href="#"><i class="fa fa-bolt"></i>Trending</a></li>
-                	<li><a href="14-history.html"><i class="fa fa-clock-o"></i>History</a></li>
                 	<li><a href="11-blog.html"><i class="fa fa-file-text"></i>blog</a></li>
                 	<li><a href="{{route('upload')}}"><i class="fa fa-upload"></i>Upload</a></li>
 				</ul>

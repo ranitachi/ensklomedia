@@ -17,7 +17,7 @@
       </div>
 
       @include('includes.scripts')
-
+      @yield('footscript')
 	</body>
 </html>
 <script type="text/javascript">

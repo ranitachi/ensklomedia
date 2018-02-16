@@ -13,11 +13,6 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `db_ensiklomedia`
 --
@@ -30,14 +25,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `category` (
   `id` int(10) UNSIGNED NOT NULL,
-  `code` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `desc` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(20)  NOT NULL,
+  `category` varchar(191)  DEFAULT NULL,
+  `desc` text  NOT NULL,
   `flag` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -71,9 +66,9 @@ INSERT INTO `category` (`id`, `code`, `category`, `desc`, `flag`, `created_at`, 
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(191)  NOT NULL,
   `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `migrations`
@@ -93,10 +88,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191)  NOT NULL,
+  `token` varchar(191)  NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -106,46 +101,46 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `profile` (
   `user_id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `public_email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gravatar_email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gravatar_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `location` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `website` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bio` text COLLATE utf8mb4_unicode_ci,
-  `timezone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rekomendasi` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nama` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `jk` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `profesi` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provinsi` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `kabupaten` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alamat1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hp` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `instansi` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `jenjang` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alamat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telp` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pelatihan_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tahun_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tempatlahir` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tgllahir` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `golnip` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `npwp` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `s1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `s2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `s3` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slain` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `namakepsek` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hpkepsek` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emailkepsek` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `petugaspusat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(191)  NOT NULL,
+  `public_email` varchar(191)  NOT NULL,
+  `gravatar_email` varchar(191)  DEFAULT NULL,
+  `gravatar_id` varchar(191)  DEFAULT NULL,
+  `location` varchar(191)  DEFAULT NULL,
+  `website` varchar(191)  DEFAULT NULL,
+  `bio` text ,
+  `timezone` varchar(191)  DEFAULT NULL,
+  `rekomendasi` varchar(191)  DEFAULT NULL,
+  `nama` varchar(191)  DEFAULT NULL,
+  `jk` varchar(191)  DEFAULT NULL,
+  `profesi` varchar(191)  DEFAULT NULL,
+  `provinsi` varchar(191)  DEFAULT NULL,
+  `kabupaten` varchar(191)  DEFAULT NULL,
+  `alamat1` varchar(191)  DEFAULT NULL,
+  `hp` varchar(191)  DEFAULT NULL,
+  `email` varchar(191)  NOT NULL,
+  `instansi` varchar(191)  DEFAULT NULL,
+  `jenjang` varchar(191)  DEFAULT NULL,
+  `alamat` varchar(191)  DEFAULT NULL,
+  `telp` varchar(191)  DEFAULT NULL,
+  `pelatihan_id` varchar(191)  DEFAULT NULL,
+  `tahun_id` varchar(191)  DEFAULT NULL,
+  `tempatlahir` varchar(191)  DEFAULT NULL,
+  `tgllahir` varchar(191)  DEFAULT NULL,
+  `golnip` varchar(191)  DEFAULT NULL,
+  `npwp` varchar(191)  DEFAULT NULL,
+  `s1` varchar(191)  DEFAULT NULL,
+  `s2` varchar(191)  DEFAULT NULL,
+  `s3` varchar(191)  DEFAULT NULL,
+  `slain` varchar(191)  DEFAULT NULL,
+  `namakepsek` varchar(191)  DEFAULT NULL,
+  `hpkepsek` varchar(191)  DEFAULT NULL,
+  `emailkepsek` varchar(191)  DEFAULT NULL,
+  `petugaspusat` varchar(191)  DEFAULT NULL,
   `flags` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `profile`
@@ -2167,25 +2162,25 @@ INSERT INTO `profile` (`user_id`, `name`, `public_email`, `gravatar_email`, `gra
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `unconfirmed_email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password_hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `auth_key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `registration_ip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191)  NOT NULL,
+  `email` varchar(191)  NOT NULL,
+  `unconfirmed_email` varchar(191)  DEFAULT NULL,
+  `username` varchar(191)  NOT NULL,
+  `password_hash` varchar(191)  NOT NULL,
+  `password` varchar(191)  NOT NULL,
+  `auth_key` varchar(191)  NOT NULL,
+  `registration_ip` varchar(191)  NOT NULL,
   `confirmed_at` int(11) DEFAULT NULL,
   `blocked_at` int(11) DEFAULT NULL,
   `flags` int(11) NOT NULL DEFAULT '0',
   `last_login_at` int(11) NOT NULL,
-  `hakakses` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hakakses` varchar(191)  NOT NULL,
+  `status` varchar(191)  NOT NULL,
+  `remember_token` varchar(100)  DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -4205,30 +4200,30 @@ INSERT INTO `users` (`id`, `name`, `email`, `unconfirmed_email`, `username`, `pa
 
 CREATE TABLE `video` (
   `id` int(10) UNSIGNED NOT NULL,
-  `userid` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `videofile` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `filetype` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `tags` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `turunan1` text COLLATE utf8mb4_unicode_ci,
-  `turunan2` text COLLATE utf8mb4_unicode_ci,
-  `turunan3` text COLLATE utf8mb4_unicode_ci,
-  `turunan4` text COLLATE utf8mb4_unicode_ci,
-  `turunan5` text COLLATE utf8mb4_unicode_ci,
-  `catatan` text COLLATE utf8mb4_unicode_ci,
-  `registrationip` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `approvedby` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `approvedat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `userid` varchar(191)  NOT NULL,
+  `videofile` varchar(191)  DEFAULT NULL,
+  `filetype` varchar(191)  DEFAULT NULL,
+  `title` varchar(191)  DEFAULT NULL,
+  `description` text ,
+  `tags` varchar(191)  DEFAULT NULL,
+  `image` varchar(191)  DEFAULT NULL,
+  `turunan1` text ,
+  `turunan2` text ,
+  `turunan3` text ,
+  `turunan4` text ,
+  `turunan5` text ,
+  `catatan` text ,
+  `registrationip` varchar(191)  DEFAULT NULL,
+  `approvedby` varchar(191)  DEFAULT NULL,
+  `approvedat` varchar(191)  DEFAULT NULL,
   `statusaktif` int(11) NOT NULL DEFAULT '0',
-  `hit` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `createdat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slug` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hit` varchar(191)  DEFAULT NULL,
+  `createdat` varchar(191)  DEFAULT NULL,
+  `slug` varchar(191)  DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `video`
@@ -5556,6 +5551,4 @@ ALTER TABLE `video`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12947;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-        <div id="all-output" class="col-md-12">
+        <div id="all-output" class="col-md-10">
             <div class="row">
             	<!-- Watch -->
                 <div class="col-md-8">
@@ -235,9 +235,3 @@
             </div><!-- // row -->
 		</div>
 @endsection
-<style>
-    body:after
-    {
-        background-color:#e6e6e6 !important;
-    }
-</style>
