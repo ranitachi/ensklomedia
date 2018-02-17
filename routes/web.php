@@ -26,4 +26,6 @@ Route::resource('category','CategoryController');
 Route::get('/category-data/{id}','CategoryController@data')->name('category.data');
 Route::get('/category-form/{id}','CategoryController@show')->name('category.form');
 
-Route::get('/upload','UploadController@index')->name('upload');
+Route::resource('upload','UploadController');
+Route::post('/videosave','UploadController@videosave')->name('upload.simpan');
+Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove');

@@ -2,9 +2,9 @@
         	<div class="left-sidebar">
             	<div id="sidebar-stick" >
             	<ul class="menu-sidebar">
-                	<li><a href="01-home.html"><i class="fa fa-home"></i>Home</a></li>
+                	<li><a href="{{URL::to('/')}}"><i class="fa fa-home"></i>Home</a></li>
                 	<li><a href="11-blog.html"><i class="fa fa-file-text"></i>blog</a></li>
-                	<li><a href="{{route('upload')}}"><i class="fa fa-upload"></i>Upload</a></li>
+                	<li><a href="{{URL::to('upload')}}"><i class="fa fa-upload"></i>Upload</a></li>
 				</ul>
 				Kategori
             	<ul class="menu-sidebar">
