@@ -12,6 +12,10 @@
       <!--======= header =======-->
         @include('includes.header')
 
+        <div class="hidden-lg hidden-md">
+          @include('includes.navbar')
+        </div>
+
 	  <div class="site-output">
         @include('includes.sidebar')  
         @yield('content')

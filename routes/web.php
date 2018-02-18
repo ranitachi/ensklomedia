@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/', 'DashboardController@index')->name('dashboard');
 Route::get('/admin', 'AdminController@index')->name('admin');
-Route::get('/watch', 'DashboardController@watch')->name('watch');
+Route::get('/watch/{slug}', 'DashboardController@watch')->name('watch');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('category','CategoryController');
@@ -29,3 +29,17 @@ Route::get('/category-form/{id}','CategoryController@show')->name('category.form
 Route::resource('upload','UploadController');
 Route::post('/videosave','UploadController@videosave')->name('upload.simpan');
 Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove');
+
+Route::get('/player/{filename}', 'DashboardController@player');
+Route::get('/video/{filename}', function ($filename) {
+    // Pasta dos videos.
+    $videosDir = base_path('public/uploadfiles/video');
+    // echo $videosDir;
+    if (file_exists($filePath = $videosDir."/".$filename)) {
+        $stream = new App\Http\VideoStream($filePath);
+        return response()->stream(function() use ($stream) {
+            $stream->start();
+        });
+    }
+    return response("File doesn't exists", 404);
+});

@@ -2,6 +2,7 @@
 
 @section('title')
     <title>Lihat Video - Ensiklomedia</title>
+     <link href="{{asset('css/videojs.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -12,15 +13,19 @@
                 	<div id="watch">
 
                         <!-- Video Player -->
-                        <h1 class="video-title">Lorem Lpsum Is Simply Dummy Text Of The Printing</h1>
+                        <h1 class="video-title">{{($id==-1 ? 'Video Tidak Tersedia' : $video->title)}}</h1>
                         <div class="video-code">
-                            <iframe width="100%" height="415" src="https://www.youtube.com/embed/e452W2Kj-yg" frameborder="0" allowfullscreen></iframe>
+                             <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"
+                                controls preload="auto" height="400">
+
+                                <source src="{{$vid}}" type="{{$mime}}" />
+                            </video>
+                            <!--<iframe width="100%" height="415" src="https://www.youtube.com/embed/e452W2Kj-yg" frameborder="0" allowfullscreen></iframe>-->
 						</div><!-- // video-code -->
 
                         <div class="video-share">
                         	<ul class="like">
-                            	<li><a class="deslike" href="#">1250 <i class="fa fa-thumbs-down"></i></a></li>
-                            	<li><a class="like" href="#">1250 <i class="fa fa-thumbs-up"></i></a></li>
+                            	<li><a class="like" href="#"><i class="fa fa-eye"></i>&nbsp;&nbsp;{{($id==-1 ? 0 : $video->hit)}} views</i></a></li>
                             </ul>
                             <ul class="social_link">
                                             <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
@@ -36,14 +41,12 @@
 
 						<!-- Chanels Item -->
                         	<div class="chanel-item">
-                        		<div class="chanel-thumb">
-                        			<a href="#"><img src="{{ asset('assets/demo_img/ch-1.jpg')}}" alt=""></a>
-                        		</div>
+                        		
                         		<div class="chanel-info">
-                        			<a class="title" href="#">Rabie Elkheir</a>
-                        			<span class="subscribers">436,414 subscribers</span>
+                        			<a class="title" href="#">Deksripsi</a>
+                        			<span class="subscribers" style="text-transform:capitalize !important">{{($id==-1 ? 'Video Tidak Tersedia' : $video->description)}}</span>
                         		</div>
-                        		<a href="#" class="subscribe">Subscribe</a>
+                        		
                         	</div>
                         <!-- // Chanels Item -->
 
@@ -234,4 +237,18 @@
                 <!-- // Related Posts -->
             </div><!-- // row -->
 		</div>
+@endsection
+@section('footscript')
+         <script src="{{asset('js/videojs.js')}}"></script>
+    <script>
+        videojs(document.getElementById('example_video_1'), {}, function() {
+            // This is functionally the same as the previous example.
+        });
+    </script>
+    <style>
+        div#example_video_1
+        {
+            width:100% !important;
+        }
+    </style>
 @endsection
