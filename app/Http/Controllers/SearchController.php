@@ -22,14 +22,14 @@ class SearchController extends Controller
         {
             $vidd=$video[0];
             $id=$vidd->id;
-            $myfile=public_path('uploadfiles/video').'/'.$vidd->videofile;
-            $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vidd->videofile;
-            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vidd->image;
+            $myfile=public_path('uploadfiles/video').'/'.$vidd->video_path;
+            $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vidd->video_path;
+            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vidd->image_path;
             if(File::exists($myfile))
             {
                 $status='v2';
-                $vv = 'uploadfiles/video/'.$vidd->videofile;
-                $cv = 'uploadfiles/image/'.$vidd->image;
+                $vv = 'uploadfiles/video/'.$vidd->video_path;
+                $cv = 'uploadfiles/image/'.$vidd->image_path;
                 $vid=url($vv);
                 $cover=url($cv);
             }

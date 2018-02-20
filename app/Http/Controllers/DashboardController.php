@@ -31,14 +31,14 @@ class DashboardController extends Controller
         {
             $video = Video::where('slug','like','%'.$slug.'%')->get()->first();
             $id=$video->id;
-            $myfile=public_path('uploadfiles/video').'/'.$video->videofile;
-            $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->videofile;
-            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image;
+            $myfile=public_path('uploadfiles/video').'/'.$video->video_path;
+            $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->video_path;
+            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
             if(File::exists($myfile))
             {
                 $status='v2';
-                $vv = 'uploadfiles/video/'.$video->videofile;
-                $cv = 'uploadfiles/image/'.$video->image;
+                $vv = 'uploadfiles/video/'.$video->video_path;
+                $cv = 'uploadfiles/image/'.$video->image_path;
                 $vid=url($vv);
                 $cover=url($cv);
             }
