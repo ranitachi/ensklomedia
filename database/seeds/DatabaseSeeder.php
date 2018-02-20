@@ -11,13 +11,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user = resolve('App\Services\RestructureUsers');
-        $user->run();
+        // $user = resolve('App\Services\RestructureUsers');
+        // $user->run();
 
-        $video = resolve('App\Services\RestructureVideo');
-        $video->run();
+        // $video = resolve('App\Services\RestructureVideo');
+        // $video->run();
 
-        $category = resolve('App\Services\RestructureCategory');
-        $category->run();
+        // $category = resolve('App\Services\RestructureCategory');
+        // $category->run();
+
+        $profile = resolve('App\Services\RestructureProfile');
+        $profile->run();
     }
 }

@@ -10,11 +10,11 @@
             	<ul class="menu-sidebar">
                 	@php
                         $cat=App\Model\Category::orderBy('name')->get();
-                        foreach($cat as $k => $v)
-                        {
-                            echo '<li class="color-1"><a href="#"><i class="fa fa-th-large"></i>'.$v->name.'</a></li>';
-                        }
-                    @endphp
+					@endphp
+
+                    @foreach ($cat as $v)
+						<li class="color-1"><a href="{{ route('video.bycategory', $v->id) }}"><i class="fa fa-th-large"></i>{{$v->name}}</a></li>
+					@endforeach
                 </ul>
             	<!--<ul class="menu-sidebar">
                 	<li><a href="#"><i class="fa fa-gear"></i>Settings</a></li>

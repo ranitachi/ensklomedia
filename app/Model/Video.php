@@ -16,4 +16,14 @@ class Video extends Model
         'tags','hit','slug','approved_by','approved_at','deactivated_at',
         'deleted_at','created_at','updated_at'
     ];
+
+    public function scopeByCategory($query, $id)
+    {
+        return $query->where('category_id', $id);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Model\Users', 'user_id');
+    }
 }
