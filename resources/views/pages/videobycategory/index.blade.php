@@ -14,8 +14,8 @@
 
         .thumb {
             height: 150px;
-            background: url({{ asset('assets/img/no-image-02.png') }});
-            background-size: 90% 100%;
+            background: url("{{ asset('assets/img/no-image-02.png') }}");
+            background-size: 95% 100%;
             background-position: center;
         }
     </style>
