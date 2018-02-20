@@ -33,11 +33,14 @@ class DashboardController extends Controller
             $id=$video->id;
             $myfile=public_path('uploadfiles/video').'/'.$video->videofile;
             $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->videofile;
+            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image;
             if(File::exists($myfile))
             {
                 $status='v2';
                 $vv = 'uploadfiles/video/'.$video->videofile;
+                $cv = 'uploadfiles/image/'.$video->image;
                 $vid=url($vv);
+                $cover=url($cv);
             }
             $mime = "video/mp4";
         }
@@ -46,7 +49,7 @@ class DashboardController extends Controller
                 ->with('id',$id)
                 ->with('status',$status)
                 ->with('video',$video)
-                ->with(compact('vid', 'mime'));
+                ->with(compact('vid', 'mime','cover'));
     }
 
     public function player($filename)

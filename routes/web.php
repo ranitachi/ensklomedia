@@ -29,6 +29,7 @@ Route::get('/category-form/{id}','CategoryController@show')->name('category.form
 Route::resource('upload','UploadController');
 Route::post('/videosave','UploadController@videosave')->name('upload.simpan');
 Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove');
+Route::post('video-saya','UploadController@myvideo')->name('video.myvideo');
 
 Route::get('/player/{filename}', 'DashboardController@player');
 Route::get('/video/{filename}', function ($filename) {

@@ -17,6 +17,15 @@ class UploadController extends Controller
             ->with('id',$id)
             ->with('cat',$cat);
     }
+    
+    public function myvideo()
+    {
+        $id=abs(crc32(sha1(md5(rand()))));
+        $cat=Category::orderBy('category')->get();
+        return view('pages.video.upload')
+            ->with('id',$id)
+            ->with('cat',$cat);
+    }
 
     public function videosave(Request $request)
     {

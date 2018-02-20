@@ -239,7 +239,7 @@
 		</div>
 @endsection
 @section('footscript')
-         <script src="{{asset('js/videojs.js')}}"></script>
+    <script src="{{asset('js/videojs.js')}}"></script>
     <script>
         videojs(document.getElementById('example_video_1'), {}, function() {
             // This is functionally the same as the previous example.
