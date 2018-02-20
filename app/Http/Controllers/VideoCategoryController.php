@@ -9,12 +9,13 @@ use App\Model\Category;
 
 class VideoCategoryController extends Controller
 {
-    public function index($id)
+    public function index($slug)
     {
-        $get = Video::byCategory($id)->limit(9)->with('user')->get();
+        $category = Category::bySlug($slug)->first();
+        $get = Video::byCategory($category->id)->limit(9)->with('user')->get();
 
         return view('pages.videobycategory.index')
             ->with('videos', $get)
-            ->with('category_name', Category::find($id)->name);
+            ->with('category_name', $category->name);
     }
 }

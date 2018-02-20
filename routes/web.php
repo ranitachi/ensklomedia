@@ -48,4 +48,4 @@ Route::get('/video/{filename}', function ($filename) {
     return response("File doesn't exists", 404);
 });
 
-Route::get('video/category/{id}', 'VideoCategoryController@index')->name('video.bycategory');
+Route::get('video/category/{slug}', 'VideoCategoryController@index')->name('video.bycategory');
