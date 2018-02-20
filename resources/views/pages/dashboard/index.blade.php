@@ -8,7 +8,7 @@
 @section('content')
     <div id="all-output" class="col-md-10">
         @foreach ($cat as $k => $v)
-            <h1 class="new-video-title"><i class="fa fa-th-large"></i> {{$v->category}}</h1>
+            <h1 class="new-video-title"><i class="fa fa-th-large"></i> {{$v->name}}</h1>
             <div class="row">
             @php
             if(isset($video[$v->id]))
