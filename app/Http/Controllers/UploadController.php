@@ -81,4 +81,11 @@ class UploadController extends Controller
 
         return redirect('upload')->with('status', 'Video Baru Berhasil Di Simpan');
     }
+
+    public function addhit($id)
+    {
+        $video=Video::find($id);
+        $video->hit = $video->hit + 1;
+        $video->save();
+    }
 }

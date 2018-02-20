@@ -22,6 +22,26 @@ class DashboardController extends Controller
             ->with('video',$video)
             ->with('cat',$cat);
     }
+    
+    public function trending()
+    {
+        $ct=Category::orderBy('name')->get();
+        $cat=array();
+        foreach($ct as $k => $v)
+        {
+            $cat[$v->id]=$v;
+        }
+        $vid=Video::limit(20)->orderBy("hit","desc")->get();
+        $video=array();
+        foreach($vid as $k => $v)
+        {
+            $video[$v->id]=$v;
+        }
+        return view('pages.dashboard.trending')
+            ->with('video',$video)
+            ->with('cat',$cat);
+    }
+
     public function watch($slug=-1)
     {
         $video=array();

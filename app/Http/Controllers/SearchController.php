@@ -10,7 +10,8 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $data=$request->input('video-search');
-        $video = Video::where("title",'=',"{$data}")->get();
+        $idvideo=$request->input('video_id');
+        $video = Video::where("id",'=',"{$idvideo}")->get();
         
         $status='v1';
         $mime = "video/mp4";
@@ -22,6 +23,11 @@ class SearchController extends Controller
         {
             $vidd=$video[0];
             $id=$vidd->id;
+
+            $update_hit=Video::find($id);
+            $update_hit->hit = $update_hit->hit+1;
+            $update_hit->save();
+
             $myfile=public_path('uploadfiles/video').'/'.$vidd->video_path;
             $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vidd->video_path;
             $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vidd->image_path;
@@ -53,7 +59,7 @@ class SearchController extends Controller
 
     public function autocomplete(Request $request)
     {
-        $data = Video::select("title as name")
+        $data = Video::select("id as id","title as name")
                     ->where("title","LIKE","%{$request->input('query')}%")->get();
         return response()->json($data);
     }

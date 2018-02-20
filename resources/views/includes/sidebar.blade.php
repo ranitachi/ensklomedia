@@ -16,11 +16,11 @@
 						<li class="color-1"><a href="{{ route('video.bycategory', $v->slug) }}"><i class="fa fa-th-large"></i>{{$v->name}}</a></li>
 					@endforeach
                 </ul>
-            	<ul class="menu-sidebar">
+            	<!--<ul class="menu-sidebar">
                 	<li><a href="#"><i class="fa fa-gear"></i>Settings</a></li>
                 	<li><a href="#"><i class="fa fa-question-circle"></i>Help</a></li>
                 	<li><a href="#"><i class="fa fa-send-o"></i>Send feedback</a></li>
-                </ul>
+                </ul>-->
                 </div><!-- // sidebar-stick -->
                 <div class="clear"></div>
             </div><!-- // left-sidebar -->
