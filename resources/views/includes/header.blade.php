@@ -17,14 +17,15 @@
                         <form id="search" action="{{route('search.cari')}}" method="post">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="text" placeholder="Cari Video Disini" name="video-search" id="search-form" autocomplete="off"/>
+                            <input type="hidden" id="video_id" value="" name="video_id">
                             <input type="submit" value="Keywords" />
                         </form>
                     </div>
                 </div><!-- // col-md-3 -->
                 <div class="col-lg-3 col-md-3 col-sm-5 hidden-xs hidden-sm">
                     <ul class="top-menu">
-                        <li><a href="01-home.html">home</a></li>
-                        <li><a href="#">trending</a></li>
+                        <li><a href="{{route('dashboard')}}">home</a></li>
+                        <li><a href="{{route('trending')}}">trending</a></li>
                         <li><a href="14-history.html">history</a></li>
                     </ul>
                 </div><!-- // col-md-4 -->

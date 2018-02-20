@@ -7,15 +7,15 @@
 
 @section('content')
     <div id="all-output" class="col-md-10">
-        @foreach ($cat as $k => $v)
-            <h1 class="new-video-title"><i class="fa fa-th-large"></i> {{$v->name}}</h1>
+            <h1 class="new-video-title"><i class="fa fa-bolt"></i> Video Favorit</h1>
             <div class="row">
             @php
-            if(isset($video[$v->id]))
+            if(isset($video))
             {
-                $fourdata = array_slice($video[$v->id], 0, 4);
                 //$no=1;
-                foreach($fourdata as $ixk => $vik)
+                shuffle($video);
+                $eightdata = array_slice($video, 0, 12);
+                foreach($eightdata as $ixk => $vik)
                 {
                     $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vik->image_path;
                     if(File::exists($vik->image_path))
@@ -72,7 +72,7 @@
                         </a>-->
                         <div class="video-info">
                             <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{$vik->title}}</a>
-                            <a class="channel-name" href="#">{{$v->category}}<span>
+                            <a class="channel-name" href="#">{{(isset($cat[$vik->category_id]) ? $cat[$vik->category_id]->name : '')}}<span>
                             <i class="fa fa-check-circle"></i></span></a>
                             <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>
                             <span class="date"><i class="fa fa-clock-o"></i>5 months ago </span>
@@ -84,8 +84,7 @@
             }
             @endphp
             </div>
-        @endforeach
-
+     
 
 		</div>
 @endsection

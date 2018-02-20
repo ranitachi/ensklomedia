@@ -38,11 +38,20 @@
     var path = "{{ route('search.auto') }}";
     $(document).ready(function(){
       $('input#search-form').typeahead({
+          name : 'name',
+          display : 'name',
           source:  function (query, process) {
           return $.get(path, { query: query }, function (data) {
                   return process(data);
               });
+          },
+          updater: function(item) { 
+            //alert(item.id)
+            $('#video_id').val(item.id);
+            $('#search-form').val(item.name);
+            return item.name;
           }
       });
+     
     });
 </script>

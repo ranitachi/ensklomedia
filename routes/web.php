@@ -21,6 +21,7 @@ Route::get('/', 'DashboardController@index')->name('dashboard');
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/watch/{slug}', 'DashboardController@watch')->name('watch');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/trending', 'DashboardController@trending')->name('trending');
 
 Route::resource('category','CategoryController');
 Route::get('/category-data/{id}','CategoryController@data')->name('category.data');
@@ -34,6 +35,7 @@ Route::post('video-saya','UploadController@myvideo')->name('video.myvideo');
 Route::post('cari','SearchController@search')->name('search.cari');
 Route::get('autocomplete','SearchController@autocomplete')->name('search.auto');
 
+Route::get('/video-add-hit/{id}','UploadController@addhit');
 Route::get('/player/{filename}', 'DashboardController@player');
 Route::get('/video/{filename}', function ($filename) {
     // Pasta dos videos.

@@ -943,6 +943,7 @@ h1.new-video-title .fa{
 .video-item .video-info{
 	background-color: #FFF;
 	padding: 25px;
+	height:130px;
 }
 .video-item a.title{
 	font-family: 'Roboto', sans-serif;
