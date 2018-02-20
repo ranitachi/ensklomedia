@@ -12,7 +12,7 @@ class UploadController extends Controller
     public function index()
     {
         $id=abs(crc32(sha1(md5(rand()))));
-        $cat=Category::orderBy('category')->get();
+        $cat=Category::orderBy('name')->get();
         return view('pages.video.upload')
             ->with('id',$id)
             ->with('cat',$cat);
@@ -21,7 +21,7 @@ class UploadController extends Controller
     public function myvideo()
     {
         $id=abs(crc32(sha1(md5(rand()))));
-        $cat=Category::orderBy('category')->get();
+        $cat=Category::orderBy('name')->get();
         return view('pages.video.upload')
             ->with('id',$id)
             ->with('cat',$cat);
@@ -38,7 +38,9 @@ class UploadController extends Controller
             $type = File::extension($filepath);
             $sv=new Video;
             $sv->id=$id;
-            $sv->videofile=$name;
+            $sv->user_id=1;
+            $sv->category_id=0;
+            $sv->video_path=$name;
             $sv->save();
         }
     }
@@ -67,15 +69,14 @@ class UploadController extends Controller
         $edit=Video::find($id);
         $edit->category_id=$d['category_id'];
         $edit->title=$d['title'];
-        $edit->filetype=$type;
-        $edit->description=$d['description'];
+        //$edit->filetype=$type;
+        $edit->desc=$d['description'];
         $edit->tags=$d['tags'];
-        $edit->image=$name;
-        $edit->tags=$d['tags'];
-        $edit->statusaktif=1;
+        $edit->image_path=$name;
+        //$edit->statusaktif=1;
         $edit->slug=str_slug($d['title'], '-');
-        $edit->created_at=date('Y-m-d H:i:s');
-        $edit->updated_at=date('Y-m-d H:i:s');
+        //$edit->created_at=date('Y-m-d H:i:s');
+        //$edit->updated_at=date('Y-m-d H:i:s');
         $edit->save();
 
         return redirect('upload')->with('status', 'Video Baru Berhasil Di Simpan');

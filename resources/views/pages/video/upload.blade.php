@@ -38,7 +38,7 @@
                                     <select name="category_id" class="form-control" data-placeholder="Kategori">
                                         <option value=""></option>
                                         @foreach ($cat as $k => $v)
-                                            <option value="{{$v->id}}">{{$v->category}}</option>
+                                            <option value="{{$v->id}}">{{$v->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

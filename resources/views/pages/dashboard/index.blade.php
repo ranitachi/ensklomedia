@@ -17,18 +17,18 @@
                 //$no=1;
                 foreach($fourdata as $ixk => $vik)
                 {
-                    $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vik->image;
-                    if(File::exists($vik->image))
+                    $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vik->image_path;
+                    if(File::exists($vik->image_path))
                     {
-                        $cv = 'uploadfiles/image/'.$video->image;
+                        $cv = 'uploadfiles/image/'.$video->image_path;
                         $cover = url($cv);
-                        $vv='uploadfiles/video/'.$video->videofile;
+                        $vv='uploadfiles/video/'.$video->video_path;
                         $vid=url($vv);
                     }
                     else
                     {   
                         //$handle=fopen($cover,'r');
-                        $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vik->videofile;
+                        $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vik->video_path;
                         $cover=$cover;
                         //$fileExists = checkExternalFile($cover);
                         /*if($fileExists==200)
