@@ -29,8 +29,9 @@
                     {   
                         //$handle=fopen($cover,'r');
                         $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vik->videofile;
-                        $fileExists = checkExternalFile($cover);
-                        if($fileExists==200)
+                        $cover=$cover;
+                        //$fileExists = checkExternalFile($cover);
+                        /*if($fileExists==200)
                         {
                             $cover=$cover;
                         }
@@ -38,7 +39,7 @@
                         {
                             $cv='assets/img/no-image-02.png';
                             $cover=url($cv);
-                        }
+                        }*/
                     }
                     $mime = "video/mp4";
                     
