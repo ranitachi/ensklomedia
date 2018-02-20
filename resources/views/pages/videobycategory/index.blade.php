@@ -79,11 +79,11 @@
                                                     $cover = url('uploadfiles/image/'.$video->image_path);
                                                 }
                                             @endphp
-                                            <a href="{{ route('watch', $video->slug) }}"><img class="custom-size" src="{{ $cover }}" alt=""></a>
+                                            <a href="{{ route('watch', $video->slug) }}" onclick="addhit('{{$video->id}}')"><img class="custom-size" src="{{ $cover }}" alt=""></a>
                                         </div>
                                         <div class="video-info">
                                             <a href="{{ route('watch', $video->slug) }}" class="title">{{ $video->title }}</a>
-                                            <a class="channel-name" href="#">{{ isset($video->user->profile->channel_name) && !is_null($video->user->profile->channel_name) ? $video->user->profile->channel_name : 'No Channel Name' }}<span>
+                                            <a class="channel-name" href="#" onclick="addhit('{{$video->id}}')">{{ isset($video->user->profile->channel_name) && !is_null($video->user->profile->channel_name) ? $video->user->profile->channel_name : 'No Channel Name' }}<span>
                                             <i class="fa fa-check-circle"></i></span></a>
                                             <span class="views"><i class="fa fa-eye"></i>{{ $video->hit }} views </span>
                                             <span class="date"><i class="fa fa-clock-o"></i>5 months ago </span>
@@ -110,5 +110,14 @@
 @endsection
 
 @section('footscript')
-    
+    <script>
+        function addhit(id)
+        {
+            $.ajax({
+                url : APP_URL+'/video-add-hit/'+id,
+                success : function(a){
+                }
+            });
+        }
+    </script>
 @endsection

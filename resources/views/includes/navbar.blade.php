@@ -7,7 +7,7 @@
                         $cat=App\Model\Category::orderBy('name')->get();
                         foreach($cat as $k => $v)
                         {
-                            echo '<li class="color-1" style="width:100% !important;"><a href="02-category.html"><i class="fa fa-th-large"></i>'.$v->name.'</a></li>';
+                            echo '<li class="color-1" style="width:100% !important;"><a href="'.route('video.bycategory', $v->id).'"><i class="fa fa-th-large"></i>'.$v->name.'</a></li>';
                         }
                     @endphp
                     </ul>
