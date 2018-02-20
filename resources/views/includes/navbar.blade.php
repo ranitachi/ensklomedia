@@ -4,7 +4,7 @@
                 <div class="col-md-12">
                     <ul class="main-category-menu">
                     @php
-                        $cat=App\Model\Category::orderBy('category')->get();
+                        $cat=App\Model\Category::orderBy('name')->get();
                         foreach($cat as $k => $v)
                         {
                             echo '<li class="color-1"><a href="02-category.html"><i class="fa fa-th-large"></i>'.$v->category.'</a></li>';
