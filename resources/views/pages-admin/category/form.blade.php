@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-12">
             <label>Judul Kategori</label>
-                    <input type="text" class="form-control" placeholder="Judul Kategori" name="category" value="{{($id!=-1 ? $det->category : '')}}">
+                    <input type="text" class="form-control" placeholder="Judul Kategori" name="name" value="{{($id!=-1 ? $det->category : '')}}">
         </div>
         <div class="col-md-12">
             <label>Deskripsi</label>

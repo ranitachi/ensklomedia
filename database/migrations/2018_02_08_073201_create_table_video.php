@@ -15,29 +15,20 @@ class CreateTableVideo extends Migration
     {
        Schema::create('video', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('userid');
-            $table->string('videofile')->nullable();
-            $table->string('filetype')->nullable();
+            $table->string('user_id');
+            $table->string('category_id');
             $table->string('title')->nullable();
-            $table->text('description')->nullable();
+            $table->text('desc')->nullable();
+            $table->string('video_path')->nullable();
+            $table->string('image_path')->nullable();
             $table->string('tags')->nullable();
-            $table->string('image')->nullable();
-            $table->text('turunan1')->nullable();
-            $table->text('turunan2')->nullable();
-            $table->text('turunan3')->nullable();
-            $table->text('turunan4')->nullable();
-            $table->text('turunan5')->nullable();
-            $table->text('catatan')->nullable();
-            $table->string('registrationip')->nullable();
-            $table->string('approvedby')->nullable();
-            $table->string('approvedat')->nullable();
-            $table->integer('statusaktif')->default(0);
-            $table->string('hit')->nullable();
-            $table->string('createdat')->nullable();
+            $table->integer('hit')->nullable();
             $table->string('slug')->nullable();
-            $table->string('category_id')->nullable();
-            $table->timestamps();
+            $table->integer('approved_by')->nullable();
+            $table->datetime('approved_at')->nullable();
+            $table->datetime('deactivated_at')->nullable();
             $table->softdeletes();
+            $table->timestamps();
         });
     }
 

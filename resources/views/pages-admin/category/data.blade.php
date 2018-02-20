@@ -10,7 +10,7 @@
                 <div class="col-md-9">
                     <div class="chanel-info" style="margin-top:-5px;">
                         <span class="subscribers">436,414 subscribers</span>
-                        <a class="title" href="#">{{$v->category}}</a>
+                        <a class="title" href="#">{{$v->name}}</a>
                     </div>
                 </div>
             </div>
