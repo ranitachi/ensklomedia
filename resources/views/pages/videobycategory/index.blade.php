@@ -22,20 +22,18 @@
 @endsection
 
 @section('content')
-    @include('includes.sidebar-admin')  
+    @include('includes.sidebar')  
     
     <div id="all-output" class="col-md-10">
         <!-- Category Cover Image -->
         <div id="category-cover-image">
             <div class="image-in">
-            <img src="{{ asset('assets/demo_img/category-img.jpg') }}" alt="">
+                <img src="{{ asset('assets/demo_img/category-img.jpg') }}" alt="">
             </div>
-            <h1 class="title"><i class="fa fa-music"></i> Music</h1>
+            <h1 class="title"><i class="fa fa-music"></i> {{ $category_name }}</h1>
             <ul class="category-info">
-                <li>97,174,199 subscribers </li>
-                <li>255,525,456 Views</li>
-                <li>45,23,65 Channel No</li>
-                <li class="subscribe"><a href="#">Subscribe</a></li>
+                <li>97,174,199 Total Subscribers </li>
+                <li>255,525,456 Total Views</li>
             </ul>
         </div>
         <!-- // Category Cover Image -->
@@ -65,7 +63,7 @@
 
                 <div class="col-md-10">
 
-                    <h1 class="new-video-title"><i class="fa fa-bolt"></i> Trending</h1>
+                    <h1 class="new-video-title"><i class="fa fa-bolt"></i> {{ $category_name }}</h1>
 
                     @foreach ($videos->chunk(3) as $chunk)
                         <div class="row">
@@ -81,11 +79,11 @@
                                                     $cover = url('uploadfiles/image/'.$video->image_path);
                                                 }
                                             @endphp
-                                            <a href="#"><img class="custom-size" src="{{ $cover }}" alt=""></a>
+                                            <a href="{{ route('watch', $video->slug) }}"><img class="custom-size" src="{{ $cover }}" alt=""></a>
                                         </div>
                                         <div class="video-info">
-                                            <a href="#" class="title">{{ $video->title }}</a>
-                                            <a class="channel-name" href="#">{{ isset($video->user->profile->name) && !is_null($video->user->profile->name) ? $video->user->profile->name : 'No Name' }}<span>
+                                            <a href="{{ route('watch', $video->slug) }}" class="title">{{ $video->title }}</a>
+                                            <a class="channel-name" href="#">{{ isset($video->user->profile->channel_name) && !is_null($video->user->profile->channel_name) ? $video->user->profile->channel_name : 'No Channel Name' }}<span>
                                             <i class="fa fa-check-circle"></i></span></a>
                                             <span class="views"><i class="fa fa-eye"></i>{{ $video->hit }} views </span>
                                             <span class="date"><i class="fa fa-clock-o"></i>5 months ago </span>
