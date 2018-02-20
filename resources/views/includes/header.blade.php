@@ -16,7 +16,7 @@
                     <div class="search-form">
                         <form id="search" action="{{route('search.cari')}}" method="post">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="text" placeholder="Cari Video Disini" name="video-search" id="search-form"/>
+                            <input type="text" placeholder="Cari Video Disini" name="video-search" id="search-form" autocomplete="off"/>
                             <input type="submit" value="Keywords" />
                         </form>
                     </div>

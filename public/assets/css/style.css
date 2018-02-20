@@ -875,7 +875,8 @@ header ul.account-menu li  .color-4{
 	display: block;
 	margin: 0px;
 	padding: 0px;
-	width: 100%;
+	/*width: 100%;*/
+	width:240px;
 }
 .left-sidebar ul.menu-sidebar li a{
 	font-family: 'Roboto', sans-serif;
