@@ -25,11 +25,24 @@
       @yield('footscript')
 	</body>
 </html>
+<script type="text/javascript" src="{{asset('js/typeahead.js')}}"></script>
 <script type="text/javascript">
   var APP_URL = {!! json_encode(url('/')) !!}
   $.ajaxSetup({
 			headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			}
-	});
+  });
+  
+  
+    var path = "{{ route('search.auto') }}";
+    $(document).ready(function(){
+      $('input#search-form').typeahead({
+          source:  function (query, process) {
+          return $.get(path, { query: query }, function (data) {
+                  return process(data);
+              });
+          }
+      });
+    });
 </script>

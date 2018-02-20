@@ -92,7 +92,7 @@
 @section('footscript')
     <script src="{{asset('js/videojs.js')}}"></script>
     <script>
-        var lebar=document.getElementById("thumb").offsetWidth;
+        //var lebar=document.getElementById("thumb").offsetWidth;
         //alert(width);
         /*$('video.video-js').each(function(a){
             var id=$(this).attr('id');

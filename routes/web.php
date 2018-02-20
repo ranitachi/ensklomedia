@@ -31,6 +31,9 @@ Route::post('/videosave','UploadController@videosave')->name('upload.simpan');
 Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove');
 Route::post('video-saya','UploadController@myvideo')->name('video.myvideo');
 
+Route::post('cari','SearchController@search')->name('search.cari');
+Route::get('autocomplete','SearchController@autocomplete')->name('search.auto');
+
 Route::get('/player/{filename}', 'DashboardController@player');
 Route::get('/video/{filename}', function ($filename) {
     // Pasta dos videos.
