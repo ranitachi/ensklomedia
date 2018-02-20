@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $cat=Category::orderBy('category')->get();
+        $cat=Category::orderBy('name')->get();
         $vid=Video::orderByRaw("RAND()")->get();
         $video=array();
         foreach($vid as $k => $v)

@@ -15,45 +15,25 @@ class CreateTableProfile extends Migration
     {
         //
    Schema::create('profile', function (Blueprint $table) {
-            $table->increments('user_id');
+            $table->increments('id');
+            $table->integer('user_id');
             $table->string('name');
-            $table->string('public_email')->nullable();
-            $table->string('gravatar_email')->nullable();
-            $table->string('gravatar_id')->nullable();
-            $table->string('location')->nullable();
+            $table->string('channel_name');
             $table->string('website')->nullable();
             $table->text('bio')->nullable();
-            $table->string('timezone')->nullable();
-            $table->string('rekomendasi')->nullable();
-            $table->string('nama')->nullable();
-            $table->string('jk')->nullable();
-            $table->string('profesi')->nullable();
-            $table->string('provinsi')->nullable();
-            $table->string('kabupaten')->nullable();
-            $table->string('alamat1')->nullable();
-            $table->string('hp')->nullable();
-            $table->string('email')->unique();
-            $table->string('instansi')->nullable();
-            $table->string('jenjang')->nullable();
-            $table->string('alamat')->nullable();
-            $table->string('telp')->nullable();
-            $table->string('pelatihan_id')->nullable();
-            $table->string('tahun_id')->nullable();
-            $table->string('tempatlahir')->nullable();
-            $table->string('tgllahir')->nullable();
-            $table->string('golnip')->nullable();
-            $table->string('npwp')->nullable();
-            $table->string('s1')->nullable();
-            $table->string('s2')->nullable();
-            $table->string('s3')->nullable();
-            $table->string('slain')->nullable();
-            $table->string('namakepsek')->nullable();
-            $table->string('hpkepsek')->nullable();
-            $table->string('emailkepsek')->nullable();
-            $table->string('petugaspusat')->nullable();
-            $table->integer('flags')->default(1);
-            $table->timestamps();
+            $table->string('gender')->nullable();
+            $table->string('profession')->nullable();
+            $table->string('province')->nullable();
+            $table->string('district')->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('institute')->nullable();
+            $table->string('educational_level')->nullable();
+            $table->string('educational_level_detail')->nullable();
+            $table->string('place_of_birth')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->softdeletes();
+            $table->timestamps();
         });
     }
 

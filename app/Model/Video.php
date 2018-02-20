@@ -4,10 +4,16 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Video extends Model
 {
     use SoftDeletes;
+
     protected $table = 'video';
-    protected $dates = ['deleted_at'];
-    protected $fillable =  ['id','userid','videofile','filetype','title','description','tags','image','turunan1','turunan2','turunan3','turunan4','turunan5','catatan','registrationip','approvedat','approvedby','statusaktif','hit','createdat','slug','category_id','created_at','updated_at'];
+
+    protected $fillable =  [
+        'user_id','category_id','title','desc','video_path','image_path',
+        'tags','hit','slug','approved_by','approved_at','deactivated_at',
+        'deleted_at','created_at','updated_at'
+    ];
 }

@@ -9,7 +9,7 @@
 				Kategori
             	<ul class="menu-sidebar">
                 	@php
-                        $cat=App\Model\Category::orderBy('category')->get();
+                        $cat=App\Model\Category::orderBy('name')->get();
                         foreach($cat as $k => $v)
                         {
                             echo '<li class="color-1"><a href="#"><i class="fa fa-th-large"></i>'.$v->category.'</a></li>';
