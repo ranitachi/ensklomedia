@@ -63,12 +63,15 @@ class DashboardController extends Controller
                 $cover=url($cv);
             }
             $mime = "video/mp4";
+
+            $relatedvideo = Video::where('category_id', $video->category_id)->limit(10)->get();
         }
         // echo $vid;
         return view('pages.watch.index')
                 ->with('id',$id)
                 ->with('status',$status)
                 ->with('video',$video)
+                ->with('relatedvideo',$relatedvideo)
                 ->with(compact('vid', 'mime','cover'));
     }
 

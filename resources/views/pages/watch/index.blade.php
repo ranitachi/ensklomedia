@@ -2,7 +2,25 @@
 
 @section('title')
     <title>Lihat Video - Ensiklomedia</title>
-     <link href="{{asset('css/videojs.css')}}" rel="stylesheet">
+    <link href="{{asset('css/videojs.css')}}" rel="stylesheet">
+     
+    <style>
+        .share-in {
+            margin-top: 0px !important;
+        }
+
+        .custom-size {
+            height: 150px;
+            width: 100%;
+        }
+
+        .thumb {
+            height: 150px;
+            background: url("{{ asset('assets/img/no-image-02.png') }}");
+            background-size: 95% 100%;
+            background-position: center;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -28,12 +46,12 @@
                             	<li><a class="like" href="#"><i class="fa fa-eye"></i>&nbsp;&nbsp;{{($id==-1 ? 0 : $video->hit)}} views</i></a></li>
                             </ul>
                             <ul class="social_link">
-                                            <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                            <li><a class="youtube" href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
-                                            <li><a class="linkedin" href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                                            <li><a class="google" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                            <li><a class="twitter" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                            <li><a class="rss" href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                                <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a class="youtube" href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li><a class="google" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a class="rss" href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
                             </ul><!-- // Social -->
                         </div><!-- // video-share -->
                         <!-- // Video Player -->
@@ -116,121 +134,27 @@
                 <!-- Related Posts-->
                 <div class="col-md-4">
                 	<div id="related-posts">
-
-                    	<!-- video item -->
-                        <div class="related-video-item">
-                        	<div class="thumb">
-                                <small class="time">10:53</small>
-                            	<a href="#"><img src="{{ asset('assets/demo_img/v1.png')}}" alt=""></a>
+                        @foreach ($relatedvideo as $related)
+                            <!-- video item -->
+                            <div class="related-video-item">
+                                <div class="thumb">
+                                    <small class="time">10:53</small>
+                                    @php
+                                        $cover = "http://ensiklomedia.kemdikbud.go.id/uploads/images/".$related->image_path;
+                                        if (File::exists($related->image_path)) {
+                                            $cover = url('uploadfiles/image/'.$related->image_path);
+                                        }
+                                    @endphp
+                                    <a href="{{ route('watch', $related->slug) }}" onclick="addhit('{{$related->id}}')"><img class="custom-size" src="{{ $cover }}" alt=""></a>
+                                </div>
+                                <a href="{{ route('watch', $related->slug) }}" class="title">{{ $related->title }}</a>
+                                <a class="channel-name" href="#">
+                                    {{ isset($related->user->profile->channel_name) ? $related->user->profile->channel_name : 'No Channel Name' }}
+                                    <span><i class="fa fa-check-circle"></i></span>
+                                </a>
                             </div>
-                            <a href="#" class="title">Lorem Ipsum is simply dummy text of the printing and </a>
-                            <a class="channel-name" href="#">Rabie Elkheir<span>
-                            <i class="fa fa-check-circle"></i></span></a>
-                        </div>
-                    	<!-- // video item -->
-
-
-                    	<!-- video item -->
-                        <div class="related-video-item">
-                        	<div class="thumb">
-                                <small class="time">10:53</small>
-                            	<a href="#"><img src="{{ asset('assets/demo_img/v2.png')}}" alt=""></a>
-                            </div>
-                            <a href="#" class="title">Lorem Ipsum is simply dummy text of the printing and </a>
-                            <a class="channel-name" href="#">Rabie Elkheir<span>
-                            <i class="fa fa-check-circle"></i></span></a>
-                        </div>
-                    	<!-- // video item -->
-
-
-                    	<!-- video item -->
-                        <div class="related-video-item">
-                        	<div class="thumb">
-                                <small class="time">10:53</small>
-                            	<a href="#"><img src="{{ asset('assets/demo_img/v3.png')}}" alt=""></a>
-                            </div>
-                            <a href="#" class="title">Lorem Ipsum is simply dummy text of the printing and </a>
-                            <a class="channel-name" href="#">Rabie Elkheir<span>
-                            <i class="fa fa-check-circle"></i></span></a>
-                        </div>
-                    	<!-- // video item -->
-
-
-                    	<!-- video item -->
-                        <div class="related-video-item">
-                        	<div class="thumb">
-                                <small class="time">10:53</small>
-                            	<a href="#"><img src="{{ asset('assets/demo_img/v4.png')}}" alt=""></a>
-                            </div>
-                            <a href="#" class="title">Lorem Ipsum is simply dummy text of the printing and </a>
-                            <a class="channel-name" href="#">Rabie Elkheir<span>
-                            <i class="fa fa-check-circle"></i></span></a>
-                        </div>
-                    	<!-- // video item -->
-
-
-                    	<!-- video item -->
-                        <div class="related-video-item">
-                        	<div class="thumb">
-                                <small class="time">10:53</small>
-                            	<a href="#"><img src="{{ asset('assets/demo_img/v5.png')}}" alt=""></a>
-                            </div>
-                            <a href="#" class="title">Lorem Ipsum is simply dummy text of the printing and </a>
-                            <a class="channel-name" href="#">Rabie Elkheir<span>
-                            <i class="fa fa-check-circle"></i></span></a>
-                        </div>
-                    	<!-- // video item -->
-
-
-                    	<!-- video item -->
-                        <div class="related-video-item">
-                        	<div class="thumb">
-                                <small class="time">10:53</small>
-                            	<a href="#"><img src="{{ asset('assets/demo_img/v6.png')}}" alt=""></a>
-                            </div>
-                            <a href="#" class="title">Lorem Ipsum is simply dummy text of the printing and </a>
-                            <a class="channel-name" href="#">Rabie Elkheir<span>
-                            <i class="fa fa-check-circle"></i></span></a>
-                        </div>
-                    	<!-- // video item -->
-
-                    	<!-- video item -->
-                        <div class="related-video-item">
-                        	<div class="thumb">
-                                <small class="time">10:53</small>
-                            	<a href="#"><img src="{{ asset('assets/demo_img/v1.png')}}" alt=""></a>
-                            </div>
-                            <a href="#" class="title">Lorem Ipsum is simply dummy text of the printing and </a>
-                            <a class="channel-name" href="#">Rabie Elkheir<span>
-                            <i class="fa fa-check-circle"></i></span></a>
-                        </div>
-                    	<!-- // video item -->
-
-
-                    	<!-- video item -->
-                        <div class="related-video-item">
-                        	<div class="thumb">
-                                <small class="time">10:53</small>
-                            	<a href="#"><img src="{{ asset('assets/demo_img/v4.png')}}" alt=""></a>
-                            </div>
-                            <a href="#" class="title">Lorem Ipsum is simply dummy text of the printing and </a>
-                            <a class="channel-name" href="#">Rabie Elkheir<span>
-                            <i class="fa fa-check-circle"></i></span></a>
-                        </div>
-                    	<!-- // video item -->
-
-
-                    	<!-- video item -->
-                        <div class="related-video-item">
-                        	<div class="thumb">
-                                <small class="time">10:53</small>
-                            	<a href="#"><img src="{{ asset('assets/demo_img/v3.png')}}" alt=""></a>
-                            </div>
-                            <a href="#" class="title">Lorem Ipsum is simply dummy text of the printing and </a>
-                            <a class="channel-name" href="#">Rabie Elkheir<span>
-                            <i class="fa fa-check-circle"></i></span></a>
-                        </div>
-                    	<!-- // video item -->
+                            <!-- // video item -->
+                        @endforeach
 
                     </div>
                 </div><!-- // col-md-4 -->

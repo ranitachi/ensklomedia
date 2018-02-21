@@ -13,7 +13,7 @@
 					@endphp
 
                     @foreach ($cat as $v)
-						<li class="color-1"><a href="{{ route('video.bycategory', $v->id) }}"><i class="fa fa-th-large"></i>{{$v->name}}</a></li>
+						<li class="color-1"><a href="{{ route('video.bycategory', $v->slug) }}"><i class="fa fa-th-large"></i>{{$v->name}}</a></li>
 					@endforeach
                 </ul>
             	<!--<ul class="menu-sidebar">
