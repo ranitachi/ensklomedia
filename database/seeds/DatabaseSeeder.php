@@ -20,7 +20,10 @@ class DatabaseSeeder extends Seeder
         // $category = resolve('App\Services\RestructureCategory');
         // $category->run();
 
-        $profile = resolve('App\Services\RestructureProfile');
-        $profile->run();
+        // $profile = resolve('App\Services\RestructureProfile');
+        // $profile->run();
+
+        $endcards = resolve('App\Services\RestructureEndcards');
+        $endcards->run();
     }
 }
