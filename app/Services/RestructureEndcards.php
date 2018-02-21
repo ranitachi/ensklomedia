@@ -23,6 +23,7 @@ class RestructureEndcards
 
         $console = new ConsoleOutput();
         $progress = new ProgressBar($console, count($videos));
+        
         $progress->setOverwrite(true);
         $progress->setRedrawFrequency(1);
 
