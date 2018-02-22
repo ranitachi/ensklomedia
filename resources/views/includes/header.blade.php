@@ -12,7 +12,7 @@
                         <a href="{{route('dashboard')}}"><img src="{{ asset('assets/img/logo.png')}}" alt=""></a>
                     </div>
                 </div><!-- // col-md-2 -->
-                <div class="col-lg-3 col-md-3 col-sm-6 hidden-xs hidden-sm">
+                <div class="col-lg-3 col-md-3 col-sm-6">
                     <div class="search-form">
                         <form id="search" action="{{route('search.cari')}}" method="post">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">

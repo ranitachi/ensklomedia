@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Users;
 use App\Model\Category;
 use App\Model\Video;
+use App\Model\Endcards;
 use File;
 class DashboardController extends Controller
 {
@@ -44,7 +45,7 @@ class DashboardController extends Controller
 
     public function watch($slug=-1)
     {
-        $video=array();
+        $video=$endcards=array();
         $id=-1;
         $status='v1';
         if($slug!=-1)
@@ -64,12 +65,14 @@ class DashboardController extends Controller
             }
             $mime = "video/mp4";
 
-            $relatedvideo = Video::where('category_id', $video->category_id)->limit(10)->get();
+            $relatedvideo = Video::where('category_id', $video->category_id)->orderByRaw("RAND()")->limit(10)->get();
+            $endcards=Endcards::where('video_id','=',$id)->whereNotNull('link')->get();
         }
         // echo $vid;
         return view('pages.watch.index')
                 ->with('id',$id)
                 ->with('status',$status)
+                ->with('endcards',$endcards)
                 ->with('video',$video)
                 ->with('relatedvideo',$relatedvideo)
                 ->with(compact('vid', 'mime','cover'));
