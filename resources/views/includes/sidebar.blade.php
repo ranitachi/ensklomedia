@@ -1,5 +1,5 @@
 		
-		<div class="col-md-2 no-padding-left no-padding-right hidden-sm hidden-xs" style="margin-top:5px !important">
+		{{--  <div class="col-md-2 no-padding-left no-padding-right hidden-sm hidden-xs" >  --}}
         	<div class="left-sidebar">
             	<div id="sidebar-stick">
             	<ul class="menu-sidebar" style="border-bottom:1px solid #dddddd;">
@@ -32,4 +32,4 @@
                 </div><!-- // sidebar-stick -->
                 <div class="clear"></div>
             </div><!-- // left-sidebar -->
-        </div>
+        {{--  </div>  --}}

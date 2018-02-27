@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <div id="all-output" class="col-md-10">
+    
         <div class="row">
             <div class="col-lg-12 col-md-12 col-cm-12">&nbsp;</div>
         </div>
@@ -98,7 +98,7 @@
             </div>
         @endforeach
 
-		</div>
+		
 @endsection
 @section('footscript')
     <script src="{{asset('js/videojs.js')}}"></script>

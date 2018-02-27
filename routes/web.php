@@ -12,7 +12,15 @@
 */
 
 // Route::get('/', function () {
-//     return view('welcome');
+//     $cat=App\Model\Category::all();
+//     foreach($cat as $k => $v)
+//     {
+//         $up=App\Model\Category::find($v->id);
+//         $up->slug=str_slug($v->name);
+//         $up->save();
+//         // echo $v->id.'-'.str_slug($v->name).'<br>';
+        
+//     }
 // });
 
 Auth::routes();

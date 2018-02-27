@@ -1,3 +1,4 @@
+{{--  <header style="position:fixed;top:0;width:100%">  --}}
 <header>
         <div class="container-full">
         	<div class="row">
@@ -20,7 +21,7 @@
                     	<i class="fa fa-close"></i>
                     </a>
                     <div style="float:left;margin-right:20px;" class="hidden-sm hidden-xs">
-                        <a href="javascript:hidemenu()" ><i class="fa fa fa-navicon font-like-yt" style="padding-top:8px"></i></a>
+                        <a href="#" id="icon-menu"><i class="fa fa fa-navicon font-like-yt" style="padding-top:8px"></i></a>
                     </div>
                     <div id="logo" style="text-align:center !important;">
                         <a href="{{route('dashboard')}}" ><img src="{{ asset('assets/img/logo.png')}}" alt="" style="width:80%"></a>
