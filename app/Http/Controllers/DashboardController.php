@@ -69,6 +69,7 @@ class DashboardController extends Controller
             $endcards=Endcards::where('video_id','=',$id)->whereNotNull('link')->get();
         }
         // echo $vid;
+        //$e_cards=json_encode($endcards);
         return view('pages.watch.index')
                 ->with('id',$id)
                 ->with('status',$status)

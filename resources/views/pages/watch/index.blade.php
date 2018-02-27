@@ -155,7 +155,7 @@
                             </div>
                             <!-- // video item -->
                         @endforeach
-
+                        
                     </div>
                 </div><!-- // col-md-4 -->
                 <!-- // Related Posts -->

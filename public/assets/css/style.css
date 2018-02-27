@@ -120,7 +120,8 @@ body{
 	line-height:24px;
 	font-weight:300;
 	font-family: 'Roboto', sans-serif;
-	background-color: #e6e6e6;
+	/* background-color: #e6e6e6; */
+	background-color: #fff;
 	height: 100%;
 	position: relative;
 }
@@ -145,9 +146,12 @@ body:after{
 	clear: both;
 }
 header{
-	background-color: #444444;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	background-color: #fff;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	-webkit-box-shadow: 0px 5px 2px -2px rgba(221,221,221,1);
+	-moz-box-shadow: 0px 5px 2px -2px rgba(221,221,221,1);
+	box-shadow: 0px 5px 2px -2px rgba(221,221,221,1);
 }
 header a#main-category-toggler{
 	color: #FFF;
@@ -234,17 +238,17 @@ header a#main-category-toggler-close{
 	display: block;
 	width: 100%;
 	color: #999  !important;
-	border: none;
+	border: 1px solid #ccc;
 	font-size: 14px;
 	outline: 0;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	padding-top: 8px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	padding-top: 4px;
 	padding-right: 20px;
-	padding-bottom: 8px;
+	padding-bottom: 4px;
 	padding-left: 20px;
-	background-color: #525252;
+	background-color: #fff;
 	margin: 0px;
 }
 .search-form input[type="submit"] {
@@ -256,7 +260,7 @@ header a#main-category-toggler-close{
 	margin: auto;
 	overflow: hidden;
 	border: none !important;
-	top: 5px;
+	top: 3px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -265,7 +269,7 @@ header a#main-category-toggler-close{
 	width: 30px;
 	right: 5px;
 	background-image: url(../img/search-icon.png);
-	height: 30px;
+	height: 24px;
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
@@ -292,6 +296,9 @@ header ul.top-menu li a{
 }
 header ul.top-menu li a:hover{
 	color: #fab318;
+}
+ul.top-menu li a:hover i.fa{
+	color: #ff0000;
 }
 header ul.notifications{
 	text-align: center;
@@ -334,6 +341,22 @@ header .badge-color3{
 }
 header a.user-area{
 	display: block;
+}
+header .thumb2
+{
+	width: 32px;
+    height: 32px;
+    cursor: pointer;
+    margin: 0 8px;
+    border-radius: 50%;
+    background-color: transparent;
+    overflow: hidden;
+}
+header .thumb2 img.img-shadow
+{
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 header a.user-area .thumb{
 	float: left;
@@ -857,12 +880,12 @@ header ul.account-menu li  .color-4{
 	color: #dd0c2b;
 }
 .left-sidebar{
-	padding: 20px;
+	padding: 20px 0px;
 	background-color: #f8f8f8;
 	height: 100%;
 }
 .left-sidebar ul.menu-sidebar{
-	padding: 0px;
+	padding: 0px 0px 0px 20px;
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 30px;
@@ -875,31 +898,47 @@ header ul.account-menu li  .color-4{
 	display: block;
 	margin: 0px;
 	padding: 0px;
-	/*width: 100%;*/
-	width:240px;
+	width: 100%;
+	/* width:240px; */
 }
 .left-sidebar ul.menu-sidebar li a{
 	font-family: 'Roboto', sans-serif;
 	display: block;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
+	/* border-bottom-width: 1px;
+	border-bottom-style: solid; */
 	border-bottom-color: #e7e7e7;
 	padding-top: 8px;
 	padding-bottom: 8px;
 	font-size: 12px;
-	font-weight: 700;
-	text-transform: uppercase;
-	color: #999999;
+	font-weight: 400;
+	text-transform: capitalize;
+	color: #000;
 }
 .left-sidebar ul.menu-sidebar li a .fa{
 	font-size: 17px;
-	color: #777777;
+	color: #999999;
 	text-align: center;
 	width: 20px;
 	margin-right: 10px;
 }
+.left-sidebar ul.menu-sidebar li a:hover .fa{
+	color: #ff0000;
+}
 .no-padding-left{
 	padding-left: 0px !important;
+}
+.no-padding-right{
+	padding-right: 0px !important;
+}
+.padding-left-right-5
+{
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+}
+.padding-left-right-3
+{
+	padding-left: 3px !important;
+	padding-right: 3px !important;
 }
 h1.new-video-title{
 	font-family: 'Roboto', sans-serif;
@@ -2483,4 +2522,28 @@ font-style: italic;
 	text-transform: uppercase;
 	padding-top: 8px;
 	padding-bottom: 8px;
+}
+
+.font-like-yt
+{
+	font-size:20px;
+	color:#999 !important;
+}
+.font-like-yt:hover
+{
+	color :#ff0000 !important;
+}
+.col-lg-1-dash,
+.col-md-1-dash
+{
+	width:5% !important;
+	float:left;
+	position:relative;
+}
+.col-lg-10-dash,
+.col-md-10-dash
+{
+	width:90% !important;
+	float:left;
+	position:relative;
 }

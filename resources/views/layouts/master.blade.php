@@ -37,6 +37,8 @@
   
     var path = "{{ route('search.auto') }}";
     $(document).ready(function(){
+      var wdth_search_form=$('.search-form').width();
+      // alert(wdth_search_form);
       $('input#search-form').typeahead({
           name : 'name',
           display : 'name',
@@ -55,3 +57,9 @@
      
     });
 </script>
+<style>
+  ul.typeahead
+  {
+    width:100% !important;
+  }
+</style>
