@@ -7,7 +7,6 @@
 @endsection
 
 @section('content')
-    <div id="all-output" class="col-md-10">
         <div id="upload">
                 <div class="row">
                     <!-- upload -->
@@ -29,10 +28,7 @@
                                 	<label>Judul Video</label>
                                     <input type="text" class="form-control" placeholder="Judul Video" name="title">
                                 </div>
-                                <div class="col-md-12">
-                                    <label>Tag Video</label>
-                                    <input type="text" class="form-control" name="tags" placeholder="Tag Video" id="tags" data-role="tagsinput">
-                                </div>
+                                
                             	<div class="col-md-12">
                                 	<label>Kategori</label>
                                     <select name="category_id" class="form-control" data-placeholder="Kategori">
@@ -41,6 +37,10 @@
                                             <option value="{{$v->id}}">{{$v->name}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Tag Video</label>
+                                    <input type="text" class="form-control" name="tags" placeholder="Tag Video" id="tags" data-role="tagsinput">
                                 </div>
                             	<div class="col-md-12">
                                 	<label>Deskripsi</label>
@@ -70,7 +70,7 @@
                    
                 </div><!-- // row -->
             </div><!-- // upload -->
-    </div>
+   
 @endsection
 @section('footscript')
 <script src="{{asset('js/dropzone.js')}}"></script>

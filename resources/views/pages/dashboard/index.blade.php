@@ -15,7 +15,11 @@
                 <div class="col-lg-1-dash col-md-1-dash col-sm-1-dash">&nbsp;</div>
                 <div class="col-lg-10-dash col-md-10-dash col-sm-10-dash">
                     <div class="row">
-                        <h1 class="new-video-title" style="padding-top:0px !important;padding-bottom:0px;"><i class="fa fa-th-large"></i> {{$v->name}}</h1>
+                        @php
+                        $first_letter=substr($v->name,0,1);
+                        @endphp
+                        <h1 class="new-video-title" style="padding-top:0px !important;padding-bottom:0px;">
+                            <span data-letters="{{$first_letter}}"> {{$v->name}}</span></h1>
                             @php
                             if(isset($video[$v->id]))
                             {
@@ -36,8 +40,8 @@
                                         //$handle=fopen($cover,'r');
                                         $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vik->video_path;
                                         $cover=$cover;
-                                        //$fileExists = checkExternalFile($cover);
-                                        /*if($fileExists==200)
+                                        $fileExists = checkExternalFile($cover);
+                                        if($fileExists==200)
                                         {
                                             $cover=$cover;
                                         }
@@ -45,25 +49,16 @@
                                         {
                                             $cv='assets/img/no-image-02.png';
                                             $cover=url($cv);
-                                        }*/
+                                        }
                                     }
                                     $mime = "video/mp4";
-                                    
-                                    /*$ffmpeg = FFMpeg\FFMpeg::create(array(
-                                        'ffmpeg.binaries'  => '/usr/local/Cellar/ffmpeg/3.4.2/bin/ffmpeg',
-                                        'ffprobe.binaries' => '/usr/local/Cellar/ffmpeg/3.4.2/bin/ffprobe' ,
-                                        'timeout'          => 3600, // The timeout for the underlying process
-                                        'ffmpeg.threads'   => 12,
-                                    ),$logger);*/
-                                    //$video = $ffmpeg->open($vid);
-                                    //$media = FFMpeg::open($vid);
-                                    //$getID3 = new \getID3;
-                                    //$duration= getDuration($vid);
-                                    
+                                    $waktu=$vik->created_at->diffForHumans();
+                                    $wkt=text_translate($waktu,'en','id');
+                                    // dd($waktu);
                             @endphp
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 padding-left-right-3">
                                     <div class="video-item">
-                                        <div class="thumb" style="height:150px;background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center">
+                                        <div class="thumb" style="height:150px;background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
                                             <div class="hover-efect"></div>
                                             <small class="time">10:53</small>
                                             <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:150px;width:100%"></a>
@@ -78,10 +73,9 @@
                                         </a>-->
                                         <div class="video-info">
                                             <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{$vik->title}}</a>
-                                            <a class="channel-name" href="#">{{$v->category}}<span>
-                                            <i class="fa fa-check-circle"></i></span></a>
+                                            <a class="channel-name" href="#">{{$v->name}}</a>
                                             <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>
-                                            <span class="date"><i class="fa fa-clock-o"></i>5 months ago </span>
+                                            <span class="date"><i class="fa fa-clock-o"></i>{{$wkt}}</span>
                                         </div>
                                     </div>
                                 </div>  

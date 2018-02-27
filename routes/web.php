@@ -12,14 +12,27 @@
 */
 
 // Route::get('/', function () {
-//     $cat=App\Model\Category::all();
-//     foreach($cat as $k => $v)
-//     {
-//         $up=App\Model\Category::find($v->id);
-//         $up->slug=str_slug($v->name);
-//         $up->save();
-//         // echo $v->id.'-'.str_slug($v->name).'<br>';
+//     // $cat=App\Model\Category::all();
+//     // foreach($cat as $k => $v)
+//     // {
+//     //     $up=App\Model\Category::find($v->id);
+//     //     $up->slug=str_slug($v->name);
+//     //     $up->save();
+//     //     // echo $v->id.'-'.str_slug($v->name).'<br>';
         
+//     // }
+//     $vid=App\Model\Video::all();
+//     foreach($vid as $k => $v)
+//     {
+//         $d=strtok($v->video_path,'-');
+//         $thn=substr($d,0,4);
+//         $bln=substr($d,4,2);
+//         $tgl=substr($d,6,4);
+//         $tgl=$thn.'-'.$bln.'-'.$tgl.' '.date('H:i:s');
+//         $up=App\Model\Video::find($v->id);
+//         $up->created_at=$tgl;
+//         $up->updated_at=$tgl;
+//         $up->save();
 //     }
 // });
 

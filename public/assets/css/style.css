@@ -984,6 +984,9 @@ h1.new-video-title .fa{
 	padding: 25px;
 	height:130px;
 }
+.video-info{
+	padding: 10px !important;
+}
 .video-item a.title{
 	font-family: 'Roboto', sans-serif;
 	font-size: 12px;
@@ -1001,7 +1004,7 @@ h1.new-video-title .fa{
 	font-weight: 500;
 	color: #a7a7a7;
 	margin-top: 4px;
-	margin-bottom: 4px;
+	margin-bottom: -4px;
 	line-height: 19px;
 }
 .video-item a.channel-name .fa{
@@ -2547,3 +2550,18 @@ font-style: italic;
 	float:left;
 	position:relative;
 }
+[data-letters]:before {
+  content:attr(data-letters);
+  display:inline-block;
+  font-size:1em;
+  width:2.5em;
+  height:2.5em;
+  line-height:2.5em;
+  text-align:center;
+  border-radius:50%;
+  /* background:plum; */
+  background:#ff0000;
+  vertical-align:middle;
+  margin-right:1em;
+  color:white;
+  }

@@ -20,8 +20,12 @@
 							$cat_name=substr($v->name,0,24).' ...';
 						else
 							$cat_name=$v->name;
+
+						$first_letter = substr($v->name,0,1);
 					@endphp
-						<li class="color-1"><a href="{{ route('video.bycategory', $v->slug) }}"><i class="fa fa-th-large"></i>{{$cat_name}}</a></li>
+						<li class="color-1">
+							<a href="{{ route('video.bycategory', $v->slug) }}"><span data-letters="{{$first_letter}}">{{$cat_name}}</span></a>
+						</li>
 					@endforeach
                 </ul>
             	<!--<ul class="menu-sidebar">

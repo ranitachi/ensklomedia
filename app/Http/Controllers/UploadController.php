@@ -46,9 +46,11 @@ class UploadController extends Controller
     }
     public function removefile(Request $request,$id)
     {
-        $filename=$request->input('name');
+        // $filename=$request->input('name');
+        $vid=Video::where('id','=',$id)->get()->first();
+        $filename=$vid->video_path;
         $filepath = public_path('uploadfiles/video').'/'.$filename;
-        Video::find($id)->delete();
+        Video::find($id)->forceDelete();
         File::delete($filepath);
     }
     public function store(Request $request)

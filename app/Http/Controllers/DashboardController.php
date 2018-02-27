@@ -8,6 +8,7 @@ use App\Model\Category;
 use App\Model\Video;
 use App\Model\Endcards;
 use File;
+use Carbon\Carbon;
 class DashboardController extends Controller
 {
     public function index()
@@ -19,9 +20,15 @@ class DashboardController extends Controller
         {
             $video[$v->category_id][]=$v;
         }
+
+        $ct=array();
+        foreach($cat as $k => $v)
+        {
+            $ct[$v->id]=$v;
+        }
         return view('pages.dashboard.index')
             ->with('video',$video)
-            ->with('cat',$cat);
+            ->with('cat',$ct);
     }
     
     public function trending()

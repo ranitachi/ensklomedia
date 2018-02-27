@@ -7,7 +7,8 @@
                         $cat=App\Model\Category::orderBy('name')->get();
                         foreach($cat as $k => $v)
                         {
-                            echo '<li class="color-1" style="width:100% !important;"><a href="'.route('video.bycategory', $v->id).'"><i class="fa fa-th-large"></i>'.$v->name.'</a></li>';
+                            $first_letter = substr($v->name,0,1);
+                            echo '<li class="color-1" style="width:100% !important;"><a href="'.route('video.bycategory', $v->slug).'"><span data-letters="'.$first_letter.'">'.$v->name.'</span></a></li>';
                         }
                     @endphp
                     </ul>
