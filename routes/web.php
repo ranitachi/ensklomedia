@@ -48,10 +48,10 @@ Route::resource('category','CategoryController');
 Route::get('/category-data/{id}','CategoryController@data')->name('category.data');
 Route::get('/category-form/{id}','CategoryController@show')->name('category.form');
 
-Route::resource('upload','UploadController');
-Route::post('/videosave','UploadController@videosave')->name('upload.simpan');
-Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove');
-Route::post('video-saya','UploadController@myvideo')->name('video.myvideo');
+Route::resource('upload','UploadController')->middleware('auth');
+Route::post('/videosave','UploadController@videosave')->name('upload.simpan')->middleware('auth');
+Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove')->middleware('auth');
+Route::post('video-saya','UploadController@myvideo')->name('video.myvideo')->middleware('auth');
 
 Route::post('cari','SearchController@search')->name('search.cari');
 Route::get('autocomplete','SearchController@autocomplete')->name('search.auto');
@@ -72,3 +72,9 @@ Route::get('/video/{filename}', function ($filename) {
 });
 
 Route::get('video/category/{slug}', 'VideoCategoryController@index')->name('video.bycategory');
+
+Route::get('/login/{social}','Auth\LoginController@socialLogin')
+        ->where('social','twitter|facebook|linkedin|google|github');
+Route::get('/login/{social}/callback','Auth\LoginController@handleProviderCallback')
+        ->where('social','twitter|facebook|linkedin|google|github');
+Route::get('logout', 'Auth\LoginController@logout');

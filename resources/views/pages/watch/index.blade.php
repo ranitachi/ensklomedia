@@ -24,10 +24,45 @@
 @endsection
 
 @section('content')
-        <div id="all-output" class="col-md-10">
+            <div class="row hidden-lg hidden-md">
+                <div class="col-xs-12 col-sm-12 no-padding-all">
+                    <video id="example_video_mobile" class="video-js vjs-default-skin vjs-big-play-centered" autoplay controls preload="auto">
+                        <source src="{{$vid}}" type="{{$mime}}" />
+                    </video>
+                </div>
+                
+                <div class="col-xs-12 col-sm-12 no-padding-all" style="margin:0px !important">
+                    <div id="watch" style="padding:0px !important;margin:0px !important;">
+                        <div class="chanel-item" style="margin-bottom:0px !important;">
+                        		
+                        		<div class="chanel-info" style="margin:0px !important;line-height:16px !important;">
+                                    <a class="title" href="#">Deksripsi</a>
+                                    <br>
+                        			<span class="subscribers" style="text-transform:capitalize !important" style="padding-top:10px;">{{($id==-1 ? 'Deskripsi Tidak Tersedia' : $video->desc)}}</span>
+                        		</div>
+                        		
+                        </div>
+
+                        <div class="video-share" style="padding:8px !important;margin:0px !important">
+                            <ul class="like">
+                                <li><a class="like" href="#"><i class="fa fa-eye"></i>&nbsp;&nbsp;{{($id==-1 ? 0 : $video->hit)}} views</i></a></li>
+                            </ul>
+                            <ul class="social_link">
+                                <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a class="youtube" href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li><a class="google" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a class="rss" href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                            </ul><!-- // Social -->
+                        </div>
+                    </div>
+                        
+                </div>
+            </div>
             <div class="row">
             	<!-- Watch -->
-                <div class="col-md-8">
+                <div class="col-md-8 hidden-sm hidden-xs">
                 	<div id="watch">
 
                         <!-- Video Player -->
@@ -62,7 +97,7 @@
                         		
                         		<div class="chanel-info">
                         			<a class="title" href="#">Deksripsi</a>
-                        			<span class="subscribers" style="text-transform:capitalize !important">{{($id==-1 ? 'Video Tidak Tersedia' : $video->description)}}</span>
+                        			<span class="subscribers" style="text-transform:capitalize !important">{{($id==-1 ? 'Deksripsi Tidak Tersedia' : $video->desc)}}</span>
                         		</div>
                         		
                         	</div>
@@ -132,8 +167,8 @@
                 <!-- // Watch -->
 
                 <!-- Related Posts-->
-                <div class="col-md-4">
-                	<div id="related-posts">
+                <div class="col-md-4 col-sm-12 col-xs-12">
+                	<div id="related-posts" style="padding:0px !important;margin:0px !important;">
                         @foreach ($relatedvideo as $related)
                             <!-- video item -->
                             <div class="related-video-item">
@@ -160,7 +195,7 @@
                 </div><!-- // col-md-4 -->
                 <!-- // Related Posts -->
             </div><!-- // row -->
-		</div>
+		
 @endsection
 @section('footscript')
     <script src="{{asset('js/videojs.js')}}"></script>
@@ -169,6 +204,11 @@
         //videojs(document.getElementById('example_video_1'), {}, function() {
             // This is functionally the same as the previous example.
         //});
+        var widthvideo=$(document).width();
+        var heightvideo=(parseInt(widthvideo) / 1.33);
+        // alert(widthvideo);
+        var video2 = videojs('example_video_mobile',{height: heightvideo, width: widthvideo});
+
         var video = videojs('example_video_1');
         var rel_content_1 = document.createElement('div');
         var a1 = document.createElement('a');
@@ -217,11 +257,21 @@
         count: 8
         });
 
+        // var heightvideo=$('#example_video_mobile_html5_api').height();
+        
+        // $('div#example_video_mobile').css({'width':widthvideo+'px !important','height':heightvideo+'px !important'});
+        // $('#example_video_mobile').attr({'height':heightvideo});
+        // alert(widthvideo+'-'+heightvideo);
     </script>
     <style>
         div#example_video_1
         {
             width:100% !important;
         }
+        div#example_video_mobile
+        {
+            width:100% !important;
+        }
+        
     </style>
 @endsection

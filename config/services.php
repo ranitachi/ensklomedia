@@ -34,5 +34,14 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
-
+    'google' => [
+      'client_id' => '899646815015-8kfl08kiostej94cnq87aanh5h58f8n5.apps.googleusercontent.com',
+      'client_secret' => 'TD_9mIDEJfX2BQfm_nvjhS6s',
+      'redirect' => 'http://127.0.0.1:8000/login/google/callback'
+    ],
+    // 'google' => [
+    //   'client_id' => '899646815015-8kfl08kiostej94cnq87aanh5h58f8n5.apps.googleusercontent.com',
+    //   'client_secret' => 'TD_9mIDEJfX2BQfm_nvjhS6s',
+    //   'redirect' => 'http://localhost/ensiklomedia/public/login/google/callback'
+    // ],
 ];

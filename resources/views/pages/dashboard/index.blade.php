@@ -40,16 +40,16 @@
                                         //$handle=fopen($cover,'r');
                                         $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vik->video_path;
                                         $cover=$cover;
-                                        $fileExists = checkExternalFile($cover);
-                                        if($fileExists==200)
-                                        {
-                                            $cover=$cover;
-                                        }
-                                        else
-                                        {
-                                            $cv='assets/img/no-image-02.png';
-                                            $cover=url($cv);
-                                        }
+                                        // $fileExists = checkExternalFile($cover);
+                                        // if($fileExists==200)
+                                        // {
+                                        //     $cover=$cover;
+                                        // }
+                                        // else
+                                        // {
+                                        //     $cv='assets/img/no-image-02.png';
+                                        //     $cover=url($cv);
+                                        // }
                                     }
                                     $mime = "video/mp4";
                                     $waktu=$vik->created_at->diffForHumans();

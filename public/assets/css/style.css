@@ -930,6 +930,10 @@ header ul.account-menu li  .color-4{
 .no-padding-right{
 	padding-right: 0px !important;
 }
+
+.no-padding-all{
+	padding: 0px !important;
+}
 .padding-left-right-5
 {
 	padding-left: 5px !important;
@@ -982,7 +986,7 @@ h1.new-video-title .fa{
 .video-item .video-info{
 	background-color: #FFF;
 	padding: 25px;
-	height:130px;
+	height:100px;
 }
 .video-info{
 	padding: 10px !important;
@@ -1496,7 +1500,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 	color: #FFF;
 	text-decoration: none;
 	border-radius: 0px;
-	width: 100%;
+	float:left;
+	font-size:13px;
 }
 .log-in-form  .fa{
 	margin-right: 10px;
@@ -1506,9 +1511,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 	color: #FFF;
 	text-decoration: none;
 	border-radius: 0px;
-	width: 100%;
+	width: 50%;
 	margin-top: 10px;
 	margin-bottom: 10px;
+}	
+.log-in-form   .bg-google{
+	background-color: #ffffff;
+	color: #d62d20;
+	text-decoration: none;
+	border-radius: 0px;
+	border:1px solid #d62d20;
+	/* margin-top: 10px; */
+	margin-bottom: 10px;
+	float:left;
+	font-size:13px;
 }	
 #watch{
 	font-family: 'Roboto', sans-serif;
@@ -2565,3 +2581,10 @@ font-style: italic;
   margin-right:1em;
   color:white;
   }
+.accordion
+{
+  list-style: none !important;
+}
+#accordion1 li.a-panel{
+    margin-bottom: 0px;
+}

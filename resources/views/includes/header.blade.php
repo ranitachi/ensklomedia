@@ -49,14 +49,27 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3 hidden-xs hidden-sm">
                     <div class="dropdown pull-right">
+                        @php
+                            if(Auth::check())
+                            {
+                                $init=substr(Auth::user()->email,0,1);
+                                $initial='<span data-letters="'.strtoupper($init).'"></span>';
+                            }
+                            else
+                                $initial='<img src="'.asset('assets/demo_img/user-1.png').'" alt="" class="img-shadow">';
+                        @endphp
                         <a data-toggle="dropdown" href="#" class="user-area">
-                            <div class="thumb2"><img src="{{ asset('assets/demo_img/user-1.png')}}" alt="" class="img-shadow"></div>    
+                            <div class="thumb2">{!!$initial!!}</div>    
                         </a>
                         <ul class="dropdown-menu account-menu">
+                        @if (Auth::check())
                             <li><a href="#"><i class="fa fa-edit color-1"></i>Edit profile</a></li>
-                            <li><a href="#"><i class="fa fa-video-camera color-2"></i>add video</a></li>
-                            <li><a href="#"><i class="fa fa-star color-3"></i>Favorites</a></li>
-                            <li><a href="#"><i class="fa fa-sign-out color-4"></i>sign out</a></li>
+                            <li><a href="{{url('upload')}}"><i class="fa fa-upload color-2"></i>Upload video</a></li>
+                            <li><a href="#"><i class="fa fa-youtube-play color-1"></i>Video Saya</a></li>
+                            <li><a href="{{url('logout')}}"><i class="fa fa-sign-out color-4"></i>Logout</a></li>
+                        @else
+                            <li><a href="{{url('login')}}"><i class="fa fa-sign-in color-4"></i>Login</a></li>
+                        @endif
                         </ul>
     				</div>
                     <ul class="top-menu pull-right">

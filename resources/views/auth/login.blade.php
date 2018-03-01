@@ -65,24 +65,22 @@
                 
 				<div class="remember">
 					<div class="checkbox">
-						<label>
-							<input name="optionsCheckboxes" type="checkbox">
-								Remember Me
-						</label>
+						
 					</div>
-					<a href="#" class="forgot">Forgot my Password</a>
+					<a href="#" class="forgot">Lupa Password</a>
 				</div>
                 
 				<a href="01-home.html" class="btn btn-lg btn-primary full-width">Login</a>
 
 			  <div class="or"></div>
+                <div class="row">
+                    <a href="#" class="btn btn-lg bg-facebook col-lg-6 col-md-6 btn-icon-left"><i class="fa fa-facebook" aria-hidden="true"></i>Login with Facebook</a>
+                    <a href="{{ url('login/google')}}" class="btn btn-lg bg-google col-lg-6 col-md-6 btn-icon-left"><i class="fa fa-google" aria-hidden="true"></i>Login with Google</a>
+                </div>
 
-				<a href="#" class="btn btn-lg bg-facebook full-width btn-icon-left"><i class="fa fa-facebook" aria-hidden="true"></i>Login with Facebook</a>
-
-				<a href="#" class="btn btn-lg bg-twitter full-width btn-icon-left"><i class="fa fa-twitter" aria-hidden="true"></i>Login with Twitter</a>
 
 
-				<p>Don't you have an account? <a href="{{URL::to('register')}}">Register Now!</a> </p>
+				<p>Belum Punya Akun ? <a href="{{URL::to('register')}}">Silahkan Daftar</a> </p>
             </form>
         </div>
       </div>

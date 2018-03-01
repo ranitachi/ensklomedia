@@ -20,6 +20,16 @@
                         @endif
                         <h1 class="page-title"><span>Upload</span> Video</h1>
                     </div>
+                    <!-- // col-md-8 -->
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <label>Video upload</label>
+                            <form action="{{URL::to('/videosave')}}" method="post" class="dropzone" id="my-awesome-dropzone">
+                                <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                                <input type="hidden" name="id" id="id" value="{{$id}}">
+                            </form>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <form id="upload-video" action="{{ URL::to('upload') }}" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -50,23 +60,15 @@
                                 	<label>Pilih Gambar Cover</label>
                                     <input id="featured_image" type="file" class="file" name="cover">
                                 </div>
+                            	<div class="col-md-6">&nbsp;</div>
                             	<div class="col-md-6">
                                     <input type="hidden" name="id" id="id" value="{{$id}}">
-                                    <button type="button" id="contact_submit" class="btn btn-dm">Simpan</button>
+                                    <button type="button" id="contact_submit" class="btn btn-dm pull-right">Simpan</button>
                                 </div>
                             </div>
                         </form>
-                    </div><!-- // col-md-8 -->
-                    <div class="col-md-6">
-                        <div class="col-md-12">
-                            <label>Video upload</label>
-                            <form action="{{URL::to('/videosave')}}" method="post" class="dropzone" id="my-awesome-dropzone">
-                                <input name="_token" type="hidden" value="{{ csrf_token() }}">
-                                <input type="hidden" name="id" id="id" value="{{$id}}">
-                            </form>
-                        </div>
+                        
                     </div>
-
                    
                 </div><!-- // row -->
             </div><!-- // upload -->
