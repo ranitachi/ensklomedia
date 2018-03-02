@@ -174,10 +174,11 @@
   box-sizing: border-box; }
 
 .dropzone {
-  min-height: 150px;
+  min-height: 300px;
   border: 2px solid rgba(0, 0, 0, 0.3);
   background: white;
-  padding: 20px 20px; }
+  padding: 60px 10px; 
+}
   .dropzone.dz-clickable {
     cursor: pointer; }
     .dropzone.dz-clickable * {
@@ -197,7 +198,8 @@
     position: relative;
     display: inline-block;
     vertical-align: top;
-    margin: 16px;
+    /* margin: 16px; */
+    width:100%;
     min-height: 100px; }
     .dropzone .dz-preview:hover {
       z-index: 1000; }
@@ -206,6 +208,7 @@
     .dropzone .dz-preview.dz-file-preview .dz-image {
       border-radius: 20px;
       background: #999;
+      width:100%;
       background: linear-gradient(to bottom, #eee, #ddd); }
     .dropzone .dz-preview.dz-file-preview .dz-details {
       opacity: 1; }

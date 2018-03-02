@@ -12,7 +12,28 @@
 */
 
 // Route::get('/', function () {
-//     return view('welcome');
+//     // $cat=App\Model\Category::all();
+//     // foreach($cat as $k => $v)
+//     // {
+//     //     $up=App\Model\Category::find($v->id);
+//     //     $up->slug=str_slug($v->name);
+//     //     $up->save();
+//     //     // echo $v->id.'-'.str_slug($v->name).'<br>';
+        
+//     // }
+//     $vid=App\Model\Video::all();
+//     foreach($vid as $k => $v)
+//     {
+//         $d=strtok($v->video_path,'-');
+//         $thn=substr($d,0,4);
+//         $bln=substr($d,4,2);
+//         $tgl=substr($d,6,4);
+//         $tgl=$thn.'-'.$bln.'-'.$tgl.' '.date('H:i:s');
+//         $up=App\Model\Video::find($v->id);
+//         $up->created_at=$tgl;
+//         $up->updated_at=$tgl;
+//         $up->save();
+//     }
 // });
 
 Auth::routes();
@@ -27,10 +48,10 @@ Route::resource('category','CategoryController');
 Route::get('/category-data/{id}','CategoryController@data')->name('category.data');
 Route::get('/category-form/{id}','CategoryController@show')->name('category.form');
 
-Route::resource('upload','UploadController');
-Route::post('/videosave','UploadController@videosave')->name('upload.simpan');
-Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove');
-Route::post('video-saya','UploadController@myvideo')->name('video.myvideo');
+Route::resource('upload','UploadController')->middleware('auth');
+Route::post('/videosave','UploadController@videosave')->name('upload.simpan')->middleware('auth');
+Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove')->middleware('auth');
+Route::post('video-saya','UploadController@myvideo')->name('video.myvideo')->middleware('auth');
 
 Route::post('cari','SearchController@search')->name('search.cari');
 Route::get('autocomplete','SearchController@autocomplete')->name('search.auto');
@@ -52,3 +73,9 @@ Route::get('/video/{filename}', function ($filename) {
 
 Route::get('video/category/{slug}', 'VideoCategoryController@index')->name('video.bycategory');
 Route::get('comments', 'CommentsController@index')->name('comments.all');
+
+Route::get('/login/{social}','Auth\LoginController@socialLogin')
+        ->where('social','twitter|facebook|linkedin|google|github');
+Route::get('/login/{social}/callback','Auth\LoginController@handleProviderCallback')
+        ->where('social','twitter|facebook|linkedin|google|github');
+Route::get('logout', 'Auth\LoginController@logout');

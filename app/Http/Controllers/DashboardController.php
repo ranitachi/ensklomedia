@@ -7,7 +7,10 @@ use App\Model\Users;
 use App\Model\Category;
 use App\Model\Video;
 use App\Model\Comments;
+use App\Model\Endcards;
+
 use File;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -20,9 +23,15 @@ class DashboardController extends Controller
         {
             $video[$v->category_id][]=$v;
         }
+
+        $ct=array();
+        foreach($cat as $k => $v)
+        {
+            $ct[$v->id]=$v;
+        }
         return view('pages.dashboard.index')
             ->with('video',$video)
-            ->with('cat',$cat);
+            ->with('cat',$ct);
     }
     
     public function trending()
@@ -46,7 +55,7 @@ class DashboardController extends Controller
 
     public function watch($slug=-1)
     {
-        $video=array();
+        $video=$endcards=array();
         $id=-1;
         $status='v1';
         if($slug!=-1)
@@ -69,12 +78,15 @@ class DashboardController extends Controller
             }
             $mime = "video/mp4";
 
-            $relatedvideo = Video::where('category_id', $video->category_id)->limit(10)->get();
+            $relatedvideo = Video::where('category_id', $video->category_id)->orderByRaw("RAND()")->limit(10)->get();
+            $endcards=Endcards::where('video_id','=',$id)->whereNotNull('link')->get();
         }
         // echo $vid;
+        //$e_cards=json_encode($endcards);
         return view('pages.watch.index')
                 ->with('id',$id)
                 ->with('status',$status)
+                ->with('endcards',$endcards)
                 ->with('video',$video)
                 ->with('relatedvideo',$relatedvideo)
                 ->with('comments',$comments)

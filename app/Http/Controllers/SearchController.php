@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Video;
+use App\Model\Endcards;
 use File;
 class SearchController extends Controller
 {
@@ -19,6 +20,8 @@ class SearchController extends Controller
         // print_r($data);
         // print_r($video);
         // echo '</pre>';
+        $relatedvideo = Video::where('category_id', $video[0]->category_id)->orderByRaw("RAND()")->limit(10)->get();
+        $endcards=Endcards::where('video_id','=',$idvideo)->whereNotNull('link')->get();
         if(strtolower($data)==strtolower($video[0]->title))
         {
             $vidd=$video[0];
@@ -44,6 +47,8 @@ class SearchController extends Controller
                     ->with('video',$vidd)
                     ->with('id',$id)
                     ->with('status',$status)
+                    ->with('relatedvideo',$relatedvideo)
+                    ->with('endcards',$endcards)
                     ->with(compact('vid', 'mime','cover'));
         }
         else

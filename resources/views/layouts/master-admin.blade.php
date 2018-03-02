@@ -10,10 +10,17 @@
     <body>
       <!--======= header =======-->
         @include('includes.header')
-     
+      <div class="hidden-lg hidden-md">
+          @include('includes.navbar')
+        </div>
 	  <div class="site-output">
-        @yield('content')
-      </div>
+        <div id="sidebar-menu" class="col-lg-2 col-md-2 no-padding-left no-padding-right hidden-sm hidden-xs" style="margin-top:5px !important">
+          @include('includes.sidebar')  
+        </div>
+        <div id="all-output" class="col-lg-10 col-md-10">
+          @yield('content')
+        </div>
+    </div>
 
       @include('includes.scripts')
       @yield('footscript')

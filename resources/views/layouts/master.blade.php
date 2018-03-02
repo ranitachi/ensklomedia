@@ -17,14 +17,19 @@
         </div>
 
 	  <div class="site-output">
-        @include('includes.sidebar')  
-        @yield('content')
-      </div>
+        <div id="sidebar-menu" class="col-lg-2 col-md-2 no-padding-left no-padding-right hidden-sm hidden-xs" style="margin-top:5px !important">
+          @include('includes.sidebar')  
+        </div>
+        <div id="all-output" class="col-lg-10 col-md-10">
+          @yield('content')
+        </div>
+    </div>
 
       @include('includes.scripts')
       @yield('footscript')
 	</body>
 </html>
+<input type="hidden" id="hide-menu" value="0">
 <script type="text/javascript" src="{{asset('js/typeahead.js')}}"></script>
 <script type="text/javascript">
   var APP_URL = {!! json_encode(url('/')) !!}
@@ -37,6 +42,25 @@
   
     var path = "{{ route('search.auto') }}";
     $(document).ready(function(){
+      $('#icon-menu').click(function(){
+          var hidemenu=$('#hide-menu').val();
+          if(hidemenu==0)
+          {
+            $('#hide-menu').val(1);
+            $('#sidebar-menu').hide();
+            $('#all-output').removeClass();
+            $('#all-output').addClass("col-lg-12 col-md-12");
+          }
+          else if(hidemenu==1)
+          {
+            $('#hide-menu').val(0);
+            $('#sidebar-menu').show();
+            $('#all-output').removeClass();
+            $('#all-output').addClass("col-lg-10 col-md-10");
+          }
+      });
+      var wdth_search_form=$('.search-form').width();
+      // alert(wdth_search_form);
       $('input#search-form').typeahead({
           name : 'name',
           display : 'name',
@@ -55,3 +79,9 @@
      
     });
 </script>
+<style>
+  ul.typeahead
+  {
+    width:100% !important;
+  }
+</style>

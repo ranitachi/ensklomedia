@@ -1,7 +1,8 @@
+{{--  <header style="position:fixed;top:0;width:100%">  --}}
 <header>
         <div class="container-full">
         	<div class="row">
-                <div class="col-lg-2 col-md-2 col-sm-12">
+                <div class="col-lg-2 col-md-2 col-sm-12 hidden-lg hidden-md">
 					<a id="main-category-toggler" class="hidden-md hidden-lg hidden-md"  href="#">
                     	<i class="fa fa-navicon"></i>
                     </a>
@@ -9,10 +10,24 @@
                     	<i class="fa fa-close"></i>
                     </a>
                     <div id="logo">
-                        <a href="{{route('dashboard')}}"><img src="{{ asset('assets/img/logo.png')}}" alt=""></a>
+                        <a href="{{route('dashboard')}}" ><img src="{{ asset('assets/img/logo.png')}}" alt=""></a>
                     </div>
                 </div><!-- // col-md-2 -->
-                <div class="col-lg-3 col-md-3 col-sm-6 hidden-xs hidden-sm">
+                <div class="col-lg-2 col-md-2 col-sm-12 hidden-sm hidden-xs">
+					<a id="main-category-toggler" class="hidden-md hidden-lg hidden-md"  href="#">
+                    	<i class="fa fa-navicon"></i>
+                    </a>
+					<a id="main-category-toggler-close" class="hidden-md hidden-lg hidden-md" href="#">
+                    	<i class="fa fa-close"></i>
+                    </a>
+                    <div style="float:left;margin-right:20px;" class="hidden-sm hidden-xs">
+                        <a href="#" id="icon-menu"><i class="fa fa fa-navicon font-like-yt" style="padding-top:8px"></i></a>
+                    </div>
+                    <div id="logo" style="text-align:center !important;">
+                        <a href="{{route('dashboard')}}" ><img src="{{ asset('assets/img/logo.png')}}" alt="" style="width:80%"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="search-form">
                         <form id="search" action="{{route('search.cari')}}" method="post">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -22,136 +37,46 @@
                         </form>
                     </div>
                 </div><!-- // col-md-3 -->
-                <div class="col-lg-3 col-md-3 col-sm-5 hidden-xs hidden-sm">
+                {{--  <div class="col-lg-3 col-md-3 col-sm-5 hidden-xs hidden-sm">
                     <ul class="top-menu">
                         <li><a href="{{route('dashboard')}}">home</a></li>
                         <li><a href="{{route('trending')}}">trending</a></li>
                         <li><a href="14-history.html">history</a></li>
                     </ul>
-                </div><!-- // col-md-4 -->
-                <div class="col-lg-2 col-md-2 col-sm-4 hidden-xs hidden-sm">
-                    <ul class="notifications">
-                        <li class="dropdown">
-                        <a href="#"  data-toggle="dropdown"><i class="fa fa-users"></i>
-                        	<span class="badge badge-color1 header-badge">3</span>
-                        </a>
-                              <ul class="dropdown-menu dropdown-menu-friend-requests ">
-                                <li>
-                                	<div class="friend-requests-info">
-                                        <div class="thumb"><a href="#"><img src="{{ asset('assets/demo_img/z1.jpg')}}" alt=""></a></div>
-                                        <a href="#" class="name">Ahmed Saleh </a>
-                                        <span>Ahmed Saleh : Follow you now</span>
-                                    </div>
-                                </li>
-                                <li>
-                                	<div class="friend-requests-info">
-                                        <div class="thumb"><a href="#"><img src="{{ asset('assets/demo_img/z2.jpg')}}" alt=""></a></div>
-                                        <a href="#" class="name">Ahmed Saleh </a>
-                                        <span>Ahmed Saleh : Follow you now</span>
-                                    </div>
-                                </li>
-                                <li>
-                                	<div class="friend-requests-info">
-                                        <div class="thumb"><a href="#"><img src="{{ asset('assets/demo_img/z3.jpg')}}" alt=""></a></div>
-                                        <a href="#" class="name">Ahmed Saleh </a>
-                                        <span>Ahmed Saleh : Follow you now</span>
-                                    </div>
-                                </li>
-                                <li>
-                                	<div class="friend-requests-info">
-                                        <div class="thumb"><a href="#"><img src="{{ asset('assets/demo_img/z4.jpg')}}" alt=""></a></div>
-                                        <a href="#" class="name">Ahmed Saleh </a>
-                                        <span>Ahmed Saleh : Follow you now</span>
-                                    </div>
-                                </li>
-                              </ul>
-                        </li>
-                        <li class="dropdown">
-                        <a href="#" data-toggle="dropdown"><i class="fa fa-info-circle"></i>
-                        	<span class="badge badge-color2 header-badge">4</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-help-cnter">
-                        	<li>
-                            	<h2 class="title">Help center</h2>
-                                <div class="search-form">
-                                    <form id="search-2" action="#" method="post">
-                                        <input type="text" placeholder="Search here video posts..."/>
-                                        <input type="submit" value="Keywords" />
-                                    </form>
-                                </div>
-                            </li>
-                            <li>
-                            	<h2 class="title">Help on</h2>
-                                <ul class="help-cat-link">
-                                	<li><a href="#">the video</a></li>
-                                	<li><a href="#">Copyrights</a></li>
-                                	<li><a href="#">Members</a></li>
-                                	<li><a href="#">Register</a></li>
-                                	<li><a href="#">Comments</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        </li>
-                        <li class="dropdown">
-                        <a href="#" data-toggle="dropdown"><i class="fa fa-bell-o"></i>
-                        	<span class="badge badge-color3 header-badge">9</span>
-                        </a>
-						<ul class="dropdown-menu dropdown-notifications-items ">
-                        	<li>
-                            	<div class="notification-info">
-                                    <a href="#"><i class="fa fa-video-camera color-1"></i>
-                                    <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
-                                    <h5 class="time">4 hours ago</h5>
-                                    </a>
-                                </div>
-                            </li>
-                        	<li>
-                            	<div class="notification-info">
-                                    <a href="#"><i class="fa fa-thumbs-up color-2"></i>
-                                    <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
-                                    <h5 class="time">4 hours ago</h5>
-                                    </a>
-                                </div>
-                            </li>
-                        	<li>
-                            	<div class="notification-info">
-                                    <a href="#"><i class="fa fa-comment color-3"></i>
-                                    <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
-                                    <h5 class="time">4 hours ago</h5>
-                                    </a>
-                                </div>
-                            </li>
-                        	<li>
-                            	<div class="notification-info">
-                                    <a href="#"><i class="fa fa-video-camera color-1"></i>
-                                    <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
-                                    <h5 class="time">4 hours ago</h5>
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                            	<a href="#" class="all_notifications">All Notifications</a>
-                            </li>
-                        </ul>
-
-                        </li>
-                    </ul>
+                </div><!-- // col-md-4 -->  --}}
+                <div class="col-lg-1 col-md-1 col-sm-4 hidden-xs hidden-sm">
+                    &nbsp;
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-3 hidden-xs hidden-sm">
-					  <div class="dropdown">
+                <div class="col-lg-3 col-md-3 col-sm-3 hidden-xs hidden-sm">
+                    <div class="dropdown pull-right">
+                        @php
+                            if(Auth::check())
+                            {
+                                $init=substr(Auth::user()->email,0,1);
+                                $initial='<span data-letters="'.strtoupper($init).'"></span>';
+                            }
+                            else
+                                $initial='<img src="'.asset('assets/demo_img/user-1.png').'" alt="" class="img-shadow">';
+                        @endphp
                         <a data-toggle="dropdown" href="#" class="user-area">
-                            <div class="thumb"><img src="{{ asset('assets/demo_img/user-1.png')}}" alt=""></div>
-                            <h2>Rabie Elkheir</h2>
-                            <h3>25 subscribers</h3>
-                            <i class="fa fa-angle-down"></i>
+                            <div class="thumb2">{!!$initial!!}</div>    
                         </a>
                         <ul class="dropdown-menu account-menu">
-                           <li><a href="#"><i class="fa fa-edit color-1"></i>Edit profile</a></li>
-                           <li><a href="#"><i class="fa fa-video-camera color-2"></i>add video</a></li>
-                           <li><a href="#"><i class="fa fa-star color-3"></i>Favorites</a></li>
-                           <li><a href="#"><i class="fa fa-sign-out color-4"></i>sign out</a></li>
+                        @if (Auth::check())
+                            <li><a href="#"><i class="fa fa-edit color-1"></i>Edit profile</a></li>
+                            <li><a href="{{url('upload')}}"><i class="fa fa-upload color-2"></i>Upload video</a></li>
+                            <li><a href="#"><i class="fa fa-youtube-play color-1"></i>Video Saya</a></li>
+                            <li><a href="{{url('logout')}}"><i class="fa fa-sign-out color-4"></i>Logout</a></li>
+                        @else
+                            <li><a href="{{url('login')}}"><i class="fa fa-sign-in color-4"></i>Login</a></li>
+                        @endif
                         </ul>
     				</div>
+                    <ul class="top-menu pull-right">
+                        <li><a href="{{URL::to('upload')}}"><i class="fa fa-upload font-like-yt"></i></a></li>
+                        <li><a href="{{URL::to('upload')}}"><i class="fa fa-th font-like-yt"></i></a></li>
+                        <li><a href="{{URL::to('upload')}}"><i class="fa fa-bell font-like-yt"></i></a></li>
+                    </ul>
                 </div>
             </div><!-- // row -->
         </div><!-- // container-full -->

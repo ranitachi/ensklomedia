@@ -106,6 +106,16 @@ header ul.top-menu li a{
 	padding-top: 10px;
 	text-align:center
 	}
+.video-item .video-info{
+	background-color: #FFF;
+	padding: 15px;
+	height:90px;
+	}
+.video-item .thumb,
+.video-item .thumb img
+	{
+		height:100px !important;
+	}
 }
 @media screen and (max-width: 375px) {
 }

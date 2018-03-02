@@ -7,7 +7,6 @@
 @endsection
 
 @section('content')
-    <div id="all-output" class="col-md-10">
         <div id="upload">
                 <div class="row">
                     <!-- upload -->
@@ -21,42 +20,7 @@
                         @endif
                         <h1 class="page-title"><span>Upload</span> Video</h1>
                     </div>
-                    <div class="col-md-6">
-                        <form id="upload-video" action="{{ URL::to('upload') }}" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        	<div class="row">
-                            	<div class="col-md-12">
-                                	<label>Judul Video</label>
-                                    <input type="text" class="form-control" placeholder="Judul Video" name="title">
-                                </div>
-                                <div class="col-md-12">
-                                    <label>Tag Video</label>
-                                    <input type="text" class="form-control" name="tags" placeholder="Tag Video" id="tags" data-role="tagsinput">
-                                </div>
-                            	<div class="col-md-12">
-                                	<label>Kategori</label>
-                                    <select name="category_id" class="form-control" data-placeholder="Kategori">
-                                        <option value=""></option>
-                                        @foreach ($cat as $k => $v)
-                                            <option value="{{$v->id}}">{{$v->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            	<div class="col-md-12">
-                                	<label>Deskripsi</label>
-                                    <textarea class="form-control" rows="4"  placeholder="Deskripsi" name="description"></textarea>
-                                </div>
-                            	<div class="col-md-12">
-                                	<label>Pilih Gambar Cover</label>
-                                    <input id="featured_image" type="file" class="file" name="cover">
-                                </div>
-                            	<div class="col-md-6">
-                                    <input type="hidden" name="id" id="id" value="{{$id}}">
-                                    <button type="button" id="contact_submit" class="btn btn-dm">Simpan</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div><!-- // col-md-8 -->
+                    <!-- // col-md-8 -->
                     <div class="col-md-6">
                         <div class="col-md-12">
                             <label>Video upload</label>
@@ -66,11 +30,49 @@
                             </form>
                         </div>
                     </div>
-
+                    <div class="col-md-6">
+                        <form id="upload-video" action="{{ URL::to('upload') }}" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        	<div class="row">
+                            	<div class="col-md-12">
+                                	<label>Judul Video</label>
+                                    <input type="text" class="form-control" placeholder="Judul Video" name="title">
+                                </div>
+                                
+                            	<div class="col-md-12">
+                                	<label>Kategori</label>
+                                    <select name="category_id" class="form-control" data-placeholder="Kategori">
+                                        <option value=""></option>
+                                        @foreach ($cat as $k => $v)
+                                            <option value="{{$v->id}}">{{$v->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Tag Video</label>
+                                    <input type="text" class="form-control" name="tags" placeholder="Tag Video" id="tags" data-role="tagsinput">
+                                </div>
+                            	<div class="col-md-12">
+                                	<label>Deskripsi</label>
+                                    <textarea class="form-control" rows="4"  placeholder="Deskripsi" name="description"></textarea>
+                                </div>
+                            	<div class="col-md-12">
+                                	<label>Pilih Gambar Cover</label>
+                                    <input id="featured_image" type="file" class="file" name="cover">
+                                </div>
+                            	<div class="col-md-6">&nbsp;</div>
+                            	<div class="col-md-6">
+                                    <input type="hidden" name="id" id="id" value="{{$id}}">
+                                    <button type="button" id="contact_submit" class="btn btn-dm pull-right">Simpan</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
                    
                 </div><!-- // row -->
             </div><!-- // upload -->
-    </div>
+   
 @endsection
 @section('footscript')
 <script src="{{asset('js/dropzone.js')}}"></script>

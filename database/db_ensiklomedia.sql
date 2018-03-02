@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 19, 2018 at 07:09 AM
+-- Generation Time: Feb 21, 2018 at 05:29 AM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.1.12
 
@@ -7507,8 +7507,7 @@ INSERT INTO `video` (`id`, `category_id`, `userid`, `videofile`, `filetype`, `ti
 (12942, '1', '2257', '20171218-2257Tak berjudul 1 640x360 0,94Mbps 2017-12-18 16-18-35.mp4', 'mp4', 'Asal usul bledug kuwu', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '7', NULL, 'asal-usul-bledug-kuwu', NULL, NULL, NULL),
 (12943, '16', '1312', '20171218-1312Sejarah G30SPKI.mp4', 'mp4', 'Sejarah G30S PKI', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '4', NULL, 'sejarah-g30s-pki-2', NULL, NULL, NULL),
 (12944, '1', '1312', '20171218-1312Sejarah G30SPKI.mp4', 'mp4', 'Sejarah G30S PKI', 'G30S PKI adalah peristiwa penghianatan terhadap bangsa indonesia terbesar yang pernah terjadi', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2', NULL, 'sejarah-g30s-pki', NULL, NULL, NULL),
-(12946, '2', '2260', '20171219-2260Pulau Sombori 960x540 2,13Mbps 2017-12-13 22-56-51.mp4', 'mp4', 'Pulau Sombori Sulawesi Tengah', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '5', NULL, 'pulau-sombori-sulawesi-tengah', NULL, NULL, NULL),
-(3771355559, '13', NULL, '20180217-15 loading images using haneke.mp4', 'png', 'Judul Lorep Ipsum', 'Lorem Ipsum', 'lorem,ipsum,title', '20180217-foto-biya.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 'judul-lorep-ipsum', '2018-02-17 12:32:23', '2018-02-17 12:32:23', NULL);
+(12946, '2', '2260', '20171219-2260Pulau Sombori 960x540 2,13Mbps 2017-12-13 22-56-51.mp4', 'mp4', 'Pulau Sombori Sulawesi Tengah', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '5', NULL, 'pulau-sombori-sulawesi-tengah', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables

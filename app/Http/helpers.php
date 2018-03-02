@@ -18,4 +18,33 @@ function getDuration($full_video_path)
 
     return $duration;
 }
+function translate($string,$from,$to)
+{
+    $en=array('months','years','dates','ago');
+    $id=array('bulan','tahun','tanggal','lalu');
+    $res='';
+    $cek=array_search($string, ${$from});
+    // if($cek)
+    // {
+    //     if(isset(${$to}[$cek]))
+    //     {
+    //         $res=${$to}[$cek];
+    //     }        
+    // }
+    return ${$to}[$cek];
+    // return $res;
+}
+function text_translate($string,$from,$to)
+{
+    $dt=explode(' ',$string);
+    $str='';
+    foreach($dt as $k => $v)
+    {
+        if(is_numeric($v))
+            $str.=$v.' ';
+        else
+            $str.=translate(trim($v),$from,$to).' ';
+    }
+    return ucwords($str);
+}
 ?>
