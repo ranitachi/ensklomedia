@@ -11,11 +11,12 @@ use App\Model\Endcards;
 
 use File;
 use Carbon\Carbon;
+use Location;
 
 class DashboardController extends Controller
 {
     public function index()
-    {
+    {   
         $cat=Category::orderBy('name')->get();
         $vid=Video::orderByRaw("RAND()")->get();
         $video=array();

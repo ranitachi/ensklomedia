@@ -40,75 +40,55 @@
         </div>
         
         <div class="form-output">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
+            <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+                {{ csrf_field() }}
+                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} label-floating">
+                    <label class="control-label">Your Email</label>
+                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
 
-                        
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }} label-floating">
-                            <label class="control-label">Name</label>
-                            <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                        </div>
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} label-floating">
-                            <label class="control-label">Your Email</label>
-                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                        </div>
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} label-floating">
-                            <label class="control-label">Your Password</label>
-                            <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                        </div>
-                        
-                        <div class="form-group label-floating">
-                            <label class="control-label">Confirm Your Password</label>
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                        </div>
-
-                        <div class="form-group label-floating is-select">
-                            <label class="control-label">Your Gender</label>
-                            <select class="selectpicker form-control">
-                                <option value="MA">Male</option>
-                                <option value="FE">Female</option>
-                            </select>
-                        </div>
-                        
-                        <div class="remember">
-                            <div class="checkbox">
-                                <label>
-                                    <input name="optionsCheckboxes" type="checkbox">
-                                    I accept the <a href="#">Terms and Conditions</a> of the website
-                                </label>
-                            </div>
-                        </div>
-                        
-                    <a href="01-home.html" class="btn btn-lg btn-primary full-width">Complete sign up !</a>
-
-                    <div class="or"></div>
-
-                        <a href="#" class="btn btn-lg bg-facebook full-width btn-icon-left"><i class="fa fa-facebook" aria-hidden="true"></i>sign up with Facebook</a>
-
-                        <a href="#" class="btn btn-lg bg-twitter full-width btn-icon-left"><i class="fa fa-twitter" aria-hidden="true"></i>sign up with Twitter</a>
-
-
-                        <p>you have an account? <a href="{{URL::to('login')}}"> Sign in !</a> </p>
-                    </form>
+                        @if ($errors->has('email'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
                 </div>
+                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} label-floating">
+                    <label class="control-label">Your Password</label>
+                    <input id="password" type="password" class="form-control" name="password" required>
+
+                        @if ($errors->has('password'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
+                        @endif
+                </div>
+                
+                <div class="form-group label-floating">
+                    <label class="control-label">Confirm Your Password</label>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                </div>
+                
+                <div class="remember">
+                    <div class="checkbox">
+                        <label>
+                            <input name="optionsCheckboxes" type="checkbox">
+                            Saya setuju dengan <a href="#">Syarat dan Ketentuan</a> dari penggunaan website ini.
+                        </label>
+                    </div>
+                </div>
+                
+            <button type="submit" class="btn btn-lg btn-primary full-width">Daftar Sekarang!</button>
+
+            <div class="or"></div>
+
+                {{--  <a href="#" class="btn btn-lg bg-facebook full-width btn-icon-left"><i class="fa fa-facebook" aria-hidden="true"></i>sign up with Facebook</a>
+
+                <a href="#" class="btn btn-lg bg-twitter full-width btn-icon-left"><i class="fa fa-twitter" aria-hidden="true"></i>sign up with Twitter</a>  --}}
+
+
+                <p>you have an account? <a href="{{URL::to('login')}}"> Sign in !</a> </p>
+            </form>
+        </div>
       </div>
       <!--======= // log_in_page =======-->
 	</body>

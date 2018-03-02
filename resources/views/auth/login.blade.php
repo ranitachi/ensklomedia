@@ -70,7 +70,7 @@
 					<a href="#" class="forgot">Lupa Password</a>
 				</div>
                 
-				<a href="01-home.html" class="btn btn-lg btn-primary full-width">Login</a>
+				<button type="submit" class="btn btn-lg btn-primary full-width">Login</button>
 
 			  <div class="or"></div>
                 <div class="row">
