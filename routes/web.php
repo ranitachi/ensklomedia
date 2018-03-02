@@ -72,9 +72,14 @@ Route::get('/video/{filename}', function ($filename) {
 });
 
 Route::get('video/category/{slug}', 'VideoCategoryController@index')->name('video.bycategory');
+Route::get('comments', 'CommentsController@index')->name('comments.all');
 
 Route::get('/login/{social}','Auth\LoginController@socialLogin')
         ->where('social','twitter|facebook|linkedin|google|github');
 Route::get('/login/{social}/callback','Auth\LoginController@handleProviderCallback')
         ->where('social','twitter|facebook|linkedin|google|github');
 Route::get('logout', 'Auth\LoginController@logout');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

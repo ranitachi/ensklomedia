@@ -20,6 +20,23 @@
             background-size: 95% 100%;
             background-position: center;
         }
+
+        .reply {
+            cursor: pointer;
+        }
+
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+        }
+        
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
+
+        div#example_video_1
+        {
+            width:100% !important;
+        }
     </style>
 @endsection
 
@@ -105,66 +122,63 @@
 
 
                         <!-- Comments -->
-                        <div id="comments" class="post-comments">
-                        	<h3 class="post-box-title"><span>19</span> Comments</h3>
-                            <ul class="comments-list">
-                            	<li>
-                                	<div class="post_author">
-                                    	<div class="img_in">
-                                        	<a href="#"><img src="{{ asset('assets/demo_img/c1.jpg')}}" alt=""></a>
-                                        </div>
-                                        <a href="#" class="author-name">Rabie Elkheir</a>
-                                        <time datetime="2017-03-24T18:18">July 27, 2014 - 11:00 PM</time>
-                                    </div>
-                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum</p>
-                                    <a href="#" class="reply">Reply</a>
+                        <div id="app">
+                            <div id="comments" class="post-comments">
+                                <h3 class="post-box-title"><span> {{ $comments->count() }} </span> Comments</h3>
 
-                                    <ul class="children">
-                                    	<li>
-                                        	<div class="post_author">
-                                            	<div class="img_in">
-                                                	<a href="#"><img src="{{ asset('assets/demo_img/c2.jpg')}}" alt=""></a>
+                                @foreach ($comments as $comment)
+                                    <ul class="comments-list">
+                                        <li>
+                                            <div class="post_author">
+                                                <div class="img_in">
+                                                    <a href="#"><img src="{{ asset('assets/demo_img/c1.jpg')}}" alt=""></a>
                                                 </div>
-                                                <a href="#" class="author-name">Salam Ahmmed</a>
+                                                <a href="#" class="author-name">
+                                                    {{ $comment->video->user->profile->name }}
+                                                </a>
                                                 <time datetime="2017-03-24T18:18">July 27, 2014 - 11:00 PM</time>
                                             </div>
-                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum</p>
-                                            <a href="#" class="reply">Reply</a>
+                                            <p>
+                                                {{ $comment->comment }}
+                                            </p>
+                                            {{--  <a class="reply">Reply</a>
+
+                                            <div style="margin-top:10px;" v-show="replybox">
+                                                <form>
+                                                    <textarea class="form-control" rows="2" id="Message" placeholder="COMMENT" v-model="replycomment"></textarea>
+                                                    <button type="button" id="contact_submit" class="btn btn-dm" v-on:click="postreplybox">Post Comment</button>
+                                                </form>
+                                            </div>
+                                            <br>
+
+                                            <ul class="children">
+                                                <li>
+                                                    <div class="post_author">
+                                                        <div class="img_in">
+                                                            <a href="#"><img src="{{ asset('assets/demo_img/c2.jpg')}}" alt=""></a>
+                                                        </div>
+                                                        <a href="#" class="author-name">Salam Ahmmed</a>
+                                                        <time datetime="2017-03-24T18:18">July 27, 2014 - 11:00 PM</time>
+                                                    </div>
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum</p>
+                                                </li>
+                                            </ul>  --}}
+
                                         </li>
                                     </ul>
+                                @endforeach
+        
+                                <h3 class="post-box-title">Add Comments</h3>
 
+                                <form>
+                                    <textarea class="form-control" rows="8" id="Message" placeholder="COMMENT" v-model="maincomment"></textarea>
+                                    <button type="button" id="contact_submit" class="btn btn-dm" v-on:click="postmaincomment">Post Comment</button>
+                                </form>
 
-                                </li>
-                            	<li>
-                                	<div class="post_author">
-                                    	<div class="img_in">
-                                        	<a href="#"><img src="{{ asset('assets/demo_img/c2.jpg')}}" alt=""></a>
-                                        </div>
-                                        <a href="#" class="author-name">Salam Ahmmed</a>
-                                        <time datetime="2017-03-24T18:18">July 27, 2014 - 11:00 PM</time>
-                                    </div>
-                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum</p>
-                                    <a href="#" class="reply">Reply</a>
-                                </li>
-
-                            </ul>
-
-
-                        	<h3 class="post-box-title">Add Comments</h3>
-                            <form>
-                               <input type="text" class="form-control" id="Name" placeholder="YOUR NAME">
-                               <input type="email" class="form-control" id="Email" placeholder="EMAIL">
-                               <input type="text" class="form-control" placeholder="WEBSITE">
-                               <textarea class="form-control" rows="8" id="Message" placeholder="COMMENT"></textarea>
-                               <button type="button" id="contact_submit" class="btn btn-dm">Post Comment</button>
-                           </form>
+                            </div>
                         </div>
-                        <!-- // Comments -->
-
-
-                    </div><!-- // watch -->
-                </div><!-- // col-md-8 -->
-                <!-- // Watch -->
+                    </div>
+                </div>
 
                 <!-- Related Posts-->
                 <div class="col-md-4 col-sm-12 col-xs-12">
@@ -197,7 +211,10 @@
             </div><!-- // row -->
 		
 @endsection
+
+
 @section('footscript')
+
     <script src="{{asset('js/videojs.js')}}"></script>
     <script src='{{asset('js/videojs.endcard.js')}}'></script>
     <script>

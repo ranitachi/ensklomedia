@@ -35,6 +35,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    
     public function socialLogin($social) {
       return Socialite::driver($social)->redirect();
     }
