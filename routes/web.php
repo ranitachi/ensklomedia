@@ -79,3 +79,7 @@ Route::get('/login/{social}','Auth\LoginController@socialLogin')
 Route::get('/login/{social}/callback','Auth\LoginController@handleProviderCallback')
         ->where('social','twitter|facebook|linkedin|google|github');
 Route::get('logout', 'Auth\LoginController@logout');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
