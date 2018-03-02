@@ -57,6 +57,30 @@ header ul.top-menu li a{
 
 }
 @media screen and (max-width: 480px) {
+header
+{
+	padding-top:0px !important;
+	/* padding-bottom:0px !important; */
+}
+.container-full
+{
+	margin-right: 10px;
+    margin-left: 10px;
+}
+.log-in-form
+{
+	margin:0px !important;
+}
+.log_in_page
+{
+	margin-top:40px;
+	background:#f00;
+}
+.log-in-form #log-in-head
+{
+	background: #fff;
+	border-bottom:1px solid #f00;
+}
 #main-category{
 	padding-top: 10px;
 	padding-bottom: 10px;

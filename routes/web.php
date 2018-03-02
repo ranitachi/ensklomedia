@@ -41,7 +41,7 @@ Auth::routes();
 Route::get('/', 'DashboardController@index')->name('dashboard');
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/watch/{slug}', 'DashboardController@watch')->name('watch');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'DashboardController@index')->name('home');
 Route::get('/trending', 'DashboardController@trending')->name('trending');
 
 Route::resource('category','CategoryController');

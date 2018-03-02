@@ -35,7 +35,7 @@
       
       	<div id="log-in-head">
         	<h1>Log in</h1>
-            <div id="logo"><a href="01-home.html"><img src="{{ asset('assets/img/logo.png')}}" alt=""></a></div>
+            <div id="logo"><a href="{{route('dashboard')}}"><img src="{{ asset('assets/img/logo.png')}}" alt=""></a></div>
         </div>
         
         <div class="form-output">
@@ -74,8 +74,8 @@
 
 			  <div class="or"></div>
                 <div class="row">
-                    <a href="#" class="btn btn-lg bg-facebook col-lg-6 col-md-6 btn-icon-left"><i class="fa fa-facebook" aria-hidden="true"></i>Login with Facebook</a>
-                    <a href="{{ url('login/google')}}" class="btn btn-lg bg-google col-lg-6 col-md-6 btn-icon-left"><i class="fa fa-google" aria-hidden="true"></i>Login with Google</a>
+                    <a href="#" class="btn btn-lg bg-facebook col-lg-6 col-md-6 col-sm-6 col-xs-6 btn-icon-left"><i class="fa fa-facebook" aria-hidden="true"></i>Login with Facebook</a>
+                    <a href="{{ url('login/google')}}" class="btn btn-lg bg-google col-lg-6 col-md-6 col-sm-6 col-xs-6 btn-icon-left"><i class="fa fa-google" aria-hidden="true"></i>Login with Google</a>
                 </div>
 
 

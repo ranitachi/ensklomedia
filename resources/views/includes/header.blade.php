@@ -2,6 +2,17 @@
 <header>
         <div class="container-full">
         	<div class="row">
+                <div class="row hidden-lg hidden-md" style="background:#f00;padding:10px 0;">
+                    <div class="col-sm-4 col-xs-4" style="text-align:center">
+                        <a href="{{url('dashboard')}}"><i class="fa fa-home" style="font-size:20px;color:#fff"></i></a>
+                    </div>
+                    <div class="col-sm-4 col-xs-4" style="text-align:center">
+                        <a href="{{url('trending')}}"><i class="fa fa-star" style="font-size:20px;color:#fff"></i></a>
+                    </div>
+                    <div class="col-sm-4 col-xs-4" style="text-align:center">
+                        <a href="{{url('login')}}"><i class="fa fa-user" style="font-size:20px;color:#fff"></i></a>
+                    </div>
+                </div>
                 <div class="col-lg-2 col-md-2 col-sm-12 hidden-lg hidden-md">
 					<a id="main-category-toggler" class="hidden-md hidden-lg hidden-md"  href="#">
                     	<i class="fa fa-navicon"></i>
@@ -36,7 +47,9 @@
                             <input type="submit" value="Keywords" />
                         </form>
                     </div>
-                </div><!-- // col-md-3 -->
+                </div>
+                
+                <!-- // col-md-3 -->
                 {{--  <div class="col-lg-3 col-md-3 col-sm-5 hidden-xs hidden-sm">
                     <ul class="top-menu">
                         <li><a href="{{route('dashboard')}}">home</a></li>

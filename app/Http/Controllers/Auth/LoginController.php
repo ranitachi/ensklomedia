@@ -24,7 +24,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -76,8 +76,21 @@ class LoginController extends Controller
         
         return redirect()->action('DashboardController@index');
     }
+
+    protected function credentials(Request $request)
+    {
+        $field = filter_var($request->get($this->username()), FILTER_VALIDATE_EMAIL)
+            ? $this->username()
+            : 'username';
+
+        return [
+            $field => $request->get($this->username()),
+            'password' => $request->password,
+        ];
+    }
+    
     public function logout(Request $request) {
         Auth::logout();
-        return redirect('/login');
+        return redirect()->action('DashboardController@index');
     }
 }
