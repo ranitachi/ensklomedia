@@ -51,3 +51,4 @@ Route::get('/video/{filename}', function ($filename) {
 });
 
 Route::get('video/category/{slug}', 'VideoCategoryController@index')->name('video.bycategory');
+Route::get('comments', 'CommentsController@index')->name('comments.all');

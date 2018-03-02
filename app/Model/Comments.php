@@ -12,4 +12,9 @@ class Comments extends Model
     protected $table = 'comments';
 
     protected $fillable = ['video_id','user_id','parent_id','comment'];
+
+    public function video()
+    {
+        return $this->belongsTo('App\Model\Video', 'video_id');
+    }
 }

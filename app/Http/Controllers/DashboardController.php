@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Model\Users;
 use App\Model\Category;
 use App\Model\Video;
+use App\Model\Comments;
 use File;
+
 class DashboardController extends Controller
 {
     public function index()
@@ -51,6 +53,9 @@ class DashboardController extends Controller
         {
             $video = Video::where('slug','like','%'.$slug.'%')->get()->first();
             $id=$video->id;
+
+            $comments = Comments::where('video_id', $id)->with('video')->get();
+            
             $myfile=public_path('uploadfiles/video').'/'.$video->video_path;
             $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->video_path;
             $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
@@ -72,6 +77,7 @@ class DashboardController extends Controller
                 ->with('status',$status)
                 ->with('video',$video)
                 ->with('relatedvideo',$relatedvideo)
+                ->with('comments',$comments)
                 ->with(compact('vid', 'mime','cover'));
     }
 
