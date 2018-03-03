@@ -46,11 +46,7 @@
 					<label class="control-label">Your Email</label>
 					<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
-                    @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
+                   
 				</div>
 				<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} label-floating">
 					<label class="control-label">Your Password</label>
@@ -61,6 +57,13 @@
                         <strong>{{ $errors->first('password') }}</strong>
                     </span>
                     @endif
+                     @if ($errors->has('email'))
+                     <center>
+                        <span class="help-block">
+                            <h3><strong>{{ $errors->first('email') }}</strong></h3>
+                        </span>
+                    </center>
+                    @endif
 				</div>
                 
 				<div class="remember">
@@ -70,7 +73,7 @@
 					<a href="#" class="forgot">Lupa Password</a>
 				</div>
                 
-				<a href="01-home.html" class="btn btn-lg btn-primary full-width">Login</a>
+				<button class="btn btn-lg btn-primary full-width" type="submit">Login</button>
 
 			  <div class="or"></div>
                 <div class="row">

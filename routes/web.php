@@ -48,6 +48,10 @@ Route::resource('category','CategoryController');
 Route::get('/category-data/{id}','CategoryController@data')->name('category.data');
 Route::get('/category-form/{id}','CategoryController@show')->name('category.form');
 
+Route::resource('user','UserController')->middleware('auth');
+Route::get('/user-data','UserController@data')->name('user.data')->middleware('auth');
+Route::get('/search','UserController@index')->middleware('auth');
+
 Route::resource('upload','UploadController')->middleware('auth');
 Route::post('/videosave','UploadController@videosave')->name('upload.simpan')->middleware('auth');
 Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove')->middleware('auth');
@@ -71,6 +75,7 @@ Route::get('/video/{filename}', function ($filename) {
     return response("File doesn't exists", 404);
 });
 
+Route::get('data-video', 'VideoCategoryController@datavideo')->name('video-saya');
 Route::get('video/category/{slug}', 'VideoCategoryController@index')->name('video.bycategory');
 Route::get('comments', 'CommentsController@index')->name('comments.all');
 

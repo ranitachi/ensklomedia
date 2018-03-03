@@ -1,6 +1,6 @@
  @foreach ($category as $i => $v)
     <div class="col-md-6">
-        <div class="chanel-item">
+        <div class="chanel-item" style="border:1px solid #ddd;">
             <div class="row">
                 <div class="col-md-3">
                     <div class="chanel-thumb">

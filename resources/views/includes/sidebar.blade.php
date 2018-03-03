@@ -9,6 +9,15 @@
 					@endif
                 	<li><a href="{{URL::to('upload')}}"><i class="fa fa-star"></i>Trending</a></li>
 				</ul>
+				@if(Auth::check())
+					@if(Auth::user()->authorization_level==0)
+					<ul class="menu-sidebar" style="border-bottom:1px solid #dddddd;">
+						<li><a href="{{URL::to('user')}}"><i class="fa fa-users"></i>Pengguna</a></li>
+						<li><a href="{{URL::to('category')}}"><i class="fa fa-files-o"></i>Kategori</a></li>
+						<li><a href="{{URL::to('setting')}}"><i class="fa fa-cogs"></i>Pengaturan</a></li>	
+					</ul>
+					@endif
+				@endif
             	<ul class="menu-sidebar accordion" id="accordion1">
 					<li class="a-panel">
 						<a data-toggle="collapse" data-parent="#accordion1" href="#firstLink" style="font-size:17px;font-weight:bold;">

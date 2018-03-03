@@ -80,33 +80,16 @@
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                         </div>
 
-                        <div class="form-group label-floating is-select">
-                            <label class="control-label">Your Gender</label>
-                            <select class="selectpicker form-control">
-                                <option value="MA">Male</option>
-                                <option value="FE">Female</option>
-                            </select>
-                        </div>
-                        
-                        <div class="remember">
-                            <div class="checkbox">
-                                <label>
-                                    <input name="optionsCheckboxes" type="checkbox">
-                                    I accept the <a href="#">Terms and Conditions</a> of the website
-                                </label>
-                            </div>
-                        </div>
-                        
-                    <a href="01-home.html" class="btn btn-lg btn-primary full-width">Complete sign up !</a>
+                      
+                    <a href="#" class="btn btn-lg btn-primary full-width">Daftar</a>
 
                     <div class="or"></div>
 
-                        <a href="#" class="btn btn-lg bg-facebook full-width btn-icon-left"><i class="fa fa-facebook" aria-hidden="true"></i>sign up with Facebook</a>
-
-                        <a href="#" class="btn btn-lg bg-twitter full-width btn-icon-left"><i class="fa fa-twitter" aria-hidden="true"></i>sign up with Twitter</a>
-
-
-                        <p>you have an account? <a href="{{URL::to('login')}}"> Sign in !</a> </p>
+                       <div class="row">
+                            <a href="#" class="btn btn-lg bg-facebook col-lg-6 col-md-6 col-sm-6 col-xs-6 btn-icon-left"><i class="fa fa-facebook" aria-hidden="true"></i>Login with Facebook</a>
+                            <a href="{{ url('login/google')}}" class="btn btn-lg bg-google col-lg-6 col-md-6 col-sm-6 col-xs-6 btn-icon-left"><i class="fa fa-google" aria-hidden="true"></i>Login with Google</a>
+                        </div>
+                        <p>Sudah Memiliki Akun ? <a href="{{URL::to('login')}}"> Login !</a> </p>
                     </form>
                 </div>
       </div>
