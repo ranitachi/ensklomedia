@@ -108,3 +108,6 @@ Route::get('logout', 'Auth\LoginController@logout');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/mapping-video-to-reviewer', 'MappingVideoToReviewerController@index')->name('mapping-to-reviewer.index');
+Route::post('/save-reviewer', 'MappingVideoToReviewerController@store')->name('mapping-to-reviewer.store');
