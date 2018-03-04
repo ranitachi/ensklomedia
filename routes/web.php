@@ -52,7 +52,7 @@ Route::resource('user','UserController')->middleware('auth');
 Route::get('/user-data','UserController@data')->name('user.data')->middleware('auth');
 Route::get('/search','UserController@index')->middleware('auth');
 
-Route::resource('mapping-admin','MappingAdminController')->middleware('auth');
+Route::resource('mapping-admin','MappingAdminController')->middleware('IsSuperAdmin');
 Route::get('/mapping-admin-data','MappingAdminController@data')->name('admin.data')->middleware('auth');
 Route::get('/search-admin','MappingAdminController@index')->middleware('auth');
 

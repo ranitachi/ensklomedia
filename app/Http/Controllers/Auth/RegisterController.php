@@ -73,5 +73,6 @@ class RegisterController extends Controller
             'location' => null,
             'timezone' => null
         ]);
+        
     }
 }
