@@ -92,4 +92,29 @@ class UploadController extends Controller
         $video->hit = $video->hit + 1;
         $video->save();
     }
+
+    public function verifikasistatus($id,$status)
+    {
+        if(Auth::check())
+        {
+            if($status==1)
+            {
+                $vid=Video::find($id);
+                $vid->active_by=Auth::user()->id;
+                $vid->flag_active=date('Y-m-d H:i:s');
+                $vid->save();
+            }
+            else
+            {
+                $vid=Video::find($id);
+                $vid->active_by=NULL;
+                $vid->flag_active=NULL;
+                $vid->save();
+            }
+
+            return response()->json(['done']);
+        }
+        else
+            return response()->json(['fail']);
+    }   
 }

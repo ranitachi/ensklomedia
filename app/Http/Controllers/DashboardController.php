@@ -93,12 +93,25 @@ class DashboardController extends Controller
                 ->with(compact('vid', 'mime','cover'));
     }
 
-    public function player($filename)
+    public function player($id)
     {
+        $video = Video::where('id','=',$id)->get()->first();
+        $id=$video->id;
         $videosDir = base_path('public/uploadfiles/video');
-        $video = 'video/'.$filename;
+        $myfile=public_path('uploadfiles/video').'/'.$video->video_path;
+        $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->video_path;
+        $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
+        if(File::exists($myfile))
+        {
+                $status='v2';
+                $vv = 'uploadfiles/video/'.$video->video_path;
+                $cv = 'uploadfiles/image/'.$video->image_path;
+                $vid=url($vv);
+                $cover=url($cv);
+        }
+        // $vid='http://ensiklomedia.kemdikbud.go.id/uploads/videos/20170703-66BP5AE20160715_010744.mp4';
         $mime = "video/mp4";
-        $title = "Os Simpsons";
-        return view('pages.video.player')->with(compact('video', 'mime', 'title'));
+        $title = $video->title;
+        return view('pages.video.player')->with(compact('vid', 'mime', 'title'));
     }
 }

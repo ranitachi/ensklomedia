@@ -87,8 +87,46 @@
     				</div>
                     <ul class="top-menu pull-right">
                         <li><a href="{{URL::to('upload')}}"><i class="fa fa-upload font-like-yt"></i></a></li>
-                        <li><a href="{{URL::to('upload')}}"><i class="fa fa-th font-like-yt"></i></a></li>
-                        <li><a href="{{URL::to('upload')}}"><i class="fa fa-bell font-like-yt"></i></a></li>
+                        <li><a href="#"><i class="fa fa-th font-like-yt"></i></a></li>
+                        <li><a href="#" data-toggle="dropdown"><i class="fa fa-bell font-like-yt"></i><span class="badge badge-color3" style="position:absolute;top:0;margin-left:-10px">9</span></a>
+                                <ul class="dropdown-menu dropdown-notifications-items" style="margin-top:15px !important">
+                                    <li>
+                                        <div class="notification-info">
+                                            <a href="#"><i class="fa fa-video-camera color-1"></i>
+                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
+                                            <h5 class="time">4 hours ago</h5>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="notification-info">
+                                            <a href="#"><i class="fa fa-thumbs-up color-2"></i>
+                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
+                                            <h5 class="time">4 hours ago</h5>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="notification-info">
+                                            <a href="#"><i class="fa fa-comment color-3"></i>
+                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
+                                            <h5 class="time">4 hours ago</h5>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="notification-info">
+                                            <a href="#"><i class="fa fa-video-camera color-1"></i>
+                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
+                                            <h5 class="time">4 hours ago</h5>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="all_notifications">All Notifications</a>
+                                    </li>
+                                </ul>
+                        </li>
                     </ul>
                 </div>
             </div><!-- // row -->

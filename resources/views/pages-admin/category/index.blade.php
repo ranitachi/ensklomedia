@@ -11,7 +11,7 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-6" >
-                                <h1 class="new-video-title"><i class="fa fa-list"></i> Kategori</h1>
+                                <h1 class="new-video-title"><i class="fa fa-files-o"></i> Kategori</h1>
                             </div>
                             <div class="col-md-6" style="padding-top:20px;">
                                 
@@ -32,7 +32,7 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col-md-6">
-                                <h1 class="new-video-title"><i class="fa fa-list"></i> Form Kategori</h1>
+                                <h1 class="new-video-title"><i class="fa fa-files-o"></i> Form Kategori</h1>
                             </div>
                             <div class="col-md-6" style="padding-top:20px;">
                                 

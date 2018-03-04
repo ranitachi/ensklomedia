@@ -52,6 +52,24 @@ Route::resource('user','UserController')->middleware('auth');
 Route::get('/user-data','UserController@data')->name('user.data')->middleware('auth');
 Route::get('/search','UserController@index')->middleware('auth');
 
+Route::resource('mapping-admin','MappingAdminController')->middleware('auth');
+Route::get('/mapping-admin-data','MappingAdminController@data')->name('admin.data')->middleware('auth');
+Route::get('/search-admin','MappingAdminController@index')->middleware('auth');
+
+Route::resource('mapping-super-user','MappingSuperUserController')->middleware('auth');
+Route::get('/mapping-super-user-data','MappingSuperUserController@data')->name('super-user.data')->middleware('auth');
+Route::get('/search-super-user','MappingSuperUserController@index')->middleware('auth');
+Route::get('/video-verifikasi','MappingSuperUserController@verifikasi')->name('verifikasi.video')->middleware('auth');
+Route::get('/search-video-verifikasi','MappingSuperUserController@verifikasi')->middleware('auth');
+
+Route::resource('mapping-reviewer','MappingReviewerController')->middleware('auth');
+Route::get('/mapping-reviewer-data','MappingReviewerController@data')->name('reviewer.data')->middleware('auth');
+Route::get('/mapping-reviewer-video','MappingReviewerController@mappingvideo')->name('mapping-video')->middleware('auth');
+Route::get('/search-reviewer','MappingReviewerController@index')->middleware('auth');
+Route::get('/search-video','MappingReviewerController@mappingvideo')->middleware('auth');
+Route::get('/mapping-video','MappingReviewerController@video')->middleware('auth');
+Route::get('/mapping-delete','MappingReviewerController@videodelete')->middleware('auth');
+
 Route::resource('upload','UploadController')->middleware('auth');
 Route::post('/videosave','UploadController@videosave')->name('upload.simpan')->middleware('auth');
 Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove')->middleware('auth');
@@ -61,7 +79,9 @@ Route::post('cari','SearchController@search')->name('search.cari');
 Route::get('autocomplete','SearchController@autocomplete')->name('search.auto');
 
 Route::get('/video-add-hit/{id}','UploadController@addhit');
-Route::get('/player/{filename}', 'DashboardController@player');
+Route::get('/ubah-verifikasi/{id}/{status}','UploadController@verifikasistatus');
+// Route::get('/player/{filename}', 'DashboardController@player');
+Route::get('/modal-video/{id}', 'DashboardController@player');
 Route::get('/video/{filename}', function ($filename) {
     // Pasta dos videos.
     $videosDir = base_path('public/uploadfiles/video');
