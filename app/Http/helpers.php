@@ -20,8 +20,8 @@ function getDuration($full_video_path)
 }
 function translate($string,$from,$to)
 {
-    $en=array('months','years','dates','ago');
-    $id=array('bulan','tahun','tanggal','lalu');
+    $en=array('months','years','dates','ago','minutes','hours','hour','seconds','second','minute');
+    $id=array('bulan','tahun','tanggal','lalu','menit','jam','jam','detik','detik','menit');
     $res='';
     $cek=array_search($string, ${$from});
     // if($cek)
@@ -46,5 +46,33 @@ function text_translate($string,$from,$to)
             $str.=translate(trim($v),$from,$to).' ';
     }
     return ucwords($str);
+}
+
+function leveluser($level)
+{
+    switch($level)
+    {
+        case 0 :
+            $lv='Super Admin';
+            break;
+        case 1 :
+            $lv='Admin';
+            break;
+        case 2 :
+            $lv='Super User';
+            break;
+        case 3 :
+            $lv='Reviewer';
+            break;
+        case 4 :
+            $lv='Contributor';
+            break;
+    }
+    return $lv;
+}
+function level()
+{
+    $lv=array('Super Admin','Admin','Super User','Reviewer','Contributor');
+    return $lv;
 }
 ?>

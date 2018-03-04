@@ -944,6 +944,14 @@ header ul.account-menu li  .color-4{
 	padding-left: 3px !important;
 	padding-right: 3px !important;
 }
+.padding-top-5
+{
+	padding-top: 5px !important;
+}
+.padding-top-10
+{
+	padding-top: 10px !important;
+}
 h1.new-video-title{
 	font-family: 'Roboto', sans-serif;
 	padding-top: 30px;
@@ -2588,3 +2596,4 @@ font-style: italic;
 #accordion1 li.a-panel{
     margin-bottom: 0px;
 }
+

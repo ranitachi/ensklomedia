@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 use App\Model\Category;
 use App\Model\Video;
 use File;
+use Auth;
 class UploadController extends Controller
 {
     public function index()
@@ -38,8 +39,9 @@ class UploadController extends Controller
             $type = File::extension($filepath);
             $sv=new Video;
             $sv->id=$id;
-            $sv->user_id=1;
+            $sv->user_id=Auth::user()->id;
             $sv->category_id=0;
+            $sv->approved_by=0;
             $sv->video_path=$name;
             $sv->save();
         }
@@ -69,11 +71,11 @@ class UploadController extends Controller
 
         $id=$d['id'];
         $edit=Video::find($id);
-        $edit->category_id=$d['category_id'];
-        $edit->title=$d['title'];
+        $edit->category_id=$request->input('category_id');
+        $edit->title=$request->input('title');
         //$edit->filetype=$type;
-        $edit->desc=$d['description'];
-        $edit->tags=$d['tags'];
+        $edit->desc=$request->input('description');
+        $edit->tags=$request->input('tags');
         $edit->image_path=$name;
         //$edit->statusaktif=1;
         $edit->slug=str_slug($d['title'], '-');
@@ -90,4 +92,29 @@ class UploadController extends Controller
         $video->hit = $video->hit + 1;
         $video->save();
     }
+
+    public function verifikasistatus($id,$status)
+    {
+        if(Auth::check())
+        {
+            if($status==1)
+            {
+                $vid=Video::find($id);
+                $vid->active_by=Auth::user()->id;
+                $vid->flag_active=date('Y-m-d H:i:s');
+                $vid->save();
+            }
+            else
+            {
+                $vid=Video::find($id);
+                $vid->active_by=NULL;
+                $vid->flag_active=NULL;
+                $vid->save();
+            }
+
+            return response()->json(['done']);
+        }
+        else
+            return response()->json(['fail']);
+    }   
 }

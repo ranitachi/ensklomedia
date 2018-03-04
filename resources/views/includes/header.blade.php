@@ -2,6 +2,17 @@
 <header>
         <div class="container-full">
         	<div class="row">
+                <div class="row hidden-lg hidden-md" style="background:#f00;padding:10px 0;">
+                    <div class="col-sm-4 col-xs-4" style="text-align:center">
+                        <a href="{{url('dashboard')}}"><i class="fa fa-home" style="font-size:20px;color:#fff"></i></a>
+                    </div>
+                    <div class="col-sm-4 col-xs-4" style="text-align:center">
+                        <a href="{{url('trending')}}"><i class="fa fa-star" style="font-size:20px;color:#fff"></i></a>
+                    </div>
+                    <div class="col-sm-4 col-xs-4" style="text-align:center">
+                        <a href="{{url('login')}}"><i class="fa fa-user" style="font-size:20px;color:#fff"></i></a>
+                    </div>
+                </div>
                 <div class="col-lg-2 col-md-2 col-sm-12 hidden-lg hidden-md">
 					<a id="main-category-toggler" class="hidden-md hidden-lg hidden-md"  href="#">
                     	<i class="fa fa-navicon"></i>
@@ -36,7 +47,9 @@
                             <input type="submit" value="Keywords" />
                         </form>
                     </div>
-                </div><!-- // col-md-3 -->
+                </div>
+                
+                <!-- // col-md-3 -->
                 {{--  <div class="col-lg-3 col-md-3 col-sm-5 hidden-xs hidden-sm">
                     <ul class="top-menu">
                         <li><a href="{{route('dashboard')}}">home</a></li>
@@ -74,8 +87,46 @@
     				</div>
                     <ul class="top-menu pull-right">
                         <li><a href="{{URL::to('upload')}}"><i class="fa fa-upload font-like-yt"></i></a></li>
-                        <li><a href="{{URL::to('upload')}}"><i class="fa fa-th font-like-yt"></i></a></li>
-                        <li><a href="{{URL::to('upload')}}"><i class="fa fa-bell font-like-yt"></i></a></li>
+                        <li><a href="#"><i class="fa fa-th font-like-yt"></i></a></li>
+                        <li><a href="#" data-toggle="dropdown"><i class="fa fa-bell font-like-yt"></i><span class="badge badge-color3" style="position:absolute;top:0;margin-left:-10px">9</span></a>
+                                <ul class="dropdown-menu dropdown-notifications-items" style="margin-top:15px !important">
+                                    <li>
+                                        <div class="notification-info">
+                                            <a href="#"><i class="fa fa-video-camera color-1"></i>
+                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
+                                            <h5 class="time">4 hours ago</h5>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="notification-info">
+                                            <a href="#"><i class="fa fa-thumbs-up color-2"></i>
+                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
+                                            <h5 class="time">4 hours ago</h5>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="notification-info">
+                                            <a href="#"><i class="fa fa-comment color-3"></i>
+                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
+                                            <h5 class="time">4 hours ago</h5>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="notification-info">
+                                            <a href="#"><i class="fa fa-video-camera color-1"></i>
+                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
+                                            <h5 class="time">4 hours ago</h5>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="all_notifications">All Notifications</a>
+                                    </li>
+                                </ul>
+                        </li>
                     </ul>
                 </div>
             </div><!-- // row -->
