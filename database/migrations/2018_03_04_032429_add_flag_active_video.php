@@ -16,7 +16,7 @@ class AddFlagActiveVideo extends Migration
         Schema::table('video', function (Blueprint $table) {
             $table->integer('deactivated_by')->after('deactivated_at')->nullable();
             $table->integer('active_by')->after('deactivated_by')->nullable();
-            $table->datetime('flag_active')->default(0)->after('active_by')->nullable();
+            $table->datetime('flag_active')->after('active_by')->nullable();
         });
     }
 
