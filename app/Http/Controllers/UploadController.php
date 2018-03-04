@@ -41,7 +41,7 @@ class UploadController extends Controller
             $sv->id=$id;
             $sv->user_id=Auth::user()->id;
             $sv->category_id=0;
-            $sv->approved_by=0;
+            $sv->approved_by=NULL;
             $sv->video_path=$name;
             $sv->save();
         }

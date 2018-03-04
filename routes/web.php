@@ -52,7 +52,7 @@ Route::resource('user','UserController')->middleware('auth');
 Route::get('/user-data','UserController@data')->name('user.data')->middleware('auth');
 Route::get('/search','UserController@index')->middleware('auth');
 
-Route::resource('mapping-admin','MappingAdminController')->middleware('auth');
+Route::resource('mapping-admin','MappingAdminController')->middleware('IsSuperAdmin');
 Route::get('/mapping-admin-data','MappingAdminController@data')->name('admin.data')->middleware('auth');
 Route::get('/search-admin','MappingAdminController@index')->middleware('auth');
 
@@ -108,3 +108,6 @@ Route::get('logout', 'Auth\LoginController@logout');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/mapping-video-to-reviewer', 'MappingVideoToReviewerController@index')->name('mapping-to-reviewer.index');
+Route::post('/save-reviewer', 'MappingVideoToReviewerController@store')->name('mapping-to-reviewer.store');

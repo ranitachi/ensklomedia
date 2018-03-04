@@ -21,6 +21,7 @@ class Video extends Model
     {
         return $query->where('category_id', $id);
     }
+
     public function scopeByUser($query, $user_id)
     {
         return $query->where('user_id', $user_id);
@@ -29,5 +30,20 @@ class Video extends Model
     public function user()
     {
         return $this->belongsTo('App\Model\Users', 'user_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Model\Category', 'category_id');
+    }
+
+    public function activated()
+    {
+        return $this->belongsTo('App\Model\Users', 'active_by');
+    }
+    
+    public function reviewer()
+    {
+        return $this->belongsTo('App\Model\Users', 'reviewer_id');
     }
 }
