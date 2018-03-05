@@ -114,14 +114,14 @@ class MappingReviewerController extends Controller
 
 
         $video=Video::where('active_by','=',1)
-                ->whereRaw('approved_by is null or apprived_by=0')
+                ->whereRaw('approved_by is null or approved_by=0')
                 ->orderBy('created_at')->paginate(10);
         
         if(isset($request->search))
         {
             $video = Video::where('active_by','=',1)
                         ->where('title','LIKE','%'.$request->search.'%')
-                        ->whereRaw('approved_by is null or apprived_by=0')
+                        ->whereRaw('approved_by is null or approved_by=0')
                         ->orderBy('created_at')->paginate(10);
         }
         

@@ -84,11 +84,19 @@
                             <li><a href="{{url('login')}}"><i class="fa fa-sign-in color-4"></i>Login</a></li>
                         @endif
                         </ul>
-    				</div>
+                    </div>
+                    
                     <ul class="top-menu pull-right">
                         <li><a href="{{URL::to('upload')}}"><i class="fa fa-upload font-like-yt"></i></a></li>
                         <li><a href="#"><i class="fa fa-th font-like-yt"></i></a></li>
-                        <li><a href="#" data-toggle="dropdown"><i class="fa fa-bell font-like-yt"></i><span class="badge badge-color3" style="position:absolute;top:0;margin-left:-10px">9</span></a>
+                        @php
+                            $notif='';
+                            if(Auth::check())
+                            {
+                                $notif='<span class="badge badge-color3" style="position:absolute;top:0;margin-left:-10px">9</span>';
+                            
+                        @endphp
+                            <li><a href="#" data-toggle="dropdown"><i class="fa fa-bell font-like-yt"></i>{!!$notif!!}</a>
                                 <ul class="dropdown-menu dropdown-notifications-items" style="margin-top:15px !important">
                                     <li>
                                         <div class="notification-info">
@@ -127,6 +135,9 @@
                                     </li>
                                 </ul>
                         </li>
+                        @php
+                        }
+                        @endphp
                     </ul>
                 </div>
             </div><!-- // row -->

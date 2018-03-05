@@ -21,7 +21,7 @@
             @endphp
             @foreach ($video as $k => $v)
                 @php
-                    $name=$email=$profession=$address=$authorization_level='';
+                    $name=$email=$profession=$address=$authorization_level=$institute='';
                     if(isset($user[$v->user_id]))
                     {
                         $us=$user[$v->user_id];
@@ -29,15 +29,14 @@
                         $email=(is_null($us->email) ? 'n/a' : $us->email);
                         $profession=(is_null($us->profession) ? 'n/a' : $us->profession);
                         $address=(is_null($us->address) ? 'n/a' : $us->address);
+                        $institute=(is_null($us->institute) ? 'n/a' : $us->institute);
                         $authorization_level=(is_null($us->authorization_level) ? 'n/a' : $us->authorization_level);
                     }
                 @endphp
                 <tr>
                     <td class="text-center">{{$no}}</td>
+                    <td>{{$v->title}}</td>
                     <td>{{is_null($name) ? 'n/a' : $name}}</td>
-                    <td>{{$email}}</td>
-                    <td>{{$profession}}</td>
-                    <td>{{$address}}</td>
                     <td>{{$institute}}</td>
                     <td class="text-center"><span class="label label-success">{{leveluser($authorization_level)}}</span></td>
                     <td class="text-center">
