@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}" />
         <!-- Responsive CSS -->
         <link rel="stylesheet" href="{{ asset('assets/css/responsive.css')}}" />
+        <link rel="stylesheet" href="{{ asset('css/chosen.css')}}" />
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

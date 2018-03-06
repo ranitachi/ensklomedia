@@ -1,7 +1,7 @@
 @extends('layouts.master-admin')
 
 @section('title')
-    <title>Mapping Video - Ensiklomedia</title>
+    <title>Mapping Admin - Ensiklomedia</title>
 @endsection
 
 @section('content')
@@ -9,14 +9,20 @@
             	<div class="row">
                     
                     <div class="col-md-12">
-                        <div class="row">
+                        @if (Session::has('message'))
+                            <div class="alert alert-success">
+                                <strong>Sukses!</strong> 
+                                {{ Session::get('message') }}
+                            </div>
+                        @endif
+                        {{--  <div class="row">
                             <div class="col-md-6" >
-                                <h1 class="new-video-title"><i class="fa fa-video-camera"></i> Data Mapping Video</h1>
+                                <h1 class="new-video-title"><i class="fa fa-users"></i> Data Review Video</h1>
                             </div>
                             <div class="col-md-6" style="padding-top:20px;">
                                 
                             </div>
-                        </div>
+                        </div>  --}}
                         <div class="row">
                             <div class="col-md-8">
                                 &nbsp;
@@ -36,19 +42,17 @@
                             </div>
                         </div>
                         <div class="row" style="margin-top:10px;">
-                            <div class="col-md-12" >
-                                <div id="data">
-                                    @include('pages-admin.setting.mapping-reviewer.video')
-                                </div><!-- // row -->
-                            </div>
+                                <div class="col-md-12">
+                                    <h1 class="new-video-title" style="">
+                                        <span data-letters="R"> Review Video</span></h1>
+                                </div>
+                            <div id="data">
+                                    @include('pages-admin.setting.review-video.data')
+                            </div><!-- // row -->
+                            
                         </div>
 
 
-                        <!-- Loading More Videos -->
-                        <div id="loading-more">
-                            {{--  <i class="fa fa-refresh faa-spin animated"></i> <span>Loading more</span>  --}}
-                        </div>
-                        <!-- // Loading More Videos -->
 
                     </div>
                     
@@ -58,13 +62,14 @@
 		
 @endsection
 @section('footscript')
-    <script type="text/javascript">
+
+    <script>
         $(document).ready(function(){
            $('#user-search').on('keyup',function(){
             var value=$(this).val();
                 $.ajax({
                     type : 'get',
-                    url : APP_URL+'/search-video',
+                    url : APP_URL+'/search-admin',
                     data:{'search':value},
                     success:function(data){
                         $('div#data').html(data);
@@ -79,23 +84,23 @@
             $('#modal_default').modal('show');
              $('button#ok').one('click',function(){
                 $.ajax({
-                    url: APP_URL+'/mapping-video-delete/'+id,
+                    url: APP_URL+'/review/'+id,
                     type : 'DELETE',
                     dataType: 'json',
                     cache: false,
                     headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                     data: {"_token": "{{ csrf_token() }}"}
                 }).done(function(data){
-                    var txt = "Data Reviewer Berhasil Di Hapus";
+                    var txt = "Data Pengguna Berhasil Di Hapus";
                     $('#modal_default').modal('hide');
                     $('#content-body-ok').html(txt);
                     $('#modal_ok').modal('show');
                     //loaddata(-1);
                     $('#tombol-ok').click(function(){
-                        location.href=APP_URL+'/mapping-reviewer-video';
+                        location.href=APP_URL+'/review';
                     })
                 }).fail(function(){
-                    var txt = " Data Mapping Video Gagal Di Hapus";
+                    var txt = " Data Pengguna Gagal Di Hapus";
                     $('#modal_default').modal('hide');
                     $('#content-body-ok').html(txt);
                     $('#modal_ok').modal('show');
@@ -103,11 +108,6 @@
             });
         }
 
-     
-        function mapping(id)
-        {
-            $('#modal-mapping').modal('show');
-        }
         $('body').on('click', '.pagination a', function(e) {
                 e.preventDefault();
                 //$('#load a').css('color', '#dfecf6');
@@ -122,7 +122,7 @@
                 }).done(function (data) {
                     $('div#data').html(data);
                 }).fail(function () {
-                    alert('Halaman Data Reviewer Tidak Dapat Di Tampilkan');
+                    alert('Halaman Data Review Video Tidak Dapat Di Tampilkan');
             });
         }
     </script>

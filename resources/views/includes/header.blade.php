@@ -96,7 +96,7 @@
                                 $notif='<span class="badge badge-color3" style="position:absolute;top:0;margin-left:-10px">9</span>';
                             
                         @endphp
-                            <li><a href="#" data-toggle="dropdown"><i class="fa fa-bell font-like-yt"></i>{!!$notif!!}</a>
+                           <!-- <li><a href="#" data-toggle="dropdown"><i class="fa fa-bell font-like-yt"></i>{!!$notif!!}</a>
                                 <ul class="dropdown-menu dropdown-notifications-items" style="margin-top:15px !important">
                                     <li>
                                         <div class="notification-info">
@@ -134,7 +134,7 @@
                                         <a href="#" class="all_notifications">All Notifications</a>
                                     </li>
                                 </ul>
-                        </li>
+                        </li>-->
                         @php
                         }
                         @endphp

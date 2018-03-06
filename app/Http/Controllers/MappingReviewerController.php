@@ -91,6 +91,7 @@ class MappingReviewerController extends Controller
         $urll = $request->fullUrl();
         $ur=explode('?',$urll);
         $hal=0;
+        $perhal=10;
         if(isset($ur[1]))
         {
             $pg=explode('=',$ur[1]);
@@ -98,9 +99,9 @@ class MappingReviewerController extends Controller
             if($pg[0]=='page')
             {
                 if(isset($pg[1]))
-                    $hal=($pg[1]*10)-10;
+                    $hal=($pg[1]*$perhal)-$perhal;
                 else
-                    $hal=(0*10);
+                    $hal=(0*$perhal);
             }
         }
         $us = Users::join('profile','profile.user_id','=','users.id')
@@ -113,16 +114,16 @@ class MappingReviewerController extends Controller
         }
 
 
-        $video=Video::where('active_by','=',1)
-                ->whereRaw('approved_by is null or approved_by=0')
-                ->orderBy('created_at')->paginate(10);
+        $video=Video::where('active_by','!=',0)
+                ->whereRaw('(approved_by is null or approved_by=0)')
+                ->orderBy('created_at')->paginate($perhal);
         
         if(isset($request->search))
         {
-            $video = Video::where('active_by','=',1)
+            $video = Video::where('active_by','!=',0)
                         ->where('title','LIKE','%'.$request->search.'%')
-                        ->whereRaw('approved_by is null or approved_by=0')
-                        ->orderBy('created_at')->paginate(10);
+                        ->whereRaw('(approved_by is null or approved_by=0)')
+                        ->orderBy('created_at')->paginate($perhal);
         }
         
 

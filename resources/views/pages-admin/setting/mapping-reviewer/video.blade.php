@@ -6,6 +6,8 @@
             <th>Kontributor</th>
             <th>Institusi</th>
             <th>Tanggal Upload</th>
+            <th>Tanggal Mapping</th>
+            <th>Reviewer</th>
             <th style="width:80px;">Aksi</th>
         </tr>             
     </thead>
@@ -32,13 +34,22 @@
                         $institute=(is_null($us->institute) ? 'n/a' : $us->institute);
                         $authorization_level=(is_null($us->authorization_level) ? 'n/a' : $us->authorization_level);
                     }
+
+                    if($v->reviewer_id=='')
+                    {
+                        $tunjuk='<a href="javascript:mapping(\''.$v->id.'\')"><span class="label label-primary"><i class="fa fa-hand-o-right"></i>&nbsp;Tunjuk Reviewer</span></a>';
+                    }
+                    else
+                        $tunjuk='';
                 @endphp
                 <tr>
                     <td class="text-center">{{$no}}</td>
                     <td>{{$v->title}}</td>
-                    <td>{{is_null($name) ? 'n/a' : $name}}</td>
+                    <td>{{($name=='') ? 'n/a' : $name}}</td>
                     <td>{{$institute}}</td>
-                    <td class="text-center"><span class="label label-success">{{leveluser($authorization_level)}}</span></td>
+                    <td class="text-center"><span class="label label-info"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{date('d-m-Y H:i:s',strtotime($v->created_at))}}</span></td>
+                    <td class="text-center"><span class="label label-success"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{date('d-m-Y H:i:s',strtotime($v->created_at))}}</span></td>
+                    <td class="text-center">{!!$tunjuk!!}</td>
                     <td class="text-center">
                         <a href="{{url('user',$v->user_id)}}" class="btn btn-xs btn-primary"><i class="fa fa-edit text-white"></i></a>
                         <a href="javascript:hapus('{{$v->user_id}}')" class="btn btn-xs btn-danger"><i class="fa fa-trash text-white"></i></a>

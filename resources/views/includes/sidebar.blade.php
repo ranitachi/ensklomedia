@@ -7,7 +7,7 @@
 					@if(Auth::check())
 						<li><a href="{{URL::to('data-video')}}"><i class="fa fa-youtube-play"></i>Video Saya</a></li>	
 					@endif
-                	<li><a href="{{URL::to('upload')}}"><i class="fa fa-star"></i>Trending</a></li>
+                	<li><a href="{{URL::to('trending')}}"><i class="fa fa-star"></i>Video Favorit</a></li>
 				</ul>
 				@if(Auth::check())
 					@if(Auth::user()->authorization_level==0)
@@ -62,9 +62,9 @@
 								</div>
 							</li>
 							<ul id="linkawal" class="collapse" style="margin-left:10px !important;padding-top:10 !important;">
-								<li class="color-1"><a href="{{url('mapping-super-user')}}" style="padding:0px !important"><i class="fa fa-caret-right"></i>Mapping Super User</a>
-								<li class="color-1"><a href="{{url('mapping-reviewer')}}" style="padding:0px !important"><i class="fa fa-caret-right"></i>Mapping Reviewer</a>
-								<li class="color-1"><a href="{{url('mapping-reviewer-video')}}" style="padding:0px !important"><i class="fa fa-caret-right"></i>Mapping Video ke Reviewer</a>
+								<li class="color-1"><a href="{{url('mapping-super-user')}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>Mapping Super User</a>
+								<li class="color-1"><a href="{{url('mapping-reviewer')}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>Mapping Reviewer</a>
+								<li class="color-1"><a href="{{url('mapping-video-to-reviewer')}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>Mapping Video ke Reviewer</a>
 							</ul>
 						</ul>
 					</ul>
@@ -85,7 +85,29 @@
 								</div>
 							</li>
 							<ul id="linkawal" class="collapse" style="margin-left:10px !important;padding-top:10 !important;">
-								<li class="color-1"><a href="{{url('video-verifikasi')}}" style="padding:0px !important"><i class="fa fa-caret-right"></i>Verifikasi Video</a>
+								<li class="color-1"><a href="{{url('video-verifikasi')}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>Verifikasi Video</a>
+								
+							</ul>
+						</ul>
+					</ul>
+					@elseif(Auth::user()->authorization_level==3)
+					<ul class="menu-sidebar" style="border-bottom:1px solid #dddddd;">
+						<ul class="accordion" id="accordion-setting">
+							<li class="a-panel">
+								<div class="row">
+									<a data-toggle="collapse" data-parent="#accordion-setting" href="#linkawal">
+										<div class="col-lg-9 col-md-9">
+											<i class="fa fa-cogs"></i>Pengaturan
+										</div>
+										<div class="col-lg-1 col-md-1">
+											<i class="fa fa-toggle-down"></i>
+										</div>
+										
+									</a>
+								</div>
+							</li>
+							<ul id="linkawal" class="collapse" style="margin-left:10px !important;padding-top:10 !important;">
+								<li class="color-1"><a href="{{url('review-video')}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>Review Video</a>
 								
 							</ul>
 						</ul>
