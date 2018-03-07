@@ -62,6 +62,7 @@ Route::get('/search-super-user','MappingSuperUserController@index')->middleware(
 Route::get('/video-verifikasi','MappingSuperUserController@verifikasi')->name('verifikasi.video')->middleware('auth');
 Route::get('/search-video-verifikasi','MappingSuperUserController@verifikasi')->middleware('auth');
 
+
 Route::resource('mapping-reviewer','MappingReviewerController')->middleware('auth');
 Route::get('/mapping-reviewer-data','MappingReviewerController@data')->name('reviewer.data')->middleware('auth');
 Route::get('/mapping-reviewer-video','MappingReviewerController@mappingvideo')->name('mapping-video')->middleware('auth');
@@ -69,6 +70,7 @@ Route::get('/search-reviewer','MappingReviewerController@index')->middleware('au
 Route::get('/search-video','MappingReviewerController@mappingvideo')->middleware('auth');
 Route::get('/mapping-video','MappingReviewerController@video')->middleware('auth');
 Route::get('/mapping-delete','MappingReviewerController@videodelete')->middleware('auth');
+Route::get('/search-video-reviewer','MappingVideoToReviewerController@index')->name('search.video')->middleware('auth');
 
 Route::resource('upload','UploadController')->middleware('auth');
 Route::post('/videosave','UploadController@videosave')->name('upload.simpan')->middleware('auth');
@@ -109,5 +111,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/mapping-video-to-reviewer', 'MappingVideoToReviewerController@index')->name('mapping-to-reviewer.index');
-Route::post('/save-reviewer', 'MappingVideoToReviewerController@store')->name('mapping-to-reviewer.store');
+Route::get('/mapping-video-to-reviewer', 'MappingVideoToReviewerController@index')->name('mapping-to-reviewer.index')->middleware('auth');
+Route::post('/save-reviewer', 'MappingVideoToReviewerController@store')->name('mapping-to-reviewer.store')->middleware('auth');
+
+Route::get('/review-video', 'ReviewVideoController@index')->name('review.video')->middleware('auth');
+Route::resource('review', 'ReviewVideoController')->middleware('auth');
+Route::post('/edit-video-reviewer/{id}', 'ReviewVideoController@editvideo')->name('review.edit-video')->middleware('auth');
+Route::post('/add-endcards-reviewer/{id}', 'ReviewVideoController@endcards')->name('review.endcards')->middleware('auth');
+Route::post('/upload-review/{id}', 'ReviewVideoController@uploadreview')->name('upload.review')->middleware('auth');

@@ -26,62 +26,79 @@
     </div>
 
       @include('includes.scripts')
-      @yield('footscript')
+      @include('includes.modal')
 	</body>
-</html>
-<input type="hidden" id="hide-menu" value="0">
-<script type="text/javascript" src="{{asset('js/typeahead.js')}}"></script>
-<script type="text/javascript">
-  var APP_URL = {!! json_encode(url('/')) !!}
-  $.ajaxSetup({
-			headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-  });
-  
-  
-    var path = "{{ route('search.auto') }}";
-    $(document).ready(function(){
-      $('#icon-menu').click(function(){
-          var hidemenu=$('#hide-menu').val();
-          if(hidemenu==0)
-          {
-            $('#hide-menu').val(1);
-            $('#sidebar-menu').hide();
-            $('#all-output').removeClass();
-            $('#all-output').addClass("col-lg-12 col-md-12");
-          }
-          else if(hidemenu==1)
-          {
-            $('#hide-menu').val(0);
-            $('#sidebar-menu').show();
-            $('#all-output').removeClass();
-            $('#all-output').addClass("col-lg-10 col-md-10");
-          }
-      });
-      var wdth_search_form=$('.search-form').width();
-      // alert(wdth_search_form);
-      $('input#search-form').typeahead({
-          name : 'name',
-          display : 'name',
-          source:  function (query, process) {
-          return $.get(path, { query: query }, function (data) {
-                  return process(data);
-              });
-          },
-          updater: function(item) { 
-            //alert(item.id)
-            $('#video_id').val(item.id);
-            $('#search-form').val(item.name);
-            return item.name;
-          }
-      });
-     
+  <input type="hidden" id="hide-menu" value="0">
+  <script type="text/javascript" src="{{asset('js/typeahead.js')}}"></script>
+  <script type="text/javascript">
+    var APP_URL = {!! json_encode(url('/')) !!}
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
-</script>
-<style>
-  ul.typeahead
-  {
-    width:100% !important;
-  }
-</style>
+    
+    
+    $(document).ready(function(){
+      $(".chosen-select").chosen();
+      var path = "{{ route('search.auto') }}";
+        $('#icon-menu').click(function(){
+            var hidemenu=$('#hide-menu').val();
+            if(hidemenu==0)
+            {
+              $('#hide-menu').val(1);
+              $('#sidebar-menu').hide();
+              $('#all-output').removeClass();
+              $('#all-output').addClass("col-lg-12 col-md-12");
+            }
+            else if(hidemenu==1)
+            {
+              $('#hide-menu').val(0);
+              $('#sidebar-menu').show();
+              $('#all-output').removeClass();
+              $('#all-output').addClass("col-lg-10 col-md-10");
+            }
+        });
+        var wdth_search_form=$('.search-form').width();
+        // alert(wdth_search_form);
+        $('input#search-form').typeahead({
+            name : 'name',
+            display : 'name',
+            source:  function (query, process) {
+            return $.get(path, { query: query }, function (data) {
+                    return process(data);
+                });
+            },
+            updater: function(item) { 
+              //alert(item.id)
+              $('#video_id').val(item.id);
+              $('#search-form').val(item.name);
+              return item.name;
+            }
+        });
+        $('input#search-reviewer').typeahead({
+            name : 'name',
+            display : 'name',
+            source:  function (query, process) {
+            return $.get(path, { query: query }, function (data) {
+                    return process(data);
+                });
+            },
+            updater: function(item) { 
+              //alert(item.id)
+              $('#reviewer_id').val(item.id);
+              $('#search-reviewer').val(item.name);
+              return item.name;
+            }
+        });
+       
+      });
+  </script>
+  <style>
+    ul.typeahead
+    {
+      width:100% !important;
+    }
+  </style>
+  @yield('footscript')
+</html>

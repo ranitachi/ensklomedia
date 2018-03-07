@@ -56,3 +56,35 @@
 		</div>
 	</div>
 </div>
+<div id="modal-mapping" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Mapping Video</h5>
+			</div>
+
+			<div class="modal-body">
+				<p id="content-body-mapping">
+					<div class="row">
+						 <div class="col-lg-3 col-md-3 col-sm-3">&nbsp;</div>
+						<div class="col-lg-6 col-md-6 col-sm-6">
+								 <div class="search-form">
+									<form id="search" action="#" method="post">
+										<input type="text" placeholder="Cari Nama atau Email Reviewer" name="reviewer-search" id="search-reviewer" autocomplete="off"/>
+										<input type="hidden" id="reviewer_id" value="" name="reviewer_id">
+									</form>
+								</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-3">&nbsp;</div>
+					</div>
+				</p>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+				<button type="button" class="btn btn-success" id="ok-mapping"><i class="fa fa-save"></i>&nbsp;OK</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -9,16 +9,36 @@ use App\Model\Users;
 
 class MappingVideoToReviewerController extends Controller
 {
-    public function index() 
+    public function index(Request $request) 
     {
-        $getvideo = Video::where('flag_active', '!=', NULL)->with('category')->with('user')->get();
+        // $getvideo = Video::whereRaw('flag_active is not NULL or flag_active != "0000-00-00 00:00:00"')->with('category')->with('user')->get();
+        $hal=10;
+        $getvideo = Video::whereRaw('active_by is not NULL or active_by != 0')->with('category')->with('user')->paginate($hal);
         $getreviewer = Users::where('authorization_level', 3)->get();
+
+        if(isset($request->search))
+        {
+           $getvideo = Video::where('title','LIKE','%'.$request->search.'%')
+                        ->whereRaw('(active_by is not NULL or active_by != 0)')
+                        ->with('category')->with('user')->paginate($hal);
+        }
+       
+        if ($request->ajax()) {
+             return view('pages-admin.mapping-video.data')
+               ->with('reviewers', $getreviewer)
+               ->with('hal',$hal)
+                ->with('videos', $getvideo);
+        }
 
         return view('pages-admin.mapping-video.index')
             ->with('reviewers', $getreviewer)
+            ->with('hal',$hal)
             ->with('videos', $getvideo);
     }
-
+    public function searchvideoreviewer()
+    {
+        
+    }
     public function store(Request $request)
     {
         $set = Video::find($request->video_id);
