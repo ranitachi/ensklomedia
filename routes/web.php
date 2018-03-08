@@ -100,7 +100,7 @@ Route::get('/video/{filename}', function ($filename) {
 Route::get('data-video', 'VideoCategoryController@datavideo')->name('video-saya');
 Route::get('video/category/{slug}', 'VideoCategoryController@index')->name('video.bycategory');
 Route::get('comments', 'CommentsController@index')->name('comments.all');
-Route::get('comments/store', 'CommentsController@store')->name('comments.store');
+Route::post('comments/store', 'CommentsController@store')->name('comments.store');
 
 Route::get('/login/{social}','Auth\LoginController@socialLogin')
         ->where('social','twitter|facebook|linkedin|google|github');

@@ -134,7 +134,7 @@
                                                     <a href="#"><img src="{{ asset('assets/demo_img/c1.jpg')}}" alt=""></a>
                                                 </div>
                                                 <a href="#" class="author-name">
-                                                    {{ $comment->video->user->profile->name }}
+                                                    {{ $comment->user->profile->name }}
                                                 </a>
                                                 <time datetime="2017-03-24T18:18">July 27, 2014 - 11:00 PM</time>
                                             </div>
@@ -168,14 +168,18 @@
                                     </ul>
                                 @endforeach
         
-                                <h3 class="post-box-title">Add Comments</h3>
+                                @if (Auth::check())
+                                    <h3 class="post-box-title">Add Comments</h3>
 
-                                <form action="{{ route('comments.store') }}" method="post">
-                                    <input type="hidden" name="video_id" value="bla">
-                                    <input type="hidden" name="slug" value="{{ $slug }}">
-                                    <textarea class="form-control" rows="8" id="Message" placeholder="COMMENT" v-model="maincomment" name="comment"></textarea>
-                                    <button type="button" id="contact_submit" class="btn btn-dm" v-on:click="postmaincomment">Post Comment</button>
-                                </form>
+                                    <form action="{{ route('comments.store') }}" method="post">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="slug" value="{{ $slug }}">
+                                        <textarea class="form-control" rows="8" id="Message" placeholder="COMMENT" v-model="maincomment" name="comment"></textarea>
+                                        <button type="submit" id="contact_submit" class="btn btn-dm" v-on:click="postmaincomment">Post Comment</button>
+                                    </form>
+                                @else
+                                    <a class="btn btn-dm" href="{{ route('login') }}">Please login first to post a comment</button>
+                                @endif
 
                             </div>
                         </div>
