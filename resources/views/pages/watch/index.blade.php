@@ -170,8 +170,10 @@
         
                                 <h3 class="post-box-title">Add Comments</h3>
 
-                                <form>
-                                    <textarea class="form-control" rows="8" id="Message" placeholder="COMMENT" v-model="maincomment"></textarea>
+                                <form action="{{ route('comments.store') }}" method="post">
+                                    <input type="hidden" name="video_id" value="bla">
+                                    <input type="hidden" name="slug" value="{{ $slug }}">
+                                    <textarea class="form-control" rows="8" id="Message" placeholder="COMMENT" v-model="maincomment" name="comment"></textarea>
                                     <button type="button" id="contact_submit" class="btn btn-dm" v-on:click="postmaincomment">Post Comment</button>
                                 </form>
 

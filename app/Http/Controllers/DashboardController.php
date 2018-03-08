@@ -88,6 +88,7 @@ class DashboardController extends Controller
                 ->with('id',$id)
                 ->with('status',$status)
                 ->with('endcards',$endcards)
+                ->with('slug',$slug)
                 ->with('video',$video)
                 ->with('relatedvideo',$relatedvideo)
                 ->with('comments',$comments)
