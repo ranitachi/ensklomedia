@@ -52,9 +52,10 @@
                                         // }
                                     }
                                     $mime = "video/mp4";
-                                    $waktu=$vik->created_at->diffForHumans();
+                                    
+                                    $waktu=\Carbon\Carbon::parse($vik->created_at)->diffForHumans();
                                     $wkt=text_translate($waktu,'en','id');
-                                    // dd($waktu);
+                                   
                             @endphp
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 padding-left-right-3">
                                     <div class="video-item">
@@ -63,14 +64,7 @@
                                             <small class="time">10:53</small>
                                             <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:150px;width:100%"></a>
                                         </div>
-                                        <!--<a href="{{route('watch', $vik->slug)}}">
-                                            <div class="thumb" id="thumb" style="height:150px;background:url(assets/img/no-image-02.png);background-size:100% 100%;">
-                                                <video id="example_video_{{$vik->id}}" class="video-js vjs-default-skin vjs-big-play-centered"
-                                                    controls preload="auto" height="180">
-                                                    <source src="{{$vid}}" type="{{$mime}}" />
-                                                </video>
-                                            </div>
-                                        </a>-->
+                                        
                                         <div class="video-info">
                                             <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{$vik->title}}</a>
                                             <a class="channel-name" href="#">{{$v->name}}</a>

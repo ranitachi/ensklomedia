@@ -43,7 +43,7 @@
 @section('content')
             <div class="row hidden-lg hidden-md">
                 <div class="col-xs-12 col-sm-12 no-padding-all">
-                    <video id="example_video_mobile" class="video-js vjs-default-skin vjs-big-play-centered" autoplay controls preload="auto">
+                    <video id="example_video_mobile" class="video-js vjs-default-skin vjs-big-play-centered hidden-lg hidden-md" controls preload="auto">
                         <source src="{{$vid}}" type="{{$mime}}" />
                     </video>
                 </div>
@@ -220,14 +220,12 @@
     <script src="{{asset('js/videojs.js')}}"></script>
     <script src='{{asset('js/videojs.endcard.js')}}'></script>
     <script>
-        //videojs(document.getElementById('example_video_1'), {}, function() {
-            // This is functionally the same as the previous example.
-        //});
         var widthvideo=$(document).width();
         var heightvideo=(parseInt(widthvideo) / 1.33);
         // alert(widthvideo);
-        var video2 = videojs('example_video_mobile',{height: heightvideo, width: widthvideo});
-
+        if(widthvideo<600)
+            var video2 = videojs('example_video_mobile',{height: heightvideo, width: widthvideo,autoplay: true});
+            
         var video = videojs('example_video_1');
         var rel_content_1 = document.createElement('div');
         var a1 = document.createElement('a');
