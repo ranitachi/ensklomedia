@@ -1,97 +1,30 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>Beranda - Ensiklomedia</title>
+    <title>Ensiklomedia</title>
      <link href="{{asset('css/videojs.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
     
-        <div class="row">
+        <div class="row margin-m-100">
             <div class="col-lg-12 col-md-12 col-cm-12">&nbsp;</div>
         </div>
-        @foreach ($cat as $k => $v)
-            <div class="row">
-                <div class="col-lg-1-dash col-md-1-dash col-sm-1-dash">&nbsp;</div>
-                <div class="col-lg-10-dash col-md-10-dash col-sm-10-dash">
-                    <div class="row">
-                        @php
-                        $first_letter=substr($v->name,0,1);
-                        @endphp
-                        <h1 class="new-video-title" style="padding-top:0px !important;padding-bottom:0px;">
-                            <span data-letters="{{$first_letter}}"> {{$v->name}}</span></h1>
-                            @php
-                            if(isset($video[$v->id]))
-                            {
-                                $fourdata = array_slice($video[$v->id], 0, 4);
-                                //$no=1;
-                                foreach($fourdata as $ixk => $vik)
-                                {
-                                    $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vik->image_path;
-                                    if(File::exists($vik->image_path))
-                                    {
-                                        $cv = 'uploadfiles/image/'.$video->image_path;
-                                        $cover = url($cv);
-                                        $vv='uploadfiles/video/'.$video->video_path;
-                                        $vid=url($vv);
-                                    }
-                                    else
-                                    {   
-                                        //$handle=fopen($cover,'r');
-                                        $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vik->video_path;
-                                        $cover=$cover;
-                                        // $fileExists = checkExternalFile($cover);
-                                        // if($fileExists==200)
-                                        // {
-                                        //     $cover=$cover;
-                                        // }
-                                        // else
-                                        // {
-                                        //     $cv='assets/img/no-image-02.png';
-                                        //     $cover=url($cv);
-                                        // }
-                                    }
-                                    $mime = "video/mp4";
-                                    
-                                    $waktu=\Carbon\Carbon::parse($vik->created_at)->diffForHumans();
-                                    $wkt=text_translate($waktu,'en','id');
-                                   
-                            @endphp
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 padding-left-right-3">
-                                    <div class="video-item">
-                                        <div class="thumb" style="height:150px;background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
-                                            <div class="hover-efect"></div>
-                                            <small class="time">10:53</small>
-                                            <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:150px;width:100%"></a>
-                                        </div>
-                                        
-                                        <div class="video-info">
-                                            <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{$vik->title}}</a>
-                                            <a class="channel-name" href="#">{{$v->name}}</a>
-                                            <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>
-                                            <span class="date"><i class="fa fa-clock-o"></i>{{$wkt}}</span>
-                                        </div>
-                                    </div>
-                                </div>  
-                            @php
-                                }
-                            }
-                            @endphp
-                           
-                    </div>
-                </div>
-                <div class="col-lg-1-dash col-md-1-dash col-sm-1-dash">&nbsp;</div>
-                
-            
-            </div>
-        @endforeach
-
-		
+        <div id="data-vid"></div>
 @endsection
 @section('footscript')
     <script src="{{asset('js/videojs.js')}}"></script>
     <script>
-        //var lebar=document.getElementById("thumb").offsetWidth;
+        $(document).ready(function(){
+            var width=$(window).width();
+            // alert(width);
+            loaddata(width);
+            $( window ).resize(function() {
+                var wdt=$( window ).width();
+                // alert(wdt)
+                loaddata(wdt);
+            });
+        });
         //alert(width);
         /*$('video.video-js').each(function(a){
             var id=$(this).attr('id');
@@ -104,6 +37,19 @@
             });
             // This is functionally the same as the previous example.
         });*/
+        function loaddata(width)
+        {
+            if(width>1024 && width<1284)
+            {
+                $('#data-vid').load(APP_URL+'/video-data/4');
+            }
+            else if(width>=1284)
+            {
+                $('#data-vid').load(APP_URL+'/video-data/5');
+            }
+            else
+                $('#data-vid').load(APP_URL+'/video-data/4');
+        }
         function addhit(id)
         {
             $.ajax({

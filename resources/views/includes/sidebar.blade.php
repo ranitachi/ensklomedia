@@ -1,7 +1,7 @@
 		
 		{{--  <div class="col-md-2 no-padding-left no-padding-right hidden-sm hidden-xs" >  --}}
         	<div class="left-sidebar">
-            	<div id="sidebar-stick">
+            	<div id="">
             	<ul class="menu-sidebar" style="border-bottom:1px solid #dddddd;">
 					<li><a href="{{URL::to('/')}}"><i class="fa fa-home"></i>Home</a></li>
 					@if(Auth::check())
@@ -114,17 +114,17 @@
 					</ul>
 					@endif
 				@endif
-            	<ul class="menu-sidebar accordion" id="accordion1">
+            	<ul class="menu-sidebar accordion" id="accordion1" style="margin-bottom:0px !important;">
 					<li class="a-panel">
-						<a data-toggle="collapse" data-parent="#accordion1" href="#firstLink" style="font-size:17px;font-weight:bold;">
+						<a data-toggle="collapse" data-parent="#accordion1" href="#firstLink" style="">
 							<div class="row">
 								<div class="col-lg-9 col-md-9">
 									KATEGORI
 								</div>
-								<div class="col-lg-1 col-md-1">
+								{{--  <div class="col-lg-1 col-md-1">
 									<i class="fa fa-toggle-down"></i>
 								</div>
-								<div class="col-lg-2 col-md-2 pull-right">&nbsp;</div>
+								<div class="col-lg-2 col-md-2 pull-right">&nbsp;</div>  --}}
 							</div>
 						</a>
 					</li>
@@ -132,7 +132,7 @@
 						$cat=App\Model\Category::orderBy('name')->get();
 						$x=0;
 					@endphp
-					<ul id="firstLink" class="collapse">
+					<ul id="firstLink" class="" style="">
 					@foreach ($cat as $v)
 					@php
 						$ln=strlen($v->name);
@@ -145,18 +145,23 @@
 						$x++;
 					@endphp
 						<li class="color-1">
-							<a href="{{ route('video.bycategory', $v->slug) }}"><span data-letters="{{$first_letter}}">{{$cat_name}}</span></a>
+							<a href="{{ route('video.bycategory', $v->slug) }}" style="padding:5px;"><span data-letters="{{$first_letter}}">{{$cat_name}}</span></a>
 						</li>
 					@endforeach
 					</ul>
-					<div class="text-center">&copy; Ensiklomedia 2018</div>
                 </ul>
             	<!--<ul class="menu-sidebar">
-                	<li><a href="#"><i class="fa fa-gear"></i>Settings</a></li>
+					<li><a href="#"><i class="fa fa-gear"></i>Settings</a></li>
                 	<li><a href="#"><i class="fa fa-question-circle"></i>Help</a></li>
                 	<li><a href="#"><i class="fa fa-send-o"></i>Send feedback</a></li>
                 </ul>-->
-				</div><!-- // sidebar-stick -->
-                <div class="clear"></div>
+			</div><!-- // sidebar-stick -->
+			<div class="text-center" style="padding-bottom:50px;">&copy; Copyright 2018<br> Pustekkom Kemdikbud RI
+
+				<br>
+				<br>
+				<br>
+			</div>
+                
             </div><!-- // left-sidebar -->
         {{--  </div>  --}}

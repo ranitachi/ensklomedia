@@ -6,12 +6,12 @@
 @endsection
 
 @section('content')
-        <div class="row">
+       <div class="row margin-m-100">
             <div class="col-lg-12 col-md-12 col-cm-12">&nbsp;</div>
         </div>
         <div class="row">
-            <div class="col-lg-1-dash col-md-1-dash col-sm-1-dash">&nbsp;</div>
-                <div class="col-lg-10-dash col-md-10-dash col-sm-10-dash">
+            <div class="col-lg-1 col-md-1 col-sm-1">&nbsp;</div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
                     <div class="row">
                         <h1 class="new-video-title" style="padding-top:0px !important;padding-bottom:0px;"><span data-letters="V"> Video Favorit</h1>
                         @php
@@ -60,12 +60,12 @@
                                 //$duration= getDuration($vid);
                                 
                         @endphp
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 padding-left-right-3">
-                                <div class="video-item">
-                                    <div class="thumb" style="height:150px;background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center">
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 margin-left-right-2 col-custom">
+                                    <div class="video-item">
+                                        <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center">
                                         <div class="hover-efect"></div>
                                         <small class="time">10:53</small>
-                                        <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:150px;width:100%"></a>
+                                        <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:118px;width:210px"></a>
                                     </div>
                                     <!--<a href="{{route('watch', $vik->slug)}}">
                                         <div class="thumb" id="thumb" style="height:150px;background:url(assets/img/no-image-02.png);background-size:100% 100%;">
@@ -90,7 +90,7 @@
                         @endphp
                       
                     </div>
-                <div class="col-lg-1-dash col-md-1-dash col-sm-1-dash">&nbsp;</div>
+                <div class="col-lg-1 col-md-1 col-sm-1">&nbsp;</div>
                 
             
             </div>

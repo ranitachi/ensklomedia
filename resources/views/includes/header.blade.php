@@ -1,10 +1,10 @@
-{{--  <header style="position:fixed;top:0;width:100%">  --}}
-<header>
+<header style="position:fixed;top:0;width:100%;z-index:100000">
+{{--  <header>  --}}
         <div class="container-full">
         	<div class="row">
                 <div class="row hidden-lg hidden-md" style="background:#f00;padding:10px 0;">
                     <div class="col-sm-4 col-xs-4" style="text-align:center">
-                        <a href="{{url('dashboard')}}"><i class="fa fa-home" style="font-size:20px;color:#fff"></i></a>
+                        <a href="{{url('/')}}"><i class="fa fa-home" style="font-size:20px;color:#fff"></i></a>
                     </div>
                     <div class="col-sm-4 col-xs-4" style="text-align:center">
                         <a href="{{url('trending')}}"><i class="fa fa-star" style="font-size:20px;color:#fff"></i></a>
@@ -21,7 +21,7 @@
                     	<i class="fa fa-close"></i>
                     </a>
                     <div id="logo">
-                        <a href="{{route('dashboard')}}" ><img src="{{ asset('assets/img/logo.png')}}" alt=""></a>
+                        <a href="{{url('/')}}" ><img src="{{ asset('assets/img/logo.png')}}" alt=""></a>
                     </div>
                 </div><!-- // col-md-2 -->
                 <div class="col-lg-2 col-md-2 col-sm-12 hidden-sm hidden-xs">
@@ -35,7 +35,7 @@
                         <a href="#" id="icon-menu"><i class="fa fa fa-navicon font-like-yt" style="padding-top:8px"></i></a>
                     </div>
                     <div id="logo" style="text-align:center !important;">
-                        <a href="{{route('dashboard')}}" ><img src="{{ asset('assets/img/logo.png')}}" alt="" style="width:80%"></a>
+                        <a href="{{url('/')}}" ><img src="{{ asset('assets/img/logo.png')}}" alt="" style="width:75%"></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">

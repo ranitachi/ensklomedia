@@ -30,4 +30,26 @@ class VideoCategoryController extends Controller
             ->with('videos', $get)
             ->with('category', $category);
     }
+
+    public function videodata($jlh)
+    {
+        $cat=Category::orderBy('name')->get();
+        $vid=Video::orderByRaw("RAND()")->get();
+        $video=array();
+        foreach($vid as $k => $v)
+        {
+            $video[$v->category_id][]=$v;
+        }
+
+        $ct=array();
+        foreach($cat as $k => $v)
+        {
+            $ct[$v->id]=$v;
+        }
+        return view('pages.dashboard.data-vid')
+            ->with('video',$video)
+            ->with('cat',$ct)
+            ->with('jlh',$jlh);
+
+    }
 }

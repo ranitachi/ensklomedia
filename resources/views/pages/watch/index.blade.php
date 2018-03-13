@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>Lihat Video - Ensiklomedia</title>
+    <title>{{($id==-1 ? 'Lihat Video' : ucwords(strtolower($video->title)))}} - Ensiklomedia</title>
     <link href="{{asset('css/videojs.css')}}" rel="stylesheet">
     <link href="{{asset('css/videojs.endcard.css')}}" rel="stylesheet">
     <style>
@@ -41,6 +41,7 @@
 @endsection
 
 @section('content')
+            <div class="row margin-m-100"></div>
             <div class="row hidden-lg hidden-md">
                 <div class="col-xs-12 col-sm-12 no-padding-all">
                     <video id="example_video_mobile" class="video-js vjs-default-skin vjs-big-play-centered hidden-lg hidden-md" controls preload="auto">
@@ -49,6 +50,7 @@
                 </div>
                 
                 <div class="col-xs-12 col-sm-12 no-padding-all" style="margin:0px !important">
+                    <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}}</h1>
                     <div id="watch" style="padding:0px !important;margin:0px !important;">
                         <div class="chanel-item" style="margin-bottom:0px !important;">
                         		
@@ -79,19 +81,20 @@
             </div>
             <div class="row">
             	<!-- Watch -->
+                {{--  <div class="col-md-1 hidden-sm hidden-xs">&nbsp;</div>  --}}
                 <div class="col-md-8 hidden-sm hidden-xs">
-                	<div id="watch">
+                	<div id="watch" style="">
 
                         <!-- Video Player -->
-                        <h1 class="video-title">{{($id==-1 ? 'Video Tidak Tersedia' : $video->title)}}</h1>
                         <div class="video-code">
-                             <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"
-                                controls preload="auto" height="400">
-
-                                <source src="{{$vid}}" type="{{$mime}}" />
-                            </video>
-                            <!--<iframe width="100%" height="415" src="https://www.youtube.com/embed/e452W2Kj-yg" frameborder="0" allowfullscreen></iframe>-->
-						</div><!-- // video-code -->
+                            <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"
+                            controls preload="auto" height="400">
+                            
+                            <source src="{{$vid}}" type="{{$mime}}" />
+                        </video>
+                        <!--<iframe width="100%" height="415" src="https://www.youtube.com/embed/e452W2Kj-yg" frameborder="0" allowfullscreen></iframe>-->
+                        </div><!-- // video-code -->
+                        <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}}</h1>
 
                         <div class="video-share">
                         	<ul class="like">
@@ -182,7 +185,7 @@
 
                 <!-- Related Posts-->
                 <div class="col-md-4 col-sm-12 col-xs-12">
-                	<div id="related-posts" style="padding:0px !important;margin:0px !important;">
+                	<div id="related-posts" style="padding:0px !important;margin:20px 0px 0x 0px !important;">
                         @foreach ($relatedvideo as $related)
                             <!-- video item -->
                             <div class="related-video-item">
@@ -193,14 +196,19 @@
                                         if (File::exists($related->image_path)) {
                                             $cover = url('uploadfiles/image/'.$related->image_path);
                                         }
+                                        $waktu=\Carbon\Carbon::parse($related->created_at)->diffForHumans();
+                                        $wkt=text_translate($waktu,'en','id');
                                     @endphp
                                     <a href="{{ route('watch', $related->slug) }}" onclick="addhit('{{$related->id}}')"><img class="custom-size" src="{{ $cover }}" alt=""></a>
                                 </div>
                                 <a href="{{ route('watch', $related->slug) }}" class="title">{{ $related->title }}</a>
                                 <a class="channel-name" href="#">
-                                    {{ isset($related->user->profile->channel_name) ? $related->user->profile->channel_name : 'No Channel Name' }}
-                                    <span><i class="fa fa-check-circle"></i></span>
+                                    {{ isset($related->category->name) ? $related->category->name : 'No Category Name' }}
                                 </a>
+                                <span>
+                                    <i class="fa fa-eye"></i>&nbsp;{{$related->hit}} views&nbsp;&nbsp;
+                                    <i class="fa fa-eye"></i>&nbsp;{{$wkt}} &nbsp;&nbsp;
+                                </span>
                             </div>
                             <!-- // video item -->
                         @endforeach

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>Lihat Video - Ensiklomedia</title>
+    <title>{{($id==-1 ? 'Lihat Video' : ucwords(strtolower($video->title)))}} - Ensiklomedia</title>
      <link href="{{asset('css/videojs.css')}}" rel="stylesheet">
      <link href="{{asset('css/videojs.endcard.css')}}" rel="stylesheet">
      <style>
@@ -20,18 +20,29 @@
             background-size: 95% 100%;
             background-position: center;
         }
+         .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+        }
+        
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
+
+        div#example_video_1
+        {
+            width:100% !important;
+        }
     </style>
 @endsection
 
 @section('content')
-        <div id="all-output" class="col-md-10">
+        <div>
             <div class="row">
             	<!-- Watch -->
                 <div class="col-md-8">
                 	<div id="watch">
 
                         <!-- Video Player -->
-                        <h1 class="video-title">{{($id==-1 ? 'Video Tidak Tersedia' : $video->title)}}</h1>
                         <div class="video-code">
                              <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"
                                 controls preload="auto" height="400">
@@ -40,6 +51,8 @@
                             </video>
                             <!--<iframe width="100%" height="415" src="https://www.youtube.com/embed/e452W2Kj-yg" frameborder="0" allowfullscreen></iframe>-->
 						</div><!-- // video-code -->
+
+                        <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}}</h1>
 
                         <div class="video-share">
                         	<ul class="like">
@@ -133,7 +146,7 @@
 
                 <!-- Related Posts-->
                 <div class="col-md-4">
-                	<div id="related-posts">
+                	<div id="related-posts" style="padding:0px !important;margin:20px 0px 0x 0px !important;">
                         @foreach ($relatedvideo as $related)
                             <!-- video item -->
                             <div class="related-video-item">
@@ -144,14 +157,19 @@
                                         if (File::exists($related->image_path)) {
                                             $cover = url('uploadfiles/image/'.$related->image_path);
                                         }
+                                        $waktu=\Carbon\Carbon::parse($related->created_at)->diffForHumans();
+                                        $wkt=text_translate($waktu,'en','id');
                                     @endphp
                                     <a href="{{ route('watch', $related->slug) }}" onclick="addhit('{{$related->id}}')"><img class="custom-size" src="{{ $cover }}" alt=""></a>
                                 </div>
                                 <a href="{{ route('watch', $related->slug) }}" class="title">{{ $related->title }}</a>
                                 <a class="channel-name" href="#">
-                                    {{ isset($related->user->profile->channel_name) ? $related->user->profile->channel_name : 'No Channel Name' }}
-                                    <span><i class="fa fa-check-circle"></i></span>
+                                    {{ isset($related->category->name) ? $related->category->name : 'No Category Name' }}
                                 </a>
+                                <span>
+                                    <i class="fa fa-eye"></i>&nbsp;{{$related->hit}} views&nbsp;&nbsp;
+                                    <i class="fa fa-eye"></i>&nbsp;{{$wkt}} &nbsp;&nbsp;
+                                </span>
                             </div>
                             <!-- // video item -->
                         @endforeach
@@ -166,6 +184,12 @@
     <script src="{{asset('js/videojs.js')}}"></script>
     <script src='{{asset('js/videojs.endcard.js')}}'></script>
     <script>
+        var widthvideo=$(document).width();
+        var heightvideo=(parseInt(widthvideo) / 1.33);
+        // alert(widthvideo);
+        if(widthvideo<600)
+            var video2 = videojs('example_video_mobile',{height: heightvideo, width: widthvideo,autoplay: true});
+            
         var video = videojs('example_video_1');
         var rel_content_1 = document.createElement('div');
         var a1 = document.createElement('a');

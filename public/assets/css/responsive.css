@@ -139,10 +139,139 @@ header
 .video-item .thumb,
 .video-item .thumb img
 	{
-		height:100px !important;
+		/* width:210px;
+		height:118px; */
+		height:110px;
+		width:100%;
+	}
+	.custom-size
+	{
+		/* width:210px;
+		height:118px; */
+		height:90px;
+		width:100%;
+	}
+	.margin-m-50
+	{
+		margin-top:50px !important;
+	}
+	.margin-m-100
+	{
+		margin-top:100px !important;
+	}
+	#main-category
+	{
+		position:absolute;
+		top:35px !important;
+	}
+	.all-output-m
+	{
+		padding:0 20px !important;
+	}
+	#example_video_mobile
+	{
+		margin-top:40px !important;
 	}
 }
 @media screen and (max-width: 375px) {
+	.margin-m-50
+	{
+		margin-top:50px !important;
+	}
+	.margin-m-100
+	{
+		margin-top:100px !important;
+	}
+	#main-category
+	{
+		position:absolute;
+		top:35px !important;
+	}
+	.all-output-m
+	{
+		padding:0 20px !important;
+	}
+	.video-item .thumb,
+.video-item .thumb img
+	{
+		/* width:210px;
+		height:118px; */
+		height:110px;
+		width:100%;
+	}
+	.custom-size
+	{
+		/* width:210px;
+		height:118px; */
+		height:90px;
+		width:100%;
+	}
+	.custom-size
+	{
+		/* width:210px;
+		height:118px; */
+		height:90px;
+		width:100%;
+	}
+		#example_video_mobile
+		{
+			margin-top:40px !important;
+		}
 }
 @media screen and (max-width: 260px) {
+	.margin-m-50
+	{
+		margin-top:50px !important;
+	}
+	.margin-m-100
+	{
+		margin-top:100px !important;
+	}
+	#main-category
+	{
+		position:absolute;
+		top:35px !important;
+	}
+	.all-output-m
+	{
+		padding:0 20px !important;
+	}
+	.video-item .thumb,
+	.video-item .thumb img
+	{
+		/* width:210px;
+		height:118px; */
+		height:110px;
+		width:100%;
+	}
+	.custom-size
+	{
+		/* width:210px;
+		height:118px; */
+		height:90px;
+		width:100%;
+	}
+	#example_video_mobile
+	{
+		margin-top:40px !important;
+	}
 }
+.margin-left-right-1
+{
+	margin-left: 1px !important;
+	margin-right: 1px !important;
+}
+.margin-left-right-2
+{
+	margin-left: 6px !important;
+	margin-right: 6px !important;
+}
+.title-watch
+{
+	font-size:25px !important;
+	margin-top:20px;
+}
+.col-custom
+        {
+            width:210px !important;
+		}

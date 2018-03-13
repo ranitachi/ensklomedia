@@ -79,7 +79,7 @@ class DashboardController extends Controller
             }
             $mime = "video/mp4";
 
-            $relatedvideo = Video::where('category_id', $video->category_id)->orderByRaw("RAND()")->limit(10)->get();
+            $relatedvideo = Video::where('category_id', $video->category_id)->with('category')->orderByRaw("RAND()")->limit(10)->get();
             $endcards=Endcards::where('video_id','=',$id)->whereNotNull('link')->get();
         }
         // echo $vid;

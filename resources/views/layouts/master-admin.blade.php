@@ -13,15 +13,23 @@
       <div class="hidden-lg hidden-md">
           @include('includes.navbar')
         </div>
-	  <div class="site-output">
+	  {{--  <div class="site-output">
         <div id="sidebar-menu" class="col-lg-2 col-md-2 no-padding-left no-padding-right hidden-sm hidden-xs" style="margin-top:5px !important">
           @include('includes.sidebar')  
         </div>
         <div id="all-output" class="col-lg-10 col-md-10">
           @yield('content')
         </div>
+    </div>  --}}
+    <div class="site-output" style="margin-top:55px;position:relative;">
+        <div id="sidebar-menu" class="no-padding-left no-padding-right hidden-lg hidden-md hidden-sm hidden-xs" style="position:fixed;width:22%;height:100%;z-index:20000;overflow:auto;background:#f8f8f8;padding-bottom:50px !important;">
+          @include('includes.sidebar')  
+        </div>
+        <div id="all-output" class="col-lg-12 col-md-12 all-output-m">
+          <div id="latar" style="width:100%;height:100%;background:#111;opacity:0.6;position:fixed;z-index:10000"></div>
+          @yield('content')
+        </div>
     </div>
-
       @include('includes.scripts')
       @include('includes.modal')
     </body>
@@ -37,23 +45,27 @@
     
     
     $(document).ready(function(){
+      $('#latar').hide();
       $(".chosen-select").chosen();
       var path = "{{ route('search.auto') }}";
+        var path = "{{ route('search.auto') }}";
         $('#icon-menu').click(function(){
             var hidemenu=$('#hide-menu').val();
             if(hidemenu==0)
             {
               $('#hide-menu').val(1);
-              $('#sidebar-menu').hide();
-              $('#all-output').removeClass();
-              $('#all-output').addClass("col-lg-12 col-md-12");
+              // $('#sidebar-menu').show();
+              $('#latar').show();
+              $('#sidebar-menu').removeClass();
+              // $('#sidebar-menu').addClass("col-lg-12 col-md-12");
             }
             else if(hidemenu==1)
             {
+              $('#latar').hide();
               $('#hide-menu').val(0);
-              $('#sidebar-menu').show();
-              $('#all-output').removeClass();
-              $('#all-output').addClass("col-lg-10 col-md-10");
+              // $('#sidebar-menu').hide();
+              $('#sidebar-menu').removeClass();
+              $('#sidebar-menu').addClass("hidden-lg hidden-md hidden-sm hidden-xs");
             }
         });
         var wdth_search_form=$('.search-form').width();
