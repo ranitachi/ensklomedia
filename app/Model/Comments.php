@@ -17,4 +17,9 @@ class Comments extends Model
     {
         return $this->belongsTo('App\Model\Video', 'video_id');
     }
+    
+    public function user()
+    {
+        return $this->belongsTo('App\Model\Users', 'user_id');
+    }
 }
