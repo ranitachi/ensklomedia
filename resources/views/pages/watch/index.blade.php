@@ -139,7 +139,7 @@
                                                 <a href="#" class="author-name">
                                                     {{ $comment->user->profile->name }}
                                                 </a>
-                                                <time datetime="2017-03-24T18:18">July 27, 2014 - 11:00 PM</time>
+                                                <time datetime="2017-03-24T18:18">{{date('d-m-Y H:i:s', strtotime($comment->created_at))}}</time>
                                             </div>
                                             <p>
                                                 {{ $comment->comment }}
@@ -208,7 +208,7 @@
                                     <a href="{{ route('watch', $related->slug) }}" onclick="addhit('{{$related->id}}')"><img class="custom-size" src="{{ $cover }}" alt=""></a>
                                 </div>
                                 <a href="{{ route('watch', $related->slug) }}" class="title">{{ $related->title }}</a>
-                                <a class="channel-name" href="#">
+                                <a class="channel-name" href="{{url('video/category',strtolower($related->category->name))}}">
                                     {{ isset($related->category->name) ? $related->category->name : 'No Category Name' }}
                                 </a>
                                 <span>

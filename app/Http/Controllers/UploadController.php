@@ -8,6 +8,7 @@ use App\Model\Category;
 use App\Model\Video;
 use File;
 use Auth;
+use FFMpeg;
 class UploadController extends Controller
 {
     public function index()
@@ -35,12 +36,20 @@ class UploadController extends Controller
             $request->file('file')->move(public_path('uploadfiles/video/'), $name);
             $id=$request->input('id');
             
+            // $media = FFMpeg::open($name);
+            // $durationInSeconds = $media->getDurationInSeconds();
             $filepath = public_path('uploadfiles/video').'/'.$name;
+
+            $getID3 = new \getID3;
+            $file = $getID3->analyze($filepath);
+            $durationInSeconds = $file['playtime_string'];
+
             $type = File::extension($filepath);
             $sv=new Video;
             $sv->id=$id;
             $sv->user_id=Auth::user()->id;
             $sv->category_id=0;
+            $sv->duration=$durationInSeconds;
             $sv->approved_by=NULL;
             $sv->video_path=$name;
             $sv->save();

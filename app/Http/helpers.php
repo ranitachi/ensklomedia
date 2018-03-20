@@ -9,6 +9,17 @@ function checkExternalFile($url)
 
     return $retCode;
 }
+function cekfile($file)
+{
+    $file_headers = @get_headers($file);
+    if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+        $exists = false;
+    }
+    else {
+        $exists = true;
+    }
+    return $exists;
+}
 function getDuration($full_video_path)
 {
     $getID3 = new \getID3;

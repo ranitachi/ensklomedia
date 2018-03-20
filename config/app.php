@@ -179,6 +179,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Stevebauman\Location\LocationServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Pbmedia\LaravelFFMpeg\FFMpegServiceProvider::class,
     ],
 
     /*
@@ -230,6 +231,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Location' => Stevebauman\Location\Facades\Location::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class
     ],
     
 ];

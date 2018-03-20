@@ -16,11 +16,11 @@
                                 foreach($fivedata as $ixk => $vik)
                                 {
                                     $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vik->image_path;
-                                    if(File::exists($vik->image_path))
+                                    if(File::exists(public_path().'/uploadfiles/image/'.$vik->image_path))
                                     {
-                                        $cv = 'uploadfiles/image/'.$video->image_path;
+                                        $cv = 'uploadfiles/image/'.$vik->image_path;
                                         $cover = url($cv);
-                                        $vv='uploadfiles/video/'.$video->video_path;
+                                        $vv='uploadfiles/video/'.$vik->video_path;
                                         $vid=url($vv);
                                     }
                                     else
@@ -40,16 +40,38 @@
                                         // }
                                     }
                                     $mime = "video/mp4";
-                                    
+                                    $durasi='00:00';
                                     $waktu=\Carbon\Carbon::parse($vik->created_at)->diffForHumans();
                                     $wkt=text_translate($waktu,'en','id');
-                                    
+                                    if($vik->duration!='00:00:00')
+                                    {
+                                        if($vik->duration!=-1)
+                                        {
+                                            if(strtok($vik->duration,':')=='00')
+                                            {
+                                                $durasi=substr($vik->duration,3,5);
+                                            }
+                                            else
+                                                $durasi=$vik->duration;
+                                        }
+                                        else if($vik->duration==0)
+                                        {
+                                            $durasi="00:00";
+                                        }
+                                        else {
+                                            $durasi="00:00";
+                                        }
+                                    }
+                                    else {
+                                        
+                                        $durasi="00:00";
+                                    }
                             @endphp
                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 margin-left-right-2 col-custom hidden-sm hidden-xs">
                                     <div class="video-item">
                                         <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
                                             <div class="hover-efect"></div>
-                                            <small class="time">10:53</small>
+                                            <small class="time">{{$durasi}}</small>
                                             <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:118px;width:210px"></a>
                                         </div>
                                         
@@ -66,7 +88,7 @@
                                     <div class="video-item">
                                         <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
                                             <div class="hover-efect"></div>
-                                            <small class="time">10:53</small>
+                                            <small class="time">{{$vik->duration!='00:00:00' ? $vik->duration : '00:00'}}</small>
                                             <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="width:100%"></a>
                                         </div>
                                         

@@ -135,7 +135,10 @@ header
 	background-color: #FFF;
 	padding: 15px;
 	height:90px;
-	}
+}
+.video-info{
+	width:190px !important;
+}
 .video-item .thumb,
 .video-item .thumb img
 	{
@@ -199,6 +202,9 @@ header
 		height:110px;
 		width:100%;
 	}
+	.video-info{
+		width:190px !important;
+	}
 	.custom-size
 	{
 		/* width:210px;
@@ -243,6 +249,9 @@ header
 		height:118px; */
 		height:110px;
 		width:100%;
+	}
+	.video-info{
+		width:190px !important;
 	}
 	.custom-size
 	{

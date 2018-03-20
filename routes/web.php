@@ -21,24 +21,27 @@
 //     //     // echo $v->id.'-'.str_slug($v->name).'<br>';
         
 //     // }
-//     $vid=App\Model\Video::all();
-//     foreach($vid as $k => $v)
-//     {
-//         $d=strtok($v->video_path,'-');
-//         $thn=substr($d,0,4);
-//         $bln=substr($d,4,2);
-//         $tgl=substr($d,6,4);
-//         $tgl=$thn.'-'.$bln.'-'.$tgl.' '.date('H:i:s');
-//         $up=App\Model\Video::find($v->id);
-//         $up->created_at=$tgl;
-//         $up->updated_at=$tgl;
-//         $up->save();
-//     }
+//     // $vid=App\Model\Video::all();
+//     // foreach($vid as $k => $v)
+//     // {
+//     //     $d=strtok($v->video_path,'-');
+//     //     $thn=substr($d,0,4);
+//     //     $bln=substr($d,4,2);
+//     //     $tgl=substr($d,6,4);
+//     //     $tgl=$thn.'-'.$bln.'-'.$tgl.' '.date('H:i:s');
+//     //     $up=App\Model\Video::find($v->id);
+//     //     $up->created_at=$tgl;
+//     //     $up->updated_at=$tgl;
+//     //     $up->save();
+//     // }
+//     echo public_path();
 // });
+
 
 Auth::routes();
 
 Route::get('/', 'DashboardController@index')->name('dashboard');
+Route::get('/cekdurasi', 'DashboardController@durasi')->name('durasi');
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/watch/{slug}', 'DashboardController@watch')->name('watch');
 Route::get('/home', 'DashboardController@index')->name('home');

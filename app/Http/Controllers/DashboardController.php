@@ -8,11 +8,14 @@ use App\Model\Category;
 use App\Model\Video;
 use App\Model\Comments;
 use App\Model\Endcards;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 use File;
 use Carbon\Carbon;
 use Location;
-
+use FFMpeg;
+use DB;
 class DashboardController extends Controller
 {
     public function index()
@@ -61,7 +64,7 @@ class DashboardController extends Controller
         $status='v1';
         if($slug!=-1)
         {
-            $video = Video::where('slug','like','%'.$slug.'%')->get()->first();
+            $video = Video::where('slug','like',$slug)->get()->first();
             $id=$video->id;
 
             $comments = Comments::where('video_id', $id)->with('video')->get();
@@ -115,5 +118,109 @@ class DashboardController extends Controller
         $mime = "video/mp4";
         $title = $video->title;
         return view('pages.video.player')->with(compact('vid', 'mime', 'title'));
+    }
+
+    public function durasi()
+    {
+        // $getID3 = new \getID3;
+        // $filename =public_path('uploadfiles/video').'/20180317-VideoAndroid.mp4';
+        // $file = $getID3->analyze($filename);
+        // $duration_string = $file['playtime_string'];
+        // echo $duration_string;
+        // $file="http://ensiklomedia.kemdikbud.go.id/uploads/videos/20170906-221Tak%20berjudul%20640x360%200,94Mbps%202017-09-06%2010-41-20.mp4";
+        // $lokasi_ffpmeg=public_path();
+        // echo $lokasi_ffpmeg.'/bin/ffmpeg';
+        // $process = new Process('bin/ffmpeg -i '.$file.' 2>&1 | grep "Duration"');
+        // $process = new Process('ls -la bin/ff*');
+        // $process->run();
+    
+        //     if (!$process->isSuccessful()) {
+        //         $durasi ='-1';
+        //     }
+        //     else{
+        //         // $durasi=substr($process->getOutput(),12,8);
+        //         $durasi=$process->getOutput();
+        //     }
+        //     echo $durasi;
+        
+        $video='http://ensiklomedia.kemdikbud.go.id/uploads/videos/20171218-1312Sejarah%20G30SPKI.mp4';
+        // $cekfile=cekfile($video);
+        // echo $cekfile;
+        // $process = new Process('/usr/local/bin/ffprobe -i '.$video.' -sexagesimal -show_entries format=duration -v quiet -of csv="p=0"');
+        // $process = new Process('/usr/local/bin/ffmpeg -i '.$video.' 2>&1 | grep "Duration"');
+        // $process->run();
+        // echo $process->getOutput();
+
+        // $vid=Video::where('duration','=','00:00:00')->limit(100)->get();
+        $vid=Video::where('duration','=','00:00:00')->get();
+        $x=0;
+        foreach($vid as $index => $val)
+        {
+            $file="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".str_replace(' ','%20',$val->video_path);
+            $cekfile=cekfile($file);
+            if($cekfile)
+            {
+                $process = new Process('/usr/local/bin/ffprobe -i '.$file.' -sexagesimal -show_entries format=duration -v quiet -of csv="p=0"');
+                $process->run();
+                $duration='0'.strtok($process->getOutput(),'.');
+
+                
+                echo '<span style="color:blue">'.$val->title.' :: '.$duration.'</span><br>';
+                $x++;
+                DB::table('video')
+                    ->where('id', $val->id)
+                    ->update(['duration' => $duration]);
+
+                $img_path=$val->image_path;
+                if($val->image_path=='')
+                {
+                    // $gbr=strtok($val->video_path,'.').'.jpg';
+                    // DB::table('video')
+                    // ->where('id', $val->id)
+                    // ->update(['image_path' => $gbr]);
+                    // $img_path=$gbr;
+                }
+                    
+                // $prc2=new Process('/usr/local/bin/ffmpeg -ss 00:00:03 -i "'.$file.'" -vf  scale=w=210:h=110:force_original_aspect_ratio=decrease "'.public_path().'/uploadfiles/image/'.$img_path.'"');
+                // $prc2->run();
+            }
+            else
+            {
+                DB::table('video')
+                    ->where('id', $val->id)
+                    ->delete();
+                echo '<span style="color:red">'.$file.' :: '.$val->title.'</span><br>';
+            }
+            // echo $cekfile;
+            // if(File::exists($url))
+            // {
+            //     echo $val->video_path.'<br>';
+            // }
+            // $process = new Process('/usr/local/bin/ffmpeg -i '.$file.' 2>&1 | grep "Duration"');
+            // $process = new Process('/usr/local/bin/ffprobe -i '.$file.' -sexagesimal -show_entries format=duration -v quiet -of csv="p=0"');
+            // $process->run();
+            // echo $file.':'.$process->getOutput().'<br>';
+            // $process->wait();
+            // if (!$process->isSuccessful()) {
+            //     $x++;
+            // }
+            // if (!$process->isSuccessful()) {
+            //     echo '<span style="color:red">'.$file.' :: '.$val->title.'</span><br>';
+            //     // DB::table('video')
+            //     //     ->where('id', $val->id)
+            //     //     ->update(['duration' => "-1"]);
+            //     $x++;
+            // }
+            // else{
+            //     $durasi=substr($process->getOutput(),12,8);
+            //     DB::table('video')
+            //         ->where('id', $val->id)
+            //         ->update(['duration' => $durasi]);
+            //     echo $val->video_path.' :: '.$process->getOutput().'<br>';
+            // }
+    
+        }
+        echo 'Data ada : '.$x;
+         echo '<br><br>This page took <b>'. (microtime(true) - LARAVEL_START) .'</b> seconds to render<br>';
     }
 }
