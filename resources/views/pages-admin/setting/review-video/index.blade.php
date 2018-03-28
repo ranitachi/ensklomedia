@@ -9,25 +9,17 @@
             	<div class="row">
                     
                     <div class="col-md-12">
-                        @if (Session::has('message'))
-                            <div class="alert alert-success">
-                                <strong>Sukses!</strong> 
-                                {{ Session::get('message') }}
-                            </div>
-                        @endif
-                        {{--  <div class="row">
-                            <div class="col-md-6" >
-                                <h1 class="new-video-title"><i class="fa fa-users"></i> Data Review Video</h1>
-                            </div>
-                            <div class="col-md-6" style="padding-top:20px;">
-                                
-                            </div>
-                        </div>  --}}
-                        <div class="row">
-                            <div class="col-md-8">
-                                &nbsp;
-                            </div>
-                            <div class="col-md-4">
+                        
+                            <div class="row top-50" style="">
+                                @if (Session::has('message'))
+                                    <div class="alert alert-success">
+                                        <strong>Sukses!</strong> 
+                                        {{ Session::get('message') }}
+                                    </div>
+                                @endif
+                            
+                            <div class="col-md-8 hidden-sm hidden-xs">&nbsp;</div>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
                                 <div class="pull-right">
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="user-search" placeholder="Cari Judul Video">
@@ -69,7 +61,7 @@
             var value=$(this).val();
                 $.ajax({
                     type : 'get',
-                    url : APP_URL+'/search-admin',
+                    url : APP_URL+'/search-review-video',
                     data:{'search':value},
                     success:function(data){
                         $('div#data').html(data);

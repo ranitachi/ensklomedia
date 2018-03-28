@@ -27,11 +27,11 @@
                     <div class="modal-body">
                             <div class="form-group">
                                 <label for="">Silahkan pilih reviewer di bawah ini:</label>
-                                <input type="hidden" id="vid" name="video_id" value="">
+                                <input type="hidden" id="vid" name="video_id">
                                 <select name="id_reviewer" id="" class="form-control chosen-select">
                                     <option value="">-- Pilih --</option>
                                     @foreach ($reviewers as $item)
-                                        <option value="{{ $item->id }}">{{ $item->profile->name }}</option>
+                                        <option value="{{ $item->id }}">{{ $item->profile->name }} [{{ $item->email }}]</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -92,13 +92,7 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                        <div class="pull-right">
-                            {{ $videos->links() }}
-                        </div>
-                    </div>
-                </div>
+                
                 <!-- Loading More Videos -->
                 
 
@@ -110,10 +104,15 @@
 
 @section('footscript')
     <script>
-        $('.simpan').click(function(){
-            var a = $(this).data('value')
-            $('#vid').attr('value', a)
-        })
+        function pilihreviewer(id)
+        {
+            $('#vid').val(id);
+            $('#modalConfirm').modal('show');
+            // $('.simpan').click(function(){
+            //     var a = $(this).data('value')
+            //     $('#vid').attr('value', a)
+            // })
+        }
         $('#video-search').on('keyup',function(){
             var value=$(this).val();
             $.ajax({

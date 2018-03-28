@@ -47,9 +47,27 @@ Route::get('/watch/{slug}', 'DashboardController@watch')->name('watch');
 Route::get('/home', 'DashboardController@index')->name('home');
 Route::get('/trending', 'DashboardController@trending')->name('trending');
 
-Route::resource('category','CategoryController');
+Route::resource('category','CategoryController')->middleware('auth');;
 Route::get('/category-data/{id}','CategoryController@data')->name('category.data');
 Route::get('/category-form/{id}','CategoryController@show')->name('category.form');
+
+Route::resource('instrumen','InstrumenController')->middleware('auth');;
+Route::get('/instrumen-data/{id}','InstrumenController@data')->name('instrumen.data');
+Route::get('/instrumen-form/{id}','InstrumenController@show')->name('instrumen.form');
+Route::get('/instrumen-change-status/{id}/{st}','InstrumenController@status')->name('instrumen.status');
+
+Route::post('/simpan-penilaian/{videoid}','PenilaianController@simpan')->name('penilaian.simpan');
+
+Route::resource('petamateri','PetaMateriController');
+Route::get('/petamateri-data/{id}','PetaMateriController@data')->name('petamateri.data');
+Route::get('/petamateri-form/{idcat}/{id}','PetaMateriController@form')->name('petamateri.form');
+Route::post('/petamateri-save/{idcat}/{id}','PetaMateriController@save')->name('petamateri.save');
+
+Route::get('/topik-materi','PetaMateriController@topik')->name('topik.materi')->middleware('auth');
+Route::post('/topik-materi-proses/{id}','PetaMateriController@topikproses')->name('topik.proses')->middleware('auth');
+Route::get('/topik-materi-data','PetaMateriController@topikdata')->name('topik.data')->middleware('auth');
+Route::get('/topik-materi-form/{idcat}/{idmapel}/{id}','PetaMateriController@topikform')->name('topik.form')->middleware('auth');
+Route::get('/topik-materi-delete/{idcat}/{idmapel}/{id}','PetaMateriController@topikdelete')->name('topik.delete')->middleware('auth');
 
 Route::resource('user','UserController')->middleware('auth');
 Route::get('/user-data','UserController@data')->name('user.data')->middleware('auth');
@@ -88,6 +106,7 @@ Route::get('/video-add-hit/{id}','UploadController@addhit');
 Route::get('/ubah-verifikasi/{id}/{status}','UploadController@verifikasistatus');
 // Route::get('/player/{filename}', 'DashboardController@player');
 Route::get('/modal-video/{id}', 'DashboardController@player');
+Route::get('/player-std/{slug}', 'DashboardController@playerstd');
 Route::get('/video/{filename}', function ($filename) {
     // Pasta dos videos.
     $videosDir = base_path('public/uploadfiles/video');
@@ -112,14 +131,15 @@ Route::get('/login/{social}/callback','Auth\LoginController@handleProviderCallba
         ->where('social','twitter|facebook|linkedin|google|github');
 Route::get('logout', 'Auth\LoginController@logout');
 
-Auth::routes();
+Route::get('combo-mapel/{idkat}','DashboardController@combomapel');
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/mapping-video-to-reviewer', 'MappingVideoToReviewerController@index')->name('mapping-to-reviewer.index')->middleware('auth');
 Route::post('/save-reviewer', 'MappingVideoToReviewerController@store')->name('mapping-to-reviewer.store')->middleware('auth');
 
 Route::get('/review-video', 'ReviewVideoController@index')->name('review.video')->middleware('auth');
+Route::get('/search-review-video','ReviewVideoController@index')->middleware('auth');
 Route::resource('review', 'ReviewVideoController')->middleware('auth');
 Route::post('/edit-video-reviewer/{id}', 'ReviewVideoController@editvideo')->name('review.edit-video')->middleware('auth');
 Route::post('/add-endcards-reviewer/{id}', 'ReviewVideoController@endcards')->name('review.endcards')->middleware('auth');

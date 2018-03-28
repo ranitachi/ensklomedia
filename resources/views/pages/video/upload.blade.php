@@ -12,7 +12,7 @@
                     <!-- upload -->
                     <div class="col-md-12">
                         @if (session('status'))
-                        <div class="alert alert-info alert-dismissable">
+                        <div class="alert alert-info alert-dismissable top-50">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                             <strong>Info!</strong> <br>
                             <h2>{{ session('status') }}</h2>
@@ -36,12 +36,12 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>Judul Video</label>
-                                        <input type="text" class="form-control" placeholder="Judul Video" name="title">
+                                        <input type="text" id="title" class="form-control" placeholder="Judul Video" name="title">
                                     </div>
                                     
                                     <div class="col-md-12">
                                         <label>Kategori</label>
-                                        <select name="category_id" class="form-control" data-placeholder="Kategori">
+                                        <select name="category_id" id="category_id" class="form-control" data-placeholder="Kategori">
                                             <option value=""></option>
                                             @foreach ($cat as $k => $v)
                                                 <option value="{{$v->id}}">{{$v->name}}</option>
@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label>Deskripsi</label>
-                                        <textarea class="form-control" rows="4"  placeholder="Deskripsi" name="description"></textarea>
+                                        <textarea class="form-control" rows="4"  id="desc" placeholder="Deskripsi" name="description"></textarea>
                                     </div>
                                     <div class="col-md-12">
                                         <label>Pilih Gambar Cover</label>
@@ -80,9 +80,28 @@
 <script>
     Dropzone.autoDiscover = false;
     $(document).ready(function(){
-        
+        $('#contact_submit').hide();
         $('#contact_submit').click(function(){
-            $('#upload-video').submit();
+            var title=$('#title').val();
+            var category_id=$('#category_id').val();
+            var tags=$('#tags').val();
+            var desc=$('#desc').val();
+            if(title=='')
+            {
+                alert('Judul Video Harus Diisi');
+            }
+            else if(category_id=='')
+            {
+                alert('Kategori Video Belum Dipilih');
+            }
+            else if(tags=='')
+            {
+                alert('Tags Video Harus Diisi');
+            }
+            else
+            {
+                $('#upload-video').submit();
+            }
             //var tags=$('input#tags').val();
             //alert(tags);
         });
@@ -90,10 +109,13 @@
             maxFiles:1,
             //acceptedFiles: ".mp4,.mkv,.avi",
             acceptedFiles: "video/*",
+            maxFilesize: 500,
             addRemoveLinks: true,
+            timeout: 0,
             dictDefaultMessage: "<i class='fa fa-upload' style='font-size:60px;color:red;'></i><br>Silahkan Pilih Video untuk di Upload (Klik)",
             dictRemoveFile:'Hapus File',
             success: function(file) {
+                $('#contact_submit').show();
                 /*var name = file.name; 
                 $('#file_name').val(name);
                 $.ajax({

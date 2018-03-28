@@ -3,10 +3,41 @@
                 <div class="col-lg-1-dash col-md-1-dash col-sm-1-dash">&nbsp;</div>
                 <div class="col-lg-10-dash col-md-10-dash col-sm-10-dash">
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                {{$videos->links()}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                        
                             @php
                             foreach($videos as $ixk => $vik)
                             {
+                                $durasi='00:00';
+                                if($vik->duration!='00:00:00')
+                                    {
+                                        if($vik->duration!=-1)
+                                        {
+                                            if(strtok($vik->duration,':')=='00')
+                                            {
+                                                $durasi=substr($vik->duration,3,5);
+                                            }
+                                            else
+                                                $durasi=$vik->duration;
+                                        }
+                                        else if($vik->duration==0)
+                                        {
+                                            $durasi="00:00";
+                                        }
+                                        else {
+                                            $durasi="00:00";
+                                        }
+                                    }
+                                    else {
+                                        
+                                        $durasi="00:00";
+                                    }
                                     $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vik->image_path;
                                     if(File::exists($vik->image_path))
                                     {
@@ -36,12 +67,12 @@
                                     $wkt=text_translate($waktu,'en','id');
                                     // dd($waktu);
                             @endphp
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 padding-left-right-3">
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 padding-left-right-3">
                                     <div class="video-item">
-                                        <div class="thumb" style="height:150px;background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
+                                        <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
                                             <div class="hover-efect"></div>
-                                            <small class="time">10:53</small>
-                                            <a href="{{url('review', $vik->id)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:150px;width:100%"></a>
+                                            <small class="time">{{$durasi}}</small>
+                                            <a href="{{url('review', $vik->id)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style=""></a>
                                         </div>
                                         <!--<a href="{{route('watch', $vik->slug)}}">
                                             <div class="thumb" id="thumb" style="height:150px;background:url(assets/img/no-image-02.png);background-size:100% 100%;">
@@ -65,6 +96,7 @@
                             @endphp
                            
                     </div>
+                    
                 </div>
                 <div class="col-lg-1-dash col-md-1-dash col-sm-1-dash">&nbsp;</div>
                 

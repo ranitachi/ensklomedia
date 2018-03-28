@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-       <div class="row margin-m-100">
+        <div class="row margin-m-100">
             <div class="col-lg-12 col-md-12 col-cm-12">&nbsp;</div>
         </div>
         <div class="row">
@@ -19,6 +19,7 @@
                         {
                             //$no=1;
                             shuffle($video);
+
                             $eightdata = array_slice($video, 0, 12);
                             foreach($eightdata as $ixk => $vik)
                             {
@@ -47,43 +48,91 @@
                                     }*/
                                 }
                                 $mime = "video/mp4";
-                                
-                                /*$ffmpeg = FFMpeg\FFMpeg::create(array(
-                                    'ffmpeg.binaries'  => '/usr/local/Cellar/ffmpeg/3.4.2/bin/ffmpeg',
-                                    'ffprobe.binaries' => '/usr/local/Cellar/ffmpeg/3.4.2/bin/ffprobe' ,
-                                    'timeout'          => 3600, // The timeout for the underlying process
-                                    'ffmpeg.threads'   => 12,
-                                ),$logger);*/
-                                //$video = $ffmpeg->open($vid);
-                                //$media = FFMpeg::open($vid);
-                                //$getID3 = new \getID3;
-                                //$duration= getDuration($vid);
+                                $waktu=\Carbon\Carbon::parse($vik->created_at)->diffForHumans();
+                                    $wkt=text_translate($waktu,'en','id');
+                                $durasi='00:00';
+                                    if($vik->duration!='00:00:00')
+                                    {
+                                        if($vik->duration!=-1)
+                                        {
+                                            if(strtok($vik->duration,':')=='00')
+                                            {
+                                                $durasi=substr($vik->duration,3,5);
+                                            }
+                                            else
+                                                $durasi=$vik->duration;
+                                        }
+                                        else if($vik->duration==0)
+                                        {
+                                            $durasi="00:00";
+                                        }
+                                        else {
+                                            $durasi="00:00";
+                                        }
+                                    }
+                                    else {
+                                        
+                                        $durasi="00:00";
+                                    }
+
+                                    if(isset($vik->category->name))
+                                        $kategori=$vik->category->name;
+                                    else
+                                        $kategori='';
+
+                                    if(is_null($vik->approved_by))
+                                    {
+                                        $cv = 'assets/img/belum-dikaji.jpg';
+                                        $cvr = url($cv);
+                                        //$durasi='';
+                                        $img_dikaji='1';
+                                    }
+                                    else
+                                        $img_dikaji='';
                                 
                         @endphp
-                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 margin-left-right-2 col-custom">
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 margin-left-right-2 col-custom hidden-sm hidden-xs">
                                     <div class="video-item">
-                                        <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center">
-                                        <div class="hover-efect"></div>
-                                        <small class="time">10:53</small>
-                                        <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:118px;width:210px"></a>
-                                    </div>
-                                    <!--<a href="{{route('watch', $vik->slug)}}">
-                                        <div class="thumb" id="thumb" style="height:150px;background:url(assets/img/no-image-02.png);background-size:100% 100%;">
-                                            <video id="example_video_{{$vik->id}}" class="video-js vjs-default-skin vjs-big-play-centered"
-                                                controls preload="auto" height="180">
-                                                <source src="{{$vid}}" type="{{$mime}}" />
-                                            </video>
+                                        <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
+                                            @if($img_dikaji=='1')
+                                                <div class="hover-efect ribbon"><i class="fa fa-info-circle" style="color:white !important"></i>&nbsp;&nbsp;Belum Dikaji</div>
+                                            @else
+                                                <div class="hover-efect"></div>
+                                            @endif
+                                                <small class="time">{{$durasi}}</small>
+                                            <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:118px;width:210px">
                                         </div>
-                                    </a>-->
-                                    <div class="video-info">
-                                        <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{$vik->title}}</a>
-                                        <a class="channel-name" href="#">{{(isset($cat[$vik->category_id]) ? $cat[$vik->category_id]->name : '')}}<span>
-                                        <i class="fa fa-check-circle"></i></span></a>
-                                        <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>
-                                        <span class="date"><i class="fa fa-clock-o"></i>5 months ago </span>
+                                        
+                                        <div class="video-info">
+                                            <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{(($vik->title))}}</a>
+                                            <a class="channel-name" href="#">{{$kategori}}</a>
+                                                <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>
+                                                <span class="date"><i class="fa fa-clock-o"></i>{{trim($wkt)}}</span>
+                                         </div>
                                     </div>
-                                </div>
-                            </div>  
+                                </div>  
+                                
+                                <div class="col-sm-12 col-xs-12 padding-left-right-3 hidden-lg hidden-md">
+                                    <div class="video-item">
+                                        <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
+                                            @if($img_dikaji=='1')
+                                                <div class="hover-efect ribbon"><i class="fa fa-info-circle" style="color:white !important"></i>&nbsp;&nbsp;Belum Dikaji</div>
+                                            @else
+                                                <div class="hover-efect"></div>
+                                            @endif
+                                                <small class="time">{{$durasi}}</small>
+                                            <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')">
+                                            <img src="{{ $cover}}" alt="" style="width:100%"></a>
+                                        </div>
+                                        
+                                        <div class="video-info">
+                                            <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{(($vik->title))}}</a>
+                                            <a class="channel-name" href="#">{{$kategori}}</a>
+                                            <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>
+                                            <span class="date"><i class="fa fa-clock-o"></i>{{$wkt}}</span>
+                                        </div>
+                                    </div>
+                                </div>  
                         @php
                             }
                         }

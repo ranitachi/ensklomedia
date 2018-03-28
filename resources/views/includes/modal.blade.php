@@ -88,3 +88,23 @@
 		</div>
 	</div>
 </div>
+<div id="modal-petamateri" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Form Peta Materi</h5>
+			</div>
+
+			<div class="modal-body">
+				<p id="content-body-petamateri">
+				</p>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+				<button type="button" class="btn btn-success" id="ok-petamateri"><i class="fa fa-save"></i>&nbsp;Simpan</button>
+			</div>
+		</div>
+	</div>
+</div>

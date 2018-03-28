@@ -17,12 +17,16 @@
     top: 0;
     bottom: 3.5em;
     right: 0;
-    left: 25%;
+    /* left: 25%; */
+    left: 0;
+    padding:10px;
 }
 
 .video-js #player-endcard #related-content div {
-    height: 50%;
+    height: 19%;
     border: 1px solid gray;
+    margin-bottom:3px;
+    padding:4px;
 }
 
 .video-js #player-endcard #related-content div p {
@@ -37,7 +41,7 @@
     position: absolute;
     top: 0;
     bottom: 3.5em;
-    right: 75%;
+    /* right: 75%; */
     left: 0%;
 }
 

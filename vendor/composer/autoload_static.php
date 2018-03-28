@@ -96,6 +96,10 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
             'Laravel\\Tinker\\' => 15,
             'Laravel\\Socialite\\' => 18,
         ),
+        'J' => 
+        array (
+            'Jenssegers\\Model\\' => 17,
+        ),
         'I' => 
         array (
             'Illuminate\\' => 11,
@@ -106,6 +110,8 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
             'GeoIp2\\' => 7,
+            'GeneaLabs\\LaravelCaffeine\\Tests\\' => 32,
+            'GeneaLabs\\LaravelCaffeine\\' => 26,
         ),
         'F' => 
         array (
@@ -131,8 +137,13 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
             'Cron\\' => 5,
             'Carbon\\' => 7,
         ),
+        'B' => 
+        array (
+            'Barryvdh\\Cors\\' => 14,
+        ),
         'A' => 
         array (
+            'Asm89\\Stack\\' => 12,
             'App\\' => 4,
         ),
     );
@@ -300,6 +311,10 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
         array (
             0 => __DIR__ . '/..' . '/laravel/socialite/src',
         ),
+        'Jenssegers\\Model\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jenssegers/model/src',
+        ),
         'Illuminate\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
@@ -319,6 +334,14 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
         'GeoIp2\\' => 
         array (
             0 => __DIR__ . '/..' . '/geoip2/geoip2/src',
+        ),
+        'GeneaLabs\\LaravelCaffeine\\Tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/genealabs/laravel-caffeine/tests',
+        ),
+        'GeneaLabs\\LaravelCaffeine\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/genealabs/laravel-caffeine/src',
         ),
         'Fideloper\\Proxy\\' => 
         array (
@@ -367,6 +390,14 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
+        ),
+        'Barryvdh\\Cors\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/barryvdh/laravel-cors/src',
+        ),
+        'Asm89\\Stack\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack',
         ),
         'App\\' => 
         array (
@@ -505,6 +536,7 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
         'App\\Http\\Controllers\\MappingSuperUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/MappingSuperUserController.php',
         'App\\Http\\Controllers\\MappingVideoToReviewerController' => __DIR__ . '/../..' . '/app/Http/Controllers/MappingVideoToReviewerController.php',
         'App\\Http\\Controllers\\NotifikasiController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotifikasiController.php',
+        'App\\Http\\Controllers\\PetaMateriController' => __DIR__ . '/../..' . '/app/Http/Controllers/PetaMateriController.php',
         'App\\Http\\Controllers\\ReviewVideoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReviewVideoController.php',
         'App\\Http\\Controllers\\SearchController' => __DIR__ . '/../..' . '/app/Http/Controllers/SearchController.php',
         'App\\Http\\Controllers\\UploadController' => __DIR__ . '/../..' . '/app/Http/Controllers/UploadController.php',
@@ -528,7 +560,9 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
         'App\\Model\\Endcards' => __DIR__ . '/../..' . '/app/Model/Endcards.php',
         'App\\Model\\History' => __DIR__ . '/../..' . '/app/Model/History.php',
         'App\\Model\\Notifikasi' => __DIR__ . '/../..' . '/app/Model/Notifikasi.php',
+        'App\\Model\\PetaMateri' => __DIR__ . '/../..' . '/app/Model/PetaMateri.php',
         'App\\Model\\Profile' => __DIR__ . '/../..' . '/app/Model/Profile.php',
+        'App\\Model\\TopikMateri' => __DIR__ . '/../..' . '/app/Model/TopikMateri.php',
         'App\\Model\\Users' => __DIR__ . '/../..' . '/app/Model/Users.php',
         'App\\Model\\Video' => __DIR__ . '/../..' . '/app/Model/Video.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -543,7 +577,13 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
         'App\\Services\\RestructureVideo' => __DIR__ . '/../..' . '/app/Services/RestructureVideo.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
+        'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
+        'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
+        'Barryvdh\\Cors\\HandleCors' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/HandleCors.php',
+        'Barryvdh\\Cors\\HandlePreflight' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/HandlePreflight.php',
+        'Barryvdh\\Cors\\LumenServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/LumenServiceProvider.php',
+        'Barryvdh\\Cors\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/ServiceProvider.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
@@ -1532,6 +1572,20 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
+        'GeneaLabs\\LaravelCaffeine\\Console\\Commands\\Publish' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/src/Console/Commands/Publish.php',
+        'GeneaLabs\\LaravelCaffeine\\Dripper' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/src/Dripper.php',
+        'GeneaLabs\\LaravelCaffeine\\Http\\Controllers\\Drip' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/src/Http/Controllers/Drip.php',
+        'GeneaLabs\\LaravelCaffeine\\Http\\Middleware\\LaravelCaffeineDripMiddleware' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/src/Http/Middleware/LaravelCaffeineDripMiddleware.php',
+        'GeneaLabs\\LaravelCaffeine\\Providers\\Service' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/src/Providers/Service.php',
+        'GeneaLabs\\LaravelCaffeine\\Tests\\BrowserTestCase' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/tests/BrowserTestCase.php',
+        'GeneaLabs\\LaravelCaffeine\\Tests\\Browser\\DripTest' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/tests/Browser/DripTest.php',
+        'GeneaLabs\\LaravelCaffeine\\Tests\\CreatesApplication' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/tests/CreatesApplication.php',
+        'GeneaLabs\\LaravelCaffeine\\Tests\\FeatureTestCase' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/tests/FeatureTestCase.php',
+        'GeneaLabs\\LaravelCaffeine\\Tests\\Feature\\CaffeineTest' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/tests/Feature/CaffeineTest.php',
+        'GeneaLabs\\LaravelCaffeine\\Tests\\Http\\Controllers\\Test' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/tests/Http/Controllers/Test.php',
+        'GeneaLabs\\LaravelCaffeine\\Tests\\UnitTestCase' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/tests/UnitTestCase.php',
+        'GeneaLabs\\LaravelCaffeine\\Tests\\Unit\\Console\\Commands\\PublishTest' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/tests/Unit/Console/Commands/PublishTest.php',
+        'GeneaLabs\\LaravelCaffeine\\Tests\\Unit\\Providers\\DripperTest' => __DIR__ . '/..' . '/genealabs/laravel-caffeine/tests/Unit/DripperTest.php',
         'GeoIp2\\Compat\\JsonSerializable' => __DIR__ . '/..' . '/geoip2/geoip2/src/Compat/JsonSerializable.php',
         'GeoIp2\\Database\\Reader' => __DIR__ . '/..' . '/geoip2/geoip2/src/Database/Reader.php',
         'GeoIp2\\Exception\\AddressNotFoundException' => __DIR__ . '/..' . '/geoip2/geoip2/src/Exception/AddressNotFoundException.php',
@@ -2470,6 +2524,8 @@ class ComposerStaticInitf7ce8e45fac8bce06cd575ab2f0b3f56
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
+        'Jenssegers\\Model\\MassAssignmentException' => __DIR__ . '/..' . '/jenssegers/model/src/MassAssignmentException.php',
+        'Jenssegers\\Model\\Model' => __DIR__ . '/..' . '/jenssegers/model/src/Model.php',
         'Laravel\\Socialite\\AbstractUser' => __DIR__ . '/..' . '/laravel/socialite/src/AbstractUser.php',
         'Laravel\\Socialite\\Contracts\\Factory' => __DIR__ . '/..' . '/laravel/socialite/src/Contracts/Factory.php',
         'Laravel\\Socialite\\Contracts\\Provider' => __DIR__ . '/..' . '/laravel/socialite/src/Contracts/Provider.php',

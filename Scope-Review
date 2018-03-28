@@ -64,7 +64,11 @@ user Interface :
     - PIC (petugas provinsi)
         - membuka dan menutup fungsi :
             - create pelatihan (Dibuat di jakarta)
-            - biodata peserta
+            - biodata peserta (level : peserta pelatihan)
+                isi biodata saat :
+                1. pelatihan
+                2. ikut 
+                -> bisa buat saung diskusi
             - pretest
             - post test
             - evaluasi narasumber ada 2 (Form)

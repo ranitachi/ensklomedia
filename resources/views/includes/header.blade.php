@@ -1,3 +1,4 @@
+<meta name="caffeinated" content="false">
 <header style="position:fixed;top:0;width:100%;z-index:100000">
 {{--  <header>  --}}
         <div class="container-full">
@@ -10,7 +11,11 @@
                         <a href="{{url('trending')}}"><i class="fa fa-star" style="font-size:20px;color:#fff"></i></a>
                     </div>
                     <div class="col-sm-4 col-xs-4" style="text-align:center">
-                        <a href="{{url('login')}}"><i class="fa fa-user" style="font-size:20px;color:#fff"></i></a>
+                        @if (Auth::check())
+                            <a href="{{url('logout')}}"><i class="fa fa-sign-out" style="font-size:20px;color:#fff"></i></a>
+                        @else
+                            <a href="{{url('login')}}"><i class="fa fa-user" style="font-size:20px;color:#fff"></i></a>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-12 hidden-lg hidden-md">
@@ -32,10 +37,10 @@
                     	<i class="fa fa-close"></i>
                     </a>
                     <div style="float:left;margin-right:20px;" class="hidden-sm hidden-xs">
-                        <a href="#" id="icon-menu"><i class="fa fa fa-navicon font-like-yt" style="padding-top:8px"></i></a>
-                    </div>
-                    <div id="logo" style="text-align:center !important;">
-                        <a href="{{url('/')}}" ><img src="{{ asset('assets/img/logo.png')}}" alt="" style="width:75%"></a>
+                        <a href="#" id="icon-menu"><i class="fa fa fa-navicon font-like-yt" style="width:18%;float:left;"></i></a>
+                        <div id="logo" style="text-align:center !important;margin-top:-4px;width:81%;float:right;padding-top:0px;">
+                            <a href="{{url('/')}}" ><img src="{{ asset('assets/img/logo.png')}}" alt=""></a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">

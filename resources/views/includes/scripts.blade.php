@@ -5,3 +5,5 @@
 <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js')}}"></script>
 <script src="{{ asset('assets/js/grid-blog.min.js')}}"></script>
 <script src="{{ asset('js/chosen.jquery.js')}}"></script>
+<script src="{{ asset('js/notify.js')}}"></script>
+<script src="{{ asset('js/popcorn.js')}}"></script>

@@ -7,14 +7,17 @@ use App\Model\Video;
 use App\Model\Category;
 use App\Model\Users;
 use App\Model\Comments;
+use App\Model\PetaMateri;
 use App\Model\Endcards;
+use App\Model\Instrumen;
+use App\Model\Penilaian;
 use Auth;
 use File;
 class ReviewVideoController extends Controller
 {
     public function index(Request $request)
     {
-        $hal=10;
+        $hal=12;
         $getvideo = Video::where('reviewer_id','=',Auth::user()->id)->with('category')->with('user')->paginate($hal);
         if(isset($request->search))
         {
@@ -45,6 +48,14 @@ class ReviewVideoController extends Controller
         {
             $cat[$v->id]=$v;
         }
+        
+        $pm=PetaMateri::orderBy('title')->get();
+        $mapel=array();
+        foreach($pm as $k => $v)
+        {
+            $mapel[$v->id]=$v;
+        }
+
         $comments = Comments::where('video_id', $id)->with('video')->get();
             
         $myfile=public_path('uploadfiles/video').'/'.$video->video_path;
@@ -76,14 +87,22 @@ class ReviewVideoController extends Controller
             }
         }
         
-    
-       
+        $instrumen=Instrumen::where('flag','=',1)->get();
+        $penilaian=Penilaian::where('video_id','=',$id)->get();
+        $pn=array();
+        foreach($penilaian as $i => $v)
+        {
+            $pn[$v->instrumen_id]=$v->nilai;
+        }
         return view('pages-admin.setting.review-video.detail')
                 ->with('id',$id)
                 ->with('status',$status)
+                ->with('instrumen',$instrumen)
                 ->with('endcards',$endcards)
+                ->with('pn',$pn)
                 ->with('video',$video)
                 ->with('cat',$cat)
+                ->with('mapel',$mapel)
                 ->with('relatedvideo',$relatedvideo)
                 ->with('comments',$comments)
                 ->with(compact('vid', 'mime','cover'));
@@ -97,7 +116,7 @@ class ReviewVideoController extends Controller
             $vid->approved_at=date('Y-m-d H:i:s');
             $vid->save();
             return redirect('review')
-            ->with('message', 'Video Sudah Dikaji, dan siap Tayang');
+                ->with('message', 'Video Sudah Dikaji, dan siap Tayang');
         }
         else
         {
@@ -110,6 +129,8 @@ class ReviewVideoController extends Controller
         $edit=Video::find($id);
         $edit->title = $request->input('title');
         $edit->category_id = $request->input('category_id');
+        $edit->id_mapel = $request->input('id_mapel');
+        $edit->tags = $request->input('tag');
         $edit->desc = $request->input('description');
         $edit->save();
         return redirect('review/'.$id)

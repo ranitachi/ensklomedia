@@ -9,6 +9,24 @@ function checkExternalFile($url)
 
     return $retCode;
 }
+function split_title($text)
+{
+    $splitstring1 = substr($text, 0, floor(strlen($text) / 2));
+    $splitstring2 = substr($text, floor(strlen($text) / 2));
+
+    if (substr($splitstring1, 0, -1) != ' ' AND substr($splitstring2, 0, 1) != ' ')
+    {
+        $middle = strlen($splitstring1) + strpos($splitstring2, ' ') + 1;
+    }
+    else
+    {
+        $middle = strrpos(substr($text, 0, floor(strlen($text) / 2)), ' ') + 1;    
+    }
+
+    $string1 = substr($text, 0, $middle);  // "The Quick : Brown Fox Jumped "
+    $string2 = substr($text, $middle);
+    return $string1.' '.$string2;
+}
 function cekfile($file)
 {
     $file_headers = @get_headers($file);

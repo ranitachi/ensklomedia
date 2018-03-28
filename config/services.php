@@ -41,9 +41,14 @@ return [
     // ],
     'google' => [
       'client_id' => '899646815015-8kfl08kiostej94cnq87aanh5h58f8n5.apps.googleusercontent.com',
-      'client_secret' => 'H22yIZhLS8MktJz9K1Zsjr9P',
-      'redirect' => 'http://ensiklomedia.suaraedukasi.com/login/google/callback'
+      'client_secret' => 'qgdgpWEq9HeJ8wwu4yT2V3HY',
+      'redirect' => 'https://ensiklomedia.tve.kemdikbud.go.id/login/google/callback'
     ],
+    // 'google' => [
+    //   'client_id' => '899646815015-8kfl08kiostej94cnq87aanh5h58f8n5.apps.googleusercontent.com',
+    //   'client_secret' => 'H22yIZhLS8MktJz9K1Zsjr9P',
+    //   'redirect' => 'http://ensiklomedia.suaraedukasi.com/login/google/callback'
+    // ],
     // 'google' => [
     //   'client_id' => '899646815015-8kfl08kiostej94cnq87aanh5h58f8n5.apps.googleusercontent.com',
     //   'client_secret' => 'TD_9mIDEJfX2BQfm_nvjhS6s',

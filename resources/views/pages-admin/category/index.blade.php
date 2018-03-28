@@ -141,5 +141,45 @@
                 
             });
         }
+        function petamateri(idcat,id)
+        {
+            $('#content-body-petamateri').load(APP_URL+'/petamateri-form/'+idcat+'/'+id);
+            $('#modal-petamateri').modal('show');
+            $('#ok-petamateri').one('click',function(){
+                var t_url = APP_URL+'/petamateri-save/'+idcat+'/'+id;
+                var t_method = 'POST';
+               
+                $.ajax({
+                    url : t_url,
+                    type : t_method,
+                    dataType: 'json',
+                    cache: false,
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    data: $('#form-petamateri').serialize()
+                }).done(function(data){
+                    
+                    loaddata(-1);
+                    $('#modal-petamateri').modal('hide');
+                    if(id==-1)
+                    {
+                         var ps="<h3 style='color:black !important;'>Data Peta Materi Berhasil Disimpan</h3>";
+                    }
+                    else
+                    {
+                        var ps="<h3 style='color:black !important;'>Data Peta Materi Berhasil Di Edit</h3>";
+                    }
+                    $('#content-body-ok').html(ps);
+                    $('#modal_ok').modal('show');
+
+                }).fail(function(data){
+                    
+                    $('#modal-petamateri').modal('hide');
+                    var ps="<h3 style='color:black !important;'>Data Peta Materi Gagal Disimpan</h3>";
+                    $('#content-body-ok').html(ps);
+                    $('#modal_ok').modal('show');
+
+                });
+            });
+        }
     </script>
 @endsection

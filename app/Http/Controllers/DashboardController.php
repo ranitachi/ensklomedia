@@ -7,6 +7,7 @@ use App\Model\Users;
 use App\Model\Category;
 use App\Model\Video;
 use App\Model\Comments;
+use App\Model\PetaMateri;
 use App\Model\Endcards;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -21,7 +22,7 @@ class DashboardController extends Controller
     public function index()
     {   
         $cat=Category::orderBy('name')->get();
-        $vid=Video::orderByRaw("RAND()")->get();
+        $vid=Video::where('duration','!=','-1')->orderByRaw("RAND()")->get();
         $video=array();
         foreach($vid as $k => $v)
         {
@@ -46,7 +47,7 @@ class DashboardController extends Controller
         {
             $cat[$v->id]=$v;
         }
-        $vid=Video::limit(20)->orderBy("hit","desc")->get();
+        $vid=Video::where('duration','!=','-1')->limit(20)->orderBy("hit","desc")->get();
         $video=array();
         foreach($vid as $k => $v)
         {
@@ -119,6 +120,27 @@ class DashboardController extends Controller
         $title = $video->title;
         return view('pages.video.player')->with(compact('vid', 'mime', 'title'));
     }
+    public function playerstd($slug)
+    {
+        $video = Video::where('slug','=',$slug)->get()->first();
+        $id=$video->id;
+        $videosDir = base_path('public/uploadfiles/video');
+        $myfile=public_path('uploadfiles/video').'/'.$video->video_path;
+        $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->video_path;
+        $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
+        if(File::exists($myfile))
+        {
+                $status='v2';
+                $vv = 'uploadfiles/video/'.$video->video_path;
+                $cv = 'uploadfiles/image/'.$video->image_path;
+                $vid=url($vv);
+                $cover=url($cv);
+        }
+        // $vid='http://ensiklomedia.kemdikbud.go.id/uploads/videos/20170703-66BP5AE20160715_010744.mp4';
+        $mime = "video/mp4";
+        $title = $video->title;
+        return view('pages.video.player-std')->with(compact('vid', 'mime', 'title'));
+    }
 
     public function durasi()
     {
@@ -152,11 +174,13 @@ class DashboardController extends Controller
         // echo $process->getOutput();
 
         // $vid=Video::where('duration','=','00:00:00')->limit(100)->get();
-        $vid=Video::where('duration','=','00:00:00')->get();
+        // $vid=Video::where('duration','=','00:00:00')->get();
+        $vid=Video::where('duration','=','-1')->get();
         $x=0;
         foreach($vid as $index => $val)
         {
             $file="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".str_replace(' ','%20',$val->video_path);
+            // $file="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$val->video_path;
             $cekfile=cekfile($file);
             if($cekfile)
             {
@@ -165,8 +189,8 @@ class DashboardController extends Controller
                 $duration='0'.strtok($process->getOutput(),'.');
 
                 
-                echo '<span style="color:blue">'.$val->title.' :: '.$duration.'</span><br>';
-                $x++;
+                //echo '<span style="color:blue">'.$val->title.' :: '.$duration.'</span><br>';
+                // $x++;
                 DB::table('video')
                     ->where('id', $val->id)
                     ->update(['duration' => $duration]);
@@ -174,22 +198,31 @@ class DashboardController extends Controller
                 $img_path=$val->image_path;
                 if($val->image_path=='')
                 {
-                    // $gbr=strtok($val->video_path,'.').'.jpg';
-                    // DB::table('video')
-                    // ->where('id', $val->id)
-                    // ->update(['image_path' => $gbr]);
-                    // $img_path=$gbr;
+                    $gbr=strtok($val->video_path,'.').'.jpg';
+                    DB::table('video')
+                    ->where('id', $val->id)
+                    ->update(['image_path' => $gbr]);
+                    $img_path=$gbr;
                 }
+                 
+                if(strpos($img_path,'.gif')!==false)
+                {
+                    $img_path=str_replace('.gif','.jpg',$img_path);
+                }
+                $prc2=new Process('/usr/local/bin/ffmpeg -ss 00:00:03 -i "'.$file.'" -vf  scale=w=845:h=400:force_original_aspect_ratio=decrease "'.public_path().'/uploadfiles/image/'.$img_path.'"');
+                $prc2->run();
                     
-                // $prc2=new Process('/usr/local/bin/ffmpeg -ss 00:00:03 -i "'.$file.'" -vf  scale=w=210:h=110:force_original_aspect_ratio=decrease "'.public_path().'/uploadfiles/image/'.$img_path.'"');
-                // $prc2->run();
             }
             else
             {
+                // DB::table('video')
+                //     ->where('id', $val->id)
+                //     ->delete();
                 DB::table('video')
                     ->where('id', $val->id)
-                    ->delete();
+                    ->update(['duration' => '-1']);
                 echo '<span style="color:red">'.$file.' :: '.$val->title.'</span><br>';
+                $x++;
             }
             // echo $cekfile;
             // if(File::exists($url))
@@ -220,7 +253,22 @@ class DashboardController extends Controller
             // }
     
         }
-        echo 'Data ada : '.$x;
+        echo 'Sisa Data : '.$x;
          echo '<br><br>This page took <b>'. (microtime(true) - LARAVEL_START) .'</b> seconds to render<br>';
+    }
+
+    public function combomapel($idkat)
+    {
+        echo '<select name="id_mapel" class="form-control" data-placeholder="Mata Pelajaran">';
+        echo '<option value=""></option>';
+        $mapel=PetaMateri::where('category_id','=',$idkat)->get();
+        if(count($mapel)!=0)
+        {
+            foreach($mapel as $id_m => $vl_m)
+            {
+                echo '<option value="'.$vl_m->id.'">'.$vl_m->title.'</option>';
+            }
+        }
+        echo '</select>';
     }
 }

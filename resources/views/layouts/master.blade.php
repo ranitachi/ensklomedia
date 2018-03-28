@@ -17,7 +17,7 @@
           @include('includes.navbar')
         </div>
 
-	  <div class="site-output" style="margin-top:55px;position:relative;">
+	    <div class="site-output" style="margin-top:55px;position:relative;">
         <div id="sidebar-menu" class="no-padding-left no-padding-right hidden-lg hidden-md hidden-sm hidden-xs" style="position:fixed;width:22%;height:100%;z-index:20000;overflow:auto;background:#f8f8f8;padding-bottom:50px !important;">
           @include('includes.sidebar')  
         </div>

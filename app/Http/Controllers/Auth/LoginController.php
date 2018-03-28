@@ -39,7 +39,7 @@ class LoginController extends Controller
             $us->password =  bcrypt($userSocial->getEmail());
             $us->registration_ip=\Request::ip();
             $us->authentication_key='-';
-            $us->authorization_level='-';
+            $us->authorization_level=4;
             $us->login_with=$social;
             $us->created_at=date('Y-m-d H:i:s');
             $us->updated_at=date('Y-m-d H:i:s');

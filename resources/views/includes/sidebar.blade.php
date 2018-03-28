@@ -14,6 +14,8 @@
 					<ul class="menu-sidebar" style="border-bottom:1px solid #dddddd;">
 						<li><a href="{{URL::to('user')}}"><i class="fa fa-users"></i>Pengguna</a></li>
 						<li><a href="{{URL::to('category')}}"><i class="fa fa-files-o"></i>Kategori</a></li>
+						<li><a href="{{url('upload')}}"><i class="fa fa-upload color-2"></i>Upload video</a></li>
+						<li><a href="{{url('instrumen')}}"><i class="fa fa-file color-2"></i>Instrumen Penilaian</a></li>
 						{{--  <li><a href="{{URL::to('setting')}}"><i class="fa fa-cogs"></i>Pengaturan</a></li>	  --}}
 						<ul class="accordion" id="accordion-setting">
 							<li class="a-panel">
@@ -32,7 +34,7 @@
 							<ul id="linkawal" class="collapse" style="margin-left:10px !important;padding-top:10 !important;">
 								@if (Auth::check())
 									@if(Auth::user()->authorization_level==0)
-										<li class="color-1"><a href="{{url('mapping-admin')}}" style="padding:0px !important"><i class="fa fa-caret-right"></i>Mapping Admin</a>
+										<li class="color-1"><a href="{{url('mapping-admin')}}" style="padding:0px !important"><i class="fa fa-caret-right"></i>Mapping Admin</a></li>
 									@endif
 								@endif
 								{{--  <li class="color-1"><a href="{{url('tahun-berjalan')}}" style="padding:0px !important"><i class="fa fa-caret-right"></i>Tahun Berjalan</a>
@@ -48,6 +50,7 @@
 					@if(Auth::user()->authorization_level==1)
 					<ul class="menu-sidebar" style="border-bottom:1px solid #dddddd;">
 						<ul class="accordion" id="accordion-setting">
+							<li><a href="{{URL::to('topik-materi')}}"><i class="fa fa-files-o"></i>Topik Materi</a></li>
 							<li class="a-panel">
 								<div class="row">
 									<a data-toggle="collapse" data-parent="#accordion-setting" href="#linkawal">
@@ -85,7 +88,7 @@
 								</div>
 							</li>
 							<ul id="linkawal" class="collapse" style="margin-left:10px !important;padding-top:10 !important;">
-								<li class="color-1"><a href="{{url('video-verifikasi')}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>Verifikasi Video</a>
+								<li class="color-1"><a href="{{url('video-verifikasi')}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>Verifikasi Video</a></li>
 								
 							</ul>
 						</ul>
@@ -107,7 +110,7 @@
 								</div>
 							</li>
 							<ul id="linkawal" class="collapse" style="margin-left:10px !important;padding-top:10 !important;">
-								<li class="color-1"><a href="{{url('review-video')}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>Review Video</a>
+								<li class="color-1"><a href="{{url('review-video')}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>Review Video</a></li>
 								
 							</ul>
 						</ul>

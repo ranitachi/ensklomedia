@@ -12,11 +12,14 @@
                                 </tr>             
                             </thead>
                             <tbody>
+                                @php
+                                     $pages= $hal+1;
+                                @endphp
                                 @foreach ($videos as $key => $item)
                                     <tr>
-                                        <td>{{ $key = $key+1 }}</td>
+                                        <td>{{ $pages }}</td>
                                         <td>{{ $item->title }}</td>
-                                        <td><span class="label label-primary">{{ $item->category->name }}</span></td>
+                                        <td><span class="label label-primary">{{ isset($item->category->name) ? $item->category->name : '' }}</span></td>
                                         <td>{!!(!isset($item->user->profile->name)) ? '<span class="label label-warning">n/a</span>' : '<span class="label label-success"><i class="fa fa-user"></i>&nbsp;'.$item->user->profile->name.'</span>'!!}</td>
                                         <td>
                                             {{ (!isset($item->activated->profile->name)) ? 'n/a' : $item->activated->profile->name }}
@@ -26,9 +29,20 @@
                                             {!!(!isset($item->reviewer->profile->name)) ? '<span class="label label-warning">n/a</span>' : '<span class="label label-info"><i class="fa fa-user"></i>&nbsp;'.$item->reviewer->profile->name.'</span>'!!}
                                         </td>
                                         <td class="text-center">
-                                            <a data-toggle="modal" data-target="#modalConfirm" data-value="{{ $item->id }}" class="btn btn-xs btn-primary simpan"><i class="fa fa-edit text-white"></i></a>
+                                            {{--  <a data-toggle="modal" data-target="#modalConfirm" data-value="{{ $item->id }}" class="btn btn-xs btn-primary simpan"><i class="fa fa-edit text-white"></i></a>  --}}
+                                            <a href="javascript:pilihreviewer({{$item->id}})" class="btn btn-xs btn-primary simpan"><i class="fa fa-edit text-white"></i></a>
                                         </td>
                                     </tr>
+                                    @php
+                                        $pages++;
+                                    @endphp
                                 @endforeach
                             </tbody>
                         </table>
+<div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                        <div class="pull-right">
+                            {{ $videos->links() }}
+                        </div>
+                    </div>
+                </div>

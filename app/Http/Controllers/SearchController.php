@@ -54,9 +54,13 @@ class SearchController extends Controller
         else
         {
             $vidd = Video::where("title","LIKE","%{$data}%")->get();
-
-            // return view('pages.video.search')
-            //         ->with('video',$vidd);
+            $id=-1;
+            return view('pages.video.search')
+                    ->with('id',$id)
+                    ->with('status',$status)
+                    ->with('relatedvideo',$relatedvideo)
+                    ->with('endcards',$endcards)
+                    ->with('video',$vidd);
         }
         
         
@@ -65,6 +69,8 @@ class SearchController extends Controller
     public function autocomplete(Request $request)
     {
         $data = Video::select("id as id","title as name")
+                    ->where('duration','!=','-1')
+                    ->whereNotNull('active_by')
                     ->where("title","LIKE","%{$request->input('query')}%")->get();
         return response()->json($data);
     }

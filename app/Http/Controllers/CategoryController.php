@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Category;
+use App\Model\PetaMateri;
 class CategoryController extends Controller
 {
     public function index()
     {
         $cat=Category::all();
+        
         return view('pages-admin.category.index')
                 ->with('category',$cat);
     }
@@ -16,7 +18,14 @@ class CategoryController extends Controller
     public function data($id=-1)
     {
         $cat=Category::orderBy('code')->get();
+        $pm=PetaMateri::where('flag','=',1)->get();
+        $petamateri=array();
+        foreach($pm as $k=>$v)
+        {
+            $petamateri[$v->category_id][]=$v;
+        }
         return view('pages-admin.category.data')
+                ->with('petamateri',$petamateri)
                 ->with('category',$cat);
     }
 

@@ -4,10 +4,10 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Video Post – Video Sharing HTML Template</title>
-        <meta name="keywords" content="Blog website templates" />
-        <meta name="description" content="Author - Personal Blog Wordpress Template">
-        <meta name="author" content="Rabie Elkheir">
+        <title>Pendaftaran - Ensiklomedia</title>
+        <meta name="keywords" content="ensiklomedia" />
+        <meta name="description" content="Ensiklomedia">
+        <meta name="author" content="Pustekkom Kemdikbud RI">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap Core CSS -->
         <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -36,7 +36,7 @@
       
       	<div id="log-in-head">
         	<h1>Sign Up</h1>
-            <div id="logo"><a href="01-home.html"><img src="{{ asset('assets/img/logo.png')}}" alt=""></a></div>
+            <div id="logo"><a href="http://ensiklomedia.tve.kemdikbud.go.id/"><img src="{{ asset('assets/img/logo.png')}}" alt=""></a></div>
         </div>
         
         <div class="form-output">
@@ -72,7 +72,7 @@
                     <div class="checkbox">
                         <label>
                             <input name="optionsCheckboxes" type="checkbox">
-                            Saya setuju dengan <a href="#">Syarat dan Ketentuan</a> dari penggunaan website ini.
+                            Saya setuju dengan syarat dan ketentuan dari penggunaan Ensiklomedia.
                         </label>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                         <a href="#" class="btn btn-lg bg-facebook col-lg-6 col-md-6 col-sm-6 col-xs-6 btn-icon-left"><i class="fa fa-facebook" aria-hidden="true"></i>Login with Facebook</a>
                         <a href="{{ url('login/google')}}" class="btn btn-lg bg-google col-lg-6 col-md-6 col-sm-6 col-xs-6 btn-icon-left"><i class="fa fa-google" aria-hidden="true"></i>Login with Google</a>
                     </div>
-                    <p>Sudah Memiliki Akun ? <a href="{{URL::to('login')}}"> Login !</a> </p>
+                    <p>Sudah Memiliki Akun ? <a href="{{URL::to('login')}}"> Login Disini!</a> </p>
                 </form>
             </div>
       </div>
