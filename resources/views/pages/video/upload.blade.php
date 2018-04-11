@@ -56,10 +56,10 @@
                                         <label>Deskripsi</label>
                                         <textarea class="form-control" rows="4"  id="desc" placeholder="Deskripsi" name="description"></textarea>
                                     </div>
-                                    <div class="col-md-12">
+                                    {{-- <div class="col-md-12">
                                         <label>Pilih Gambar Cover</label>
                                         <input id="featured_image" type="file" class="file" name="cover">
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-6">&nbsp;</div>
                                     <div class="col-md-6">
                                         <input type="hidden" name="id" id="id" value="{{$id}}">

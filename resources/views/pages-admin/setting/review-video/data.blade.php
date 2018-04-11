@@ -84,7 +84,7 @@
                                         </a>-->
                                         <div class="video-info">
                                             <a href="{{url('review', $vik->id)}}" onclick="addhit('{{$vik->id}}')" class="title">{{$vik->title}}</a>
-                                            <a class="channel-name" href="#">{!!$vik->approved_by !=0 || $vik->appreved_by!='' ? '<i class="fa fa-check-circle-o" data-toggle="tooltip" title="Sudah Di Verifikasi"></i>' : ''!!}</i>&nbsp;&nbsp;{{$vik->category->name}}</a>
+                                            <a class="channel-name" href="#">{!!$vik->approved_by !=0 || $vik->appreved_by!='' ? '<i class="fa fa-check-circle-o" data-toggle="tooltip" title="Sudah Di Verifikasi"></i>' : ''!!}</i>&nbsp;&nbsp;{{isset($vik->category->name) ? $vik->category->name : ''}}</a>
                                             <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>
                                             <span class="date"><i class="fa fa-clock-o"></i>{{$wkt}}</span>
                                         </div>

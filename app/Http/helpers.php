@@ -96,12 +96,34 @@ function leveluser($level)
         case 4 :
             $lv='Contributor';
             break;
+        case 5 :
+            $lv='PIC Fasilitasi';
+            break;
     }
     return $lv;
 }
 function level()
 {
-    $lv=array('Super Admin','Admin','Super User','Reviewer','Contributor');
+    $lv=array('Super Admin','Admin','Super User','Reviewer','Contributor','PIC Fasilitasi');
     return $lv;
+}
+function rating($star)
+{
+    $s1=$star;
+    $s2=5-$star;
+    $s='';
+    if($star>0)
+    {
+
+        for($i=1;$i<=$s1;$i++)
+        {
+            $s.='<span class="fa fa-star checked"></span>';
+        }
+        for($j=1;$j<=$s2;$j++)
+        {
+            $s.='<span class="fa fa-star"></span>';
+        }
+    }
+    return $s;
 }
 ?>

@@ -54,7 +54,7 @@
                 </div>
                 
                 <div class="col-xs-12 col-sm-12 no-padding-all" style="margin:0px !important">
-                <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}} {!!(is_null($video->approved_by) ? '<span class="label label-important"><i class="fa fa-info-circle" style="color:white"></i>&nbsp;&nbsp;Belum Dikaji</span>' : '')!!}</h1>
+                <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}} {!!(is_null($video->approved_by) ? rating(0) : '')!!}</h1>
                     <div id="watch" style="padding:0px !important;margin:0px !important;">
                         <div class="chanel-item" style="margin-bottom:0px !important;">
                         		
@@ -115,7 +115,7 @@
                         <h1 class="video-title title-watch">
                             
                             @if(is_null($video->approved_by))
-                                <span class="label label-danger"><i class="fa fa-info-circle" style="color:white"></i>&nbsp;&nbsp;Belum Dikaji</span>
+                                {!!rating(0)!!}
                             @endif
 
                             {{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}} 
@@ -123,15 +123,27 @@
 
                         <div class="video-share">
                         	<ul class="like">
-                            	<li><a class="like" href="#"><i class="fa fa-eye"></i>&nbsp;&nbsp;{{($id==-1 ? 0 : $video->hit)}} views</i></a></li>
+                                @php
+                                    $waktu=\Carbon\Carbon::parse($video->created_at)->diffForHumans();
+                                    $wkt=text_translate($waktu,'en','id');
+                                @endphp
+                                <li><a class="like" href="#"><i class="fa fa-eye"></i>&nbsp;&nbsp;{{($id==-1 ? 0 : $video->hit)}} views</i></a></li>
+                                <li><a class="like" href="#"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{date('d-m-Y',strtotime($video->created_at))}} :: {{($id==-1 ? 0 : $wkt)}}</i></a></li>
                             </ul>
-                        	<ul class="like pull-right">
-                            	<li>
-                                    <div >
-                                        <a href="" class="btn btn-sm btn-primary"><i class="fa fa-clone"></i>&nbsp;Buat Saung Diskusi</a>
-                                    </div>
-                                </li>
-                            </ul>
+                            @if (Auth::check())
+                                @if (!isset($saung[$video->id][Auth::user()->id]))
+                                    <ul class="like pull-right">
+                                        <li>
+                                            <div>
+                                                {{-- <a href="{{url('buat-saung/'.$video->slug)}}" class="btn btn-sm btn-primary"><i class="fa fa-clone"></i>&nbsp;Buka Saung Diskusi</a> --}}
+                                                <a href="javascript:gabungsaung('{{$video->slug}}','{{$video->title}}','{{$video->id}}')" class="btn btn-sm btn-success"><i class="fa fa-clone"></i>&nbsp;Gabung Saung Diskusi</a>
+
+                                                <a href="javascript:bukasaung('{{$video->slug}}','{{$video->title}}','{{$video->id}}')" class="btn btn-sm btn-primary"><i class="fa fa-clone"></i>&nbsp;Buka Saung Diskusi</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                @endif
+                            @endif
                         </div><!-- // video-share -->
                         <!-- // Video Player -->
 
@@ -247,11 +259,9 @@
                             <!-- video item -->
                             <div class="related-video-item" style="margin-left:5px;">
                                 <div class="thumb">
-                                    @if(is_null($related->approved_by))
-                                    <div class="hover-efect ribbon"><i class="fa fa-info-circle" style="color:white !important"></i>&nbsp;&nbsp;Belum Dikaji</div>
-                                    @else
-                                        <div class="hover-efect"></div>
-                                    @endif
+                                    
+                                    <div class="hover-efect"></div>
+                                    
                                     <small class="time">{{$durasi}}</small>
                                     @php
                                         $cover = "http://ensiklomedia.kemdikbud.go.id/uploads/images/".$related->image_path;
@@ -263,6 +273,8 @@
                                     @endphp
                                     <a href="{{ route('watch', $related->slug) }}" onclick="addhit('{{$related->id}}')"><img class="custom-size" src="{{ $cover }}" alt=""></a>
                                 </div>
+                                {!!rating(0)!!}
+                                
                                 <a href="{{ route('watch', $related->slug) }}" class="title">{{ $related->title }}</a>
                                 <a class="channel-name" href="{{ isset($related->category->name) ? url('video/category',strtolower($related->category->name)) : ''}}">
                                     {{ isset($related->category->name) ? $related->category->name : 'No Category Name' }}
@@ -293,6 +305,7 @@ if($id!=-1)
 }
 // $ecard=str_replace(array('[',']'),'',json_encode($endcards));
 $ecard=json_encode($endcards);
+// echo $ecard;
 // echo '<pre>';
 // print_r($endcards);
 // echo '</pre>';
@@ -304,6 +317,51 @@ $ecard=json_encode($endcards);
     <script src="{{asset('js/videojs.js')}}"></script>
     <script src='{{asset('js/videojs.endcard.js')}}'></script>
     <script>
+        function bukasaung(slug,judul,idvid)
+        {
+            $('#content-body').html('<h1 style="color:#000">Apakah Anda Yakin ingin Membuka Saung Diskusi untuk Video : '+judul+' ?</h1>');
+            $('#modal_default').modal('show');
+            $('#ok').click(function(){
+                $.ajax({
+                    url : APP_URL+'/create-saung/'+idvid,
+                    dataType: 'json',
+                    cache: false,
+                }).done(function(data){
+                    location.href=APP_URL+'/form-biodata/'+idvid+'/-1';
+
+                }).fail(function(){
+                    var txt = "Buka Saung Diskusi Baru Tidak Berhasil";
+                    
+                    $.notify(txt, {
+                        elementPosition: 'bottom right',
+                        className : 'error',
+                        globalPosition: 'buttom right',
+                    });
+                });
+            });
+        }
+        function gabungsaung(slug,judul,idvid)
+        {
+            $('#content-body').html('<h1 style="color:#000">Apakah Anda Yakin ingin Bergabung pada Saung Diskusi ini ?</h1>');
+            $('#modal_default').modal('show');
+            $('#ok').click(function(){
+                $.ajax({
+                    url : APP_URL+'/join-saung/'+idvid,
+                    dataType: 'json',
+                    cache: false,
+                }).done(function(data){
+                    // location.href=APP_URL+'/buka-saung/'+slug;
+                    location.href=APP_URL+'/edit-profile';
+                }).fail(function(){
+                    var txt = "Gabung Saung Diskusi Baru Tidak Berhasil";    
+                    $.notify(txt, {
+                        elementPosition: 'bottom right',
+                        className : 'error',
+                        globalPosition: 'buttom right',
+                    });
+                });
+            });
+        }
         var widthvideo=$(document).width();
         var heightvideo=(parseInt(widthvideo) / 1.33);
         var ecard='{{$ecard}}';
@@ -353,8 +411,14 @@ $ecard=json_encode($endcards);
                 var rel_content = document.createElement('div');
                 var a = document.createElement('a');
                 var p = document.createElement('p');
+                var link =en_c[x].link;
                 p.innerHTML = en_c[x].title;
-                a.href=en_c[x].link;
+                p.setAttribute('id_'+x, x);
+                // a.href=en_c[x].link;
+                p.addEventListener("click", function (i) {
+                    alert(p.getAttribute('id_'+x));
+                });
+
                 a.appendChild(p);
                 rel_content.appendChild(a);
                 list.push(rel_content);

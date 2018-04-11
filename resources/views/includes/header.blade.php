@@ -81,7 +81,7 @@
                         </a>
                         <ul class="dropdown-menu account-menu">
                         @if (Auth::check())
-                            <li><a href="#"><i class="fa fa-edit color-1"></i>Edit profile</a></li>
+                            <li><a href="{{url('edit-profile')}}"><i class="fa fa-edit color-1"></i>Edit profile</a></li>
                             <li><a href="{{url('upload')}}"><i class="fa fa-upload color-2"></i>Upload video</a></li>
                             <li><a href="#"><i class="fa fa-youtube-play color-1"></i>Video Saya</a></li>
                             <li><a href="{{url('logout')}}"><i class="fa fa-sign-out color-4"></i>Logout</a></li>

@@ -162,7 +162,9 @@ header
 	{
 		/* width:210px;
 		height:118px; */
-		height:110px;
+		/* height:110px; */
+		height:auto;
+		max-height:170px;
 		width:100% !important;
 	}
 	.custom-size
@@ -236,8 +238,9 @@ header
 	{
 		/* width:210px;
 		height:118px; */
-		height:110px;
+		height:auto;
 		width:100% !important;
+		max-height:170px;
 	}
 	.video-info{
 		width:190px !important;

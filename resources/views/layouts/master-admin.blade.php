@@ -47,7 +47,7 @@
     $(document).ready(function(){
       $('#latar').hide();
       $(".chosen-select").chosen();
-      var path = "{{ route('search.auto') }}";
+
         var path = "{{ route('search.auto') }}";
         $('#icon-menu').click(function(){
             var hidemenu=$('#hide-menu').val();

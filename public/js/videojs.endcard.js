@@ -46,8 +46,9 @@
         for (var i = 0; i < content.length; i++) {
           related_content_div.appendChild(content[i]);
         }
-
+        
         card.appendChild(related_content_div);
+        //alert('aa');
       }
       else {
         throw new TypeError("options.getRelatedContent must return an array");

@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 
 /**
@@ -51,3 +50,11 @@ if (token) {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+import Echo from "laravel-echo"
+window.Pusher = require('pusher-js');
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '5d43fb244fa747cbef54',
+    cluster: 'ap1',
+    encrypted: true
+});

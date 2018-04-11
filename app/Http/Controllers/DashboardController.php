@@ -9,6 +9,7 @@ use App\Model\Video;
 use App\Model\Comments;
 use App\Model\PetaMateri;
 use App\Model\Endcards;
+use App\Model\Saung;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -86,10 +87,17 @@ class DashboardController extends Controller
             $relatedvideo = Video::where('category_id', $video->category_id)->with('category')->orderByRaw("RAND()")->limit(10)->get();
             $endcards=Endcards::where('video_id','=',$id)->whereNotNull('link')->get();
         }
+        $saung=Saung::where('flag','=',1)->get();
+        $sn=array();
+        foreach($saung as $k => $v)
+        {
+            $sn[$v->video_id][$v->created_user_id]=$v;
+        }
         // echo $vid;
         //$e_cards=json_encode($endcards);
         return view('pages.watch.index')
                 ->with('id',$id)
+                ->with('saung',$sn)
                 ->with('status',$status)
                 ->with('endcards',$endcards)
                 ->with('slug',$slug)

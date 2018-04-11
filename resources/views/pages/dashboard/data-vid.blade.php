@@ -83,11 +83,8 @@
                                     <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 margin-left-right-2 col-custom hidden-sm hidden-xs">
                                         <div class="video-item">
                                             <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
-                                                @if($img_dikaji=='1')
-                                                    <div class="hover-efect ribbon"><i class="fa fa-info-circle" style="color:white !important"></i>&nbsp;&nbsp;Belum Dikaji</div>
-                                                @else
+                                               
                                                     <div class="hover-efect"></div>
-                                                @endif
                                                     <small class="time">{{$durasi}}</small>
                                                 <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:118px;width:210px">
                                                 
@@ -95,6 +92,8 @@
                                             </div>
                                             
                                             <div class="video-info">
+                                                {!!rating(0)!!}
+
                                                 <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{(($vik->title))}}</a>
                                                 <a class="channel-name" href="#">{{$kategori}}</a>
                                                     <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>
@@ -106,11 +105,9 @@
                                     <div class="col-sm-12 col-xs-12 padding-left-right-3 hidden-lg hidden-md">
                                         <div class="video-item">
                                             <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
-                                                @if($img_dikaji=='1')
-                                                    <div class="hover-efect ribbon"><i class="fa fa-info-circle" style="color:white !important"></i>&nbsp;&nbsp;Belum Dikaji</div>
-                                                @else
-                                                    <div class="hover-efect"></div>
-                                                @endif
+                                                
+                                                <div class="hover-efect"></div>
+                                                
                                             @if($durasi!='')
                                                     <small class="time">{{$durasi}}</small>
                                                 @endif
@@ -118,6 +115,7 @@
                                             </div>
                                             
                                             <div class="video-info">
+                                                {!!rating(0)!!}
                                                 <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{(($vik->title))}}</a>
                                                 <a class="channel-name" href="#">{{$kategori}}</a>
                                                 <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>

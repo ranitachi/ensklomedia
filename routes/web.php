@@ -51,10 +51,35 @@ Route::resource('category','CategoryController')->middleware('auth');;
 Route::get('/category-data/{id}','CategoryController@data')->name('category.data');
 Route::get('/category-form/{id}','CategoryController@show')->name('category.form');
 
+Route::resource('menu-aktivasi','MenuAktivasiController')->middleware('auth');;
+Route::get('/menu-aktivasi-data/{id}','MenuAktivasiController@data')->name('menu-aktivasi.data');
+Route::get('/menu-aktivasi-form/{id}','MenuAktivasiController@show')->name('menu-aktivasi.form');
+Route::get('/menu-aktivasi-change-status/{idfasil}/{idmenu}/{st}','MenuAktivasiController@status')->name('menu-aktivasi.status');
+
 Route::resource('instrumen','InstrumenController')->middleware('auth');;
 Route::get('/instrumen-data/{id}','InstrumenController@data')->name('instrumen.data');
 Route::get('/instrumen-form/{id}','InstrumenController@show')->name('instrumen.form');
 Route::get('/instrumen-change-status/{id}/{st}','InstrumenController@status')->name('instrumen.status');
+
+Route::resource('fasilitasi','FasilitasiController')->middleware('auth');;
+Route::get('/fasilitasi-data/{id}','FasilitasiController@data')->name('fasilitasi.data');
+Route::get('/fasilitasi-form/{id}','FasilitasiController@show')->name('fasilitasi.form');
+Route::get('/fasilitasi-change-status/{id}/{st}','FasilitasiController@status')->name('fasilitasi.status');
+Route::post('/fasilitasi-simpan','FasilitasiController@simpan')->name('mapping-to-fasilitasi.simpan');
+Route::get('/hapus-pic-fasilitasi/{id}','FasilitasiController@hapuspic')->name('hapus-pic-fasilitasi');
+Route::get('/kegiatan-fasilitasi/{id}','FasilitasiController@fasilitasiuser')->name('fasilitasi.user');
+Route::get('/aktivasi-peserta-change-status/{id}/{st}','FasilitasiController@aktivasipeserta')->name('fasilitasi.aktivasipeserta');
+
+
+Route::post('narsum-to-fasilitasi','NarsumfasilitasiController@store')->name('narsum-to-fasilitasi.simpan')->middleware('auth');
+Route::get('hapus-narsum-fasilitasi/{idnarsum}/{index}','NarsumfasilitasiController@hapus')->name('narsum-to-fasilitasi.hapus')->middleware('auth');
+
+Route::get('form-biodata/{idvid}/{idfasil}','FasilitasiController@biodata')->middleware('auth');
+Route::post('form-biodata-save/{id}/{idfasil}','FasilitasiController@biodatasave')->middleware('auth');
+
+Route::get('pre-test/{id}/{idfasil}','FasilitasiController@pretest')->middleware('auth');
+Route::get('post-test/{id}/{idfasil}','FasilitasiController@postest')->middleware('auth');
+
 
 Route::post('/simpan-penilaian/{videoid}','PenilaianController@simpan')->name('penilaian.simpan');
 
@@ -77,6 +102,10 @@ Route::get('/video-data/{jlh}','VideoCategoryController@videodata');
 Route::resource('mapping-admin','MappingAdminController')->middleware('IsSuperAdmin');
 Route::get('/mapping-admin-data','MappingAdminController@data')->name('admin.data')->middleware('auth');
 Route::get('/search-admin','MappingAdminController@index')->middleware('auth');
+
+Route::resource('mapping-fasilitasi','MappingFasilitasiController')->middleware('IsSuperAdmin');
+Route::get('/mapping-fasilitasi-data','MappingFasilitasiController@data')->name('admin.data')->middleware('auth');
+Route::get('/search-fasilitasi','MappingFasilitasiController@index')->middleware('auth');
 
 Route::resource('mapping-super-user','MappingSuperUserController')->middleware('auth');
 Route::get('/mapping-super-user-data','MappingSuperUserController@data')->name('super-user.data')->middleware('auth');
@@ -144,3 +173,59 @@ Route::resource('review', 'ReviewVideoController')->middleware('auth');
 Route::post('/edit-video-reviewer/{id}', 'ReviewVideoController@editvideo')->name('review.edit-video')->middleware('auth');
 Route::post('/add-endcards-reviewer/{id}', 'ReviewVideoController@endcards')->name('review.endcards')->middleware('auth');
 Route::post('/upload-review/{id}', 'ReviewVideoController@uploadreview')->name('upload.review')->middleware('auth');
+
+Route::get('edit-profile','UserController@profile')->middleware('auth');
+Route::post('edit-profile-save/{id}','UserController@profilesave')->middleware('auth');
+
+/* Saung */
+Route::get('buka-saung/{slug}','SaungController@buatsaung')->middleware('auth');
+Route::get('create-saung/{idvideo}','SaungController@createsaung')->middleware('auth');
+Route::get('topik-saung-data/{idsaung}/{idtopik}','SaungController@topiksaung')->middleware('auth');
+Route::get('topik-saung-keterangan/{idsaung}/{idtopik}','SaungController@keterangan')->middleware('auth');
+Route::get('topik-saung-form/{idsaung}/{idtopik}','SaungController@topikform')->middleware('auth');
+Route::get('tutup-saung/{idsaung}/{slug}','SaungController@tutupsaung')->middleware('auth');
+
+Route::get('join-saung/{idvid}','SaungController@joinsaung')->middleware('auth');
+
+Route::resource('topik-turunan','TopikturunanController')->middleware('auth');
+Route::get('topik-turunan-data/{idvideo}/{idsaung}/{user_id}','TopikturunanController@data')->middleware('auth');
+Route::get('topik-turunan-form/{idvideo}/{idtopik}/{user_id}/{idsaung}','TopikturunanController@form')->middleware('auth');
+Route::get('topik-turunan-penjelasan/{idtopik}','TopikturunanController@penjelasan')->middleware('auth');
+
+/* EndSaung */
+
+/* CHAT */
+Route::get('/chat-data/{idsaung}', 'ChatController@data')->middleware('auth');
+Route::post('/chat/{idsaung}', 'ChatController@store')->middleware('auth');
+/* ENDCHAT */
+
+/* LATIHAN */
+Route::get('/latihan/{idsaung}', 'LatihansaungController@index')->middleware('auth');
+Route::get('/latihan-data/{idsaung}', 'LatihansaungController@data')->middleware('auth');
+Route::get('/latihan-form/{idsaung}/{id}', 'LatihansaungController@show')->middleware('auth');
+Route::post('/latihan/{idsaung}/{id}', 'LatihansaungController@store')->middleware('auth');
+/* END LATIHAN */
+Route::get('messages', 'ChatsController@fetch');
+Route::post('messages', 'ChatsController@sentMessage');
+
+Route::get('editdataprofile',function () {
+    $user=App\Model\Users::all();
+    $us=array();
+    
+    $profile=App\Model\Profile::all();
+    $pr=array();
+    foreach($profile as $k => $v)
+    {
+        $pr[$v->user_id]=$v;
+    }
+
+    foreach($user as $k => $v)
+    {
+        if(!isset($pr[$v->id]))
+        {
+            $add_pr=new App\Model\Profile;
+            $add_pr->user_id=$v->id;
+            $add_pr->save();
+        }
+    }
+});
