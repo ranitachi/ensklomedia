@@ -51,6 +51,12 @@
         $(document).ready(function(){
             //loaddata(-1);
             loadform(-1);
+            var pesan='{!! Session::get("status") !!}';
+            if(pesan!='')
+            {
+                $('#content-body-ok').html('<h2 style="color:black">'+pesan+'</h2>');
+                $('#modal_ok').modal('show');
+            }
         });
         var currentLocation = window.location;
         function changestatus(idfasil,idmenu,st)
@@ -81,9 +87,35 @@
                     });
             });
         }
+        function hapuspeserta(id)
+        {
+            var tx="<h3 style='color:black !important;'>Apakah Yakin ingin Menghapus Data Peserta ini ?</h3>";
+            $('#content-body').html(tx);
+            $('#modal_default').modal('show');
+             $('button#ok').one('click',function(){
+                $.ajax({
+                    url: APP_URL+'/hapus-peserta-fasilitasi/'+id,
+                    dataType: 'json',
+                    cache: false,
+                }).done(function(data){
+                    var txt = "<h3 style='color:black !important;'>Data Peserta Fasilitasi Berhasil Di Hapus</h3>";
+                    $('#modal_default').modal('hide');
+                    $('#content-body-ok').html(txt);
+                    $('#modal_ok').modal('show');
+                    var currentLocation = window.location;
+                    getPosts(currentLocation);
+                }).fail(function(){
+                    var txt = " <h3 style='color:black !important;'>Data Peserta Fasilitasi Gagal Di Hapus</h3>";
+                    $('#modal_default').modal('hide');
+                    $('#content-body-ok').html(txt);
+                    $('#modal_ok').modal('show');
+                });
+            });
+        }
         function aktifkanpeserta(id,st)
         {
             var currentLocation = window.location;
+            
             $.ajax({
                     url: APP_URL+'/aktivasi-peserta-change-status/'+id+'/'+st
                 }).done(function(data){
@@ -218,5 +250,128 @@
                     alert('Halaman Data Menu Aktivasi Tidak Dapat Di Tampilkan');
             });
         }
+        function addpeserta(idfasilitas)
+        {
+            $('#id_fasilitasi').val(idfasilitas);
+            $('#modalConfirm').modal('show');
+            $('#ok').click(function(){
+                var peserta_id=$('#id_peserta').val();
+                if(peserta_id=='')
+                {
+                    var txt = "Peserta Fasilitasi Belum Dipilih";
+                        $.notify(txt,{
+                            elementPosition: 'bottom right',
+                            globalPosition: 'buttom right',
+                            className : 'error',
+                            z_index : 1500000
+                        });
+                }
+                else
+                {
+                    $('#add-peserta').submit();
+                }
+            });
+        }
+        function lihatbiodata(idpf,id)
+        {
+            $('#modal-body_biodata').load(APP_URL+'/lihat-biodata/'+idpf+'/'+id);
+            $('#modal_besar_biodata').modal('show');
+        }
+        function lihatsaung(fasilitasi_id)
+        {
+            $('#content-body-ok').load(APP_URL+'/saung-by-fasilitasi/'+fasilitasi_id);
+            $('#modal_ok').modal('show');
+        }
+        function hapussaung(idsaung,idfasil)
+        {
+            $.ajax({
+                url : APP_URL+'/hapus-saung-pic/'+idsaung,
+                success : function(a){
+                    $('#content-body-ok').load(APP_URL+'/saung-by-fasilitasi/'+idfasil);
+                }
+            });
+        }
     </script>
 @endsection
+<div id="modalConfirm" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Information</h5>
+                </div>
+
+                <form action="{{ url('add-peserta-to-fasilitasi/simpan') }}" method="post" id="add-peserta">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label for="">Silahkan pilih Peserta di bawah ini:</label>
+                                <input type="hidden" name="id_fasilitasi" id="id_fasilitasi">
+                                <select name="id_peserta[]" id="id_peserta" class="form-control chosen-select" multiple="multiple">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($peserta as $item)
+                                        <option value="{{ $item->id }}">{{ (isset($prf[$item->id]) ? $prf[$item->id]->name : '') }} [{{ $item->email }}]</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+                        <button type="button" class="btn btn-success" id="ok"><i class="fa fa-save"></i>&nbsp;Simpan</button>
+                    </div>
+                </form>                
+            </div>
+        </div>
+    </div>
+<div id="modal_besar_biodata" class="modal fade">
+	<div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title-lg"></h5>
+                </div>
+
+			    <div id="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" style="padding-top:10px;">
+                            <div id="modal-body_biodata"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                   
+                    <button type="button" class="btn btn-success" id="ok-lg_latihan" data-dismiss="modal"><i class="fa fa-check"></i>&nbsp;Tutup</button>
+                </div>
+            </div>
+    </div>
+</div>
+<style>
+    .table td,
+    .table th
+    {
+        font-size:13px !important;
+    }
+    .chosen-container
+    {
+        width:100% !important;
+    }
+        #modal_besar_biodata > .modal-dialog
+        {
+            width: 99%;
+            height: 100%;
+            margin-top:5px;
+            
+            /* margin: 0;
+            padding: 0; */
+        }
+        #modal_ok > .modal-dialog
+        {
+            width: 60%;
+            /* margin: 0;
+            padding: 0; */
+        }
+        .modal{
+            z-index:10000 !important;
+        }
+</style>

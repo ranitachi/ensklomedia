@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Video;
 use App\Model\Endcards;
+use App\Model\Like;
+use App\Model\Comments;
 use File;
+use Auth;
 class SearchController extends Controller
 {
     public function search(Request $request)
@@ -30,10 +33,10 @@ class SearchController extends Controller
             $update_hit=Video::find($id);
             $update_hit->hit = $update_hit->hit+1;
             $update_hit->save();
-
+            $comments = Comments::where('video_id', $id)->with('video')->get();
             $myfile=public_path('uploadfiles/video').'/'.$vidd->video_path;
-            $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vidd->video_path;
-            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vidd->image_path;
+            $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$vidd->video_path;
+            $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$vidd->image_path;
             if(File::exists($myfile))
             {
                 $status='v2';
@@ -42,13 +45,18 @@ class SearchController extends Controller
                 $vid=url($vv);
                 $cover=url($cv);
             }
-
+            $slug=$vidd->slug;
+            if(Auth::check())
+                $like=Like::where('video_id','=',$id)->where('user_id','=',Auth::user()->id)->first();
             return view('pages.video.search')
                     ->with('video',$vidd)
                     ->with('id',$id)
                     ->with('status',$status)
+                    ->with('like',$like)
                     ->with('relatedvideo',$relatedvideo)
                     ->with('endcards',$endcards)
+                    ->with('comments',$comments)
+                    ->with('slug',$slug)
                     ->with(compact('vid', 'mime','cover'));
         }
         else
@@ -58,8 +66,11 @@ class SearchController extends Controller
             return view('pages.video.search')
                     ->with('id',$id)
                     ->with('status',$status)
+                    ->with('like',$like)
                     ->with('relatedvideo',$relatedvideo)
                     ->with('endcards',$endcards)
+                    ->with('comments',$comments)
+                    ->with('slug',$slug)
                     ->with('video',$vidd);
         }
         
