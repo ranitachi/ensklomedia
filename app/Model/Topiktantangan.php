@@ -18,5 +18,5 @@ class Topiktantangan extends Model
     {
         return $this->belongsTo('App\Model\Saung', 'saung_id');
     }
-
+    
 }

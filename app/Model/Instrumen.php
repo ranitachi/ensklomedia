@@ -8,6 +8,6 @@ class Instrumen extends Model
 {
     use SoftDeletes;
     protected $table = 'instrumen';
-    protected $fillable =  ['category_id','pertanyaan','flag','created_at','updated_at','deleted_at'];
+    protected $fillable =  ['category_id','pertanyaan','bobot','flag','created_at','updated_at','deleted_at'];
     
 }

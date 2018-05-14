@@ -4,6 +4,7 @@
         <tr>
             <th class="text-center">No</th>
             <th class="text-center">Pertanyaan</th>
+            <th class="text-center">Bobot</th>
             <th class="text-center">Aktif</th>
             <th class="text-center" style="width:80px;">Aksi</th>
         </tr>             
@@ -16,6 +17,7 @@
         <tr>
             <td class="text-center">{{($no)}}</td>
             <td class="text-left">{{($v->pertanyaan)}}</td>
+            <td class="text-left">{{($v->bobot)}}</td>
             <td class="text-center">
                 {!!($v->flag==1 ? '<span class="label label-success">Aktif</span>' : '<span class="label label-danger">Non Aktif</span>')!!}
                 &nbsp;&nbsp;

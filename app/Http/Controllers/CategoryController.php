@@ -43,12 +43,26 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-       $create = Category::create($request->all());
+        $data=array();
+        foreach($request->all() as $k => $v)
+        {
+            $tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+            $message = preg_replace($tagsToStrip, '-', $v);
+            $data[$k]=$message;
+        }
+        $create = Category::create($data);
        return response()->json([$create]);
     }
     public function update(Request $request,$id)
     {
-       $update = Category::find($id)->update($request->all());
+        $data=array();
+        foreach($request->all() as $k => $v)
+        {
+            $tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+            $message = preg_replace($tagsToStrip, '-', $v);
+            $data[$k]=$message;
+        }
+       $update = Category::find($id)->update($data);
        return response()->json([$update]);
     }
     public function destroy($id)

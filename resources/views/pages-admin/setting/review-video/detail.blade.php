@@ -47,17 +47,22 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 no-padding-all">
                     <div class="row top-50" style="">
-                                @if (Session::has('message'))
-                                    <div class="alert alert-success" style="margin-bottom:0px !important;margin-top:20px">
-                                        <strong>Sukses!</strong> 
-                                        {{ Session::get('message') }}
-                                    </div>
-                                @endif
+                        @if (Session::has('message'))
+                            <div class="alert alert-success" style="margin-bottom:0px !importanmargin-top:20px">
+                                <strong>Sukses!</strong> 
+                                {{ Session::get('message') }}
+                            </div>
+                        @endif
                     </div>
-                    <video id="example_video_mobile" class="video-js vjs-default-skin vjs-big-play-centered" autoplay controls preload="auto">
+                    <video id="example_video_mobile" class="video-js vjs-default-skin vjs-big-play-centered"  controls preload="auto">
                         <source src="{{$vid}}" type="{{$mime}}" />
                     </video>
                     <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}}</h1>
+                    @if ($video->approved_by==0 && $video->approved_by=='')
+                        {!!rating(0)!!}
+                    @else
+                        {!!rating(getstar($video->nilai_review))!!}
+                    @endif
                 </div>
                 
                 <div class="col-xs-12 col-sm-12 no-padding-all" style="margin:0px !important">
@@ -139,7 +144,7 @@
                                             <div id="cmb_mapel_sm">
                                                 <select name="id_mapel" class="form-control" data-placeholder="Mata Pelajaran" id="id_mapel_sm">
                                                     <option value=""></option>
-                                                    @foreach ($mapel as $k => $v)
+                                                    @foreach ($mapel[$video->category_id] as $k => $v)
                                                         @if ($v->id==$video->id_mapel)
                                                             <option value="{{$v->id}}" selected="selected">{{$v->title}}</option>
                                                         @else
@@ -244,17 +249,17 @@
                 <!-- Watch -->
                 
                 <div class="col-md-8 hidden-sm hidden-xs">
-                    <div class="row">
-                        <div class="col-md-12">
-                            @if (Session::has('message'))
-                                    <div class="alert alert-success">
-                                        <strong>Sukses!</strong> 
-                                        {{ Session::get('message') }}
-                                    </div>
-                                @endif
+                    <div id="watch" style="margin-top:10px !important;padding:5px !important;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if (Session::has('message'))
+                                        <div class="alert alert-success">
+                                            <strong>Sukses!</strong> 
+                                            {{ Session::get('message') }}
+                                        </div>
+                                    @endif
+                            </div>
                         </div>
-                    </div>
-                	<div id="watch" style="margin-top:10px !important;padding:5px !important;">
 
                         <!-- Video Player -->
                         <div class="video-code">
@@ -265,7 +270,13 @@
                         </video>
                         <!--<iframe width="100%" height="415" src="https://www.youtube.com/embed/e452W2Kj-yg" frameborder="0" allowfullscreen></iframe>-->
                     </div><!-- // video-code -->
-                    <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}}</h1>
+                    <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}}
+                    @if ($video->approved_by==0 && $video->approved_by=='')
+                        {!!rating(0)!!}
+                    @else
+                        {!!rating(getstar($video->nilai_review))!!}
+                    @endif
+                    </h1>
                     
                         <div class="video-share">
                         	<ul class="like">
@@ -355,7 +366,7 @@
                                             <div id="cmb_mapel_lg">
                                                 <select name="id_mapel" class="form-control" data-placeholder="Mata Pelajaran" id="id_mapel_lg">
                                                     <option value=""></option>
-                                                    @foreach ($mapel as $k => $v)
+                                                    @foreach ($mapel[$video->category_id] as $k => $v)
                                                         @if ($v->id==$video->id_mapel)
                                                             <option value="{{$v->id}}" selected="selected">{{$v->title}}</option>
                                                         @else
@@ -467,8 +478,8 @@
                                 <div class="thumb">
                                     
                                     @php
-                                        $cover = "http://ensiklomedia.kemdikbud.go.id/uploads/images/".$related->image_path;
-                                        if (File::exists($related->image_path)) {
+                                        $cover = "http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$related->image_path;
+                                        if (File::exists(public_path().'/uploadfiles/image/'.$related->image_path)) {
                                             $cover = url('uploadfiles/image/'.$related->image_path);
                                         }
                                         $durasi='00:00';
@@ -502,8 +513,17 @@
                                 <a href="{{ url('review', $related->id) }}" class="title">{{ $related->title }}</a>
                                 <a class="channel-name" href="#">
                                     {{ isset($related->user->profile->channel_name) ? $related->user->profile->channel_name : 'No Channel Name' }}
-                                    <span><i class="fa fa-check-circle"></i></span>
+                                    <span>
+                                    @if ($related->approved_by!=0 || $related->approved_by!='')
+                                        <i class="fa fa-check-circle"></i>
+                                    @endif
+                                    </span>
                                 </a>
+                                @if ($related->approved_by==0 && $related->approved_by=='')
+                                    {!!rating(0)!!}
+                                @else
+                                    {!!rating(getstar($related->nilai_review))!!}
+                                @endif
                             </div>
                             <!-- // video item -->
                         @endforeach
@@ -524,10 +544,13 @@
         //videojs(document.getElementById('example_video_1'), {}, function() {
             // This is functionally the same as the previous example.
         //});
+        setTimeout(function(){
+            $('.alert-success').fadeOut();
+        },2500);
         var widthvideo=$(document).width();
         var heightvideo=(parseInt(widthvideo) / 1.33);
         // alert(widthvideo);
-        var video2 = videojs('example_video_mobile',{height: heightvideo, width: widthvideo});
+       //ReviewVideoController var video2 = videojs('example_video_mobile',{height: heightvideo, width: widthvideo});
 
         var video = videojs('example_video_1');
              

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Model\Users;
 use App\Model\Profile;
 use App\Model\Video;
+use App\Model\Notifikasi;
+use Auth;
 class MappingSuperUserController extends Controller
 {
     public function index(Request $request)
@@ -121,7 +123,7 @@ class MappingSuperUserController extends Controller
                         ->orderBy('created_at')->paginate(10);
         }
         
-
+        
         if ($request->ajax()) {
              return view('pages-admin.setting.mapping-reviewer.verifikasi-video')
                 ->with('user',$user)
@@ -129,6 +131,11 @@ class MappingSuperUserController extends Controller
                 ->with('video',$video)
                 ->render();
         }
+
+        $update['seen']=date('Y-m-d H:i:s');
+        $update['flag_active']=0;
+        Notifikasi::where('to',Auth::user()->id)->where('url','like','%video-verifikasi%')->update($update);
+
         return view('pages-admin.setting.mapping-reviewer.verifikasi')
                 ->with('video',$video)
                 ->with('user',$user)

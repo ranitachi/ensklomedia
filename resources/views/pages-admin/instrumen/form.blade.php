@@ -10,6 +10,10 @@
                  <textarea class="form-control" rows="4"  placeholder="Pertanyaan" name="pertanyaan">{{($id!=-1 ? $det->pertanyaan : '')}}</textarea>
         </div>
         <div class="col-md-12">
+            <label>Bobot Nilai</label>
+                 <input type="text" class="form-control"  placeholder="Bobot Niliai" name="bobot" value="{{($id!=-1 ? $det->bobot : '')}}">
+        </div>
+        <div class="col-md-12">
             <label>Aktif</label>
             <select name="flag" class="form-control" data-placeholder="Aktif">
                 @if ($id==-1)

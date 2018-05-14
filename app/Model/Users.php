@@ -13,7 +13,7 @@ class Users extends Model
 
     protected $fillable =  [
         'email','password','registration_ip','authentication_key','authorization_level',
-        'location','timezone','remember_token','activated_at','deactivated_at',
+        'location','timezone','pic','remember_token','activated_at','deactivated_at',
         'blocked_at','last_login_at','deleted_at','created_at','updated_at'
     ];
 

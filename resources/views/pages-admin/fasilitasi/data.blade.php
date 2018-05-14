@@ -5,6 +5,7 @@
             <th class="text-center">No</th>
             {{-- <th class="text-center">Nama Fasilitasi</th> --}}
             <th class="text-center">Wilayah</th>
+            <th class="text-center">Lokasi</th>
             <th class="text-center">Tanggal Pelaksanaan</th>
             <th class="text-center">PIC Fasilitasi</th>
             <th class="text-center">Narsum/Reviewer</th>
@@ -25,8 +26,8 @@
     @foreach ($instrumen as $i => $v)
             <tr>
                 <td class="text-center">{{($no)}}</td>
-                {{-- <td class="text-left">{{$v->nama_fasilitasi}}</td> --}}
                 <td class="text-left">{{isset($v->provinsi->name) ? $v->provinsi->name : ''}}</td>
+                <td class="text-left">{{$v->nama_fasilitasi}}</td>
                 <td class="text-center"><b>{{date('d-m-Y', strtotime($v->start_date))}}</b> <br>s.d. <br><b>{{date('d-m-Y', strtotime($v->end_date))}}</b></td>
                 <td class="text-left">
                 @if (isset($mapping[$v->id]))
@@ -62,6 +63,12 @@
                                         <i class="fa fa-search"></i> Pilih Narsum
                                     </button>
                                 @endif
+
+                                @if ($item->narsum_2_id==0)
+                                    <button class="btn btn-xs btn-info" onclick="pilihnarsum('{{$v->id}}')">
+                                        <i class="fa fa-search"></i> Pilih Narsum
+                                    </button>
+                                @endif
                             @endforeach
                         @else                    
                             <button class="btn btn-xs btn-info" onclick="pilihnarsum('{{$v->id}}')">
@@ -71,6 +78,9 @@
                     @else
                         <button class="btn btn-xs btn-info" onclick="pilihnarsum('{{$v->id}}')">
                             <i class="fa fa-search"></i> Pilih Narsum
+                        </button>
+                        <button class="btn btn-xs btn-success" onclick="random('{{$v->id}}')">
+                            <i class="fa fa-refresh"></i> Random Narsum
                         </button>
                     @endif
                     

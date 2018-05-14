@@ -37,7 +37,7 @@
                     	<i class="fa fa-close"></i>
                     </a>
                     <div style="float:left;margin-right:20px;" class="hidden-sm hidden-xs">
-                        <a href="#" id="icon-menu"><i class="fa fa fa-navicon font-like-yt" style="width:18%;float:left;"></i></a>
+                        <a href="#" id="icon-menu"><i class="fa fa fa-navicon font-like-yt" id="2-icon-menu" style="width:18%;float:left;"></i></a>
                         <div id="logo" style="text-align:center !important;margin-top:-4px;width:81%;float:right;padding-top:0px;">
                             <a href="{{url('/')}}" ><img src="{{ asset('assets/img/logo.png')}}" alt=""></a>
                         </div>
@@ -92,57 +92,97 @@
                     </div>
                     
                     <ul class="top-menu pull-right">
-                        <li><a href="{{URL::to('upload')}}"><i class="fa fa-upload font-like-yt"></i></a></li>
-                        <li><a href="#"><i class="fa fa-th font-like-yt"></i></a></li>
+                        
+                        @if(Auth::check())
                         @php
-                            $notif='';
-                            if(Auth::check())
-                            {
-                                $notif='<span class="badge badge-color3" style="position:absolute;top:0;margin-left:-10px">9</span>';
+                            $notif=\App\Model\Notifikasi::where('to','=',Auth::user()->id)->whereNull('seen')->orderBy('created_at','desc')->get();
                             
+                            $jlh_notif=count($notif);
                         @endphp
-                           <!-- <li><a href="#" data-toggle="dropdown"><i class="fa fa-bell font-like-yt"></i>{!!$notif!!}</a>
+                        @if ($jlh_notif>0)
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown"><i class="fa fa-bell-o font-like-yt"></i>
+                                    <span class="badge badge-color3 header-badge" style="margin-left:-6px">{{$jlh_notif}}</span>
+                                </a>
                                 <ul class="dropdown-menu dropdown-notifications-items" style="margin-top:15px !important">
+                                    @foreach ($notif as $k => $v)
                                     <li>
                                         <div class="notification-info">
-                                            <a href="#"><i class="fa fa-video-camera color-1"></i>
-                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
-                                            <h5 class="time">4 hours ago</h5>
+                                            <a href="#" style="text-transform: capitalize;"><i class="fa fa-commenting color-1"></i>
+                                            {!!$v->title!!} 
+                                            @php
+                                                $waktu=\Carbon\Carbon::parse($v->created_at)->diffForHumans();
+                                                $wkt=text_translate($waktu,'en','id');
+                                            @endphp 
+                                                <h5 class="time">{{$wkt}}
+                                                @if ($v->url!=null)
+                                                    <> <b><span style="" onclick="location.href='{{url($v->url)}}'">Klik Untuk Detail</span></b>
+                                                @endif
+                                                </h5>
                                             </a>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <div class="notification-info">
-                                            <a href="#"><i class="fa fa-thumbs-up color-2"></i>
-                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
-                                            <h5 class="time">4 hours ago</h5>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="notification-info">
-                                            <a href="#"><i class="fa fa-comment color-3"></i>
-                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
-                                            <h5 class="time">4 hours ago</h5>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="notification-info">
-                                            <a href="#"><i class="fa fa-video-camera color-1"></i>
-                                            <strong>Rabie Elkheir</strong> Add a new <span>Video</span>
-                                            <h5 class="time">4 hours ago</h5>
-                                            </a>
-                                        </div>
-                                    </li>
+                                    </li>       
                                     <li>
                                         <a href="#" class="all_notifications">All Notifications</a>
                                     </li>
+                                    @endforeach
                                 </ul>
-                        </li>-->
-                        @php
-                        }
-                        @endphp
+
+                            </li>
+                            @endif
+                        @endif
+                        <li><a href="{{URL::to('upload')}}"><i class="fa fa-upload font-like-yt"></i></a></li>
+                        <li><a href="#" data-toggle="dropdown"><i class="fa fa-th font-like-yt"></i></a>
+                                <ul class="dropdown-menu dropdown-notifications-items" style="margin-top:15px !important">
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-md-4 text-center">
+                                                <div class="notification-info">
+                                                    <a href="http://tve.kemdikbud.go.id" target="_blank">
+                                                    <img src="{{asset('assets/img/Tve_logo.png')}}">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-4 text-center">
+                                                 <div class="notification-info">
+                                                    <a href="http://suaraedukasi.kemdikbud.go.id" target="_blank">
+                                                    <img src="{{asset('assets/img/suaraedukasi.gif')}}">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 text-center">
+                                                 <div class="notification-info">
+                                                    <a href="http://tve.kemdikbud.go.id/vod" target="_blank">
+                                                    <img src="{{asset('assets/img/logo_vodtve.png')}}">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-md-8 text-center">
+                                                 <div class="notification-info">
+                                                    <a href="http://belajar.kemdikbud.go.id" target="_blank">
+                                                    <img src="{{asset('assets/img/logo_rumah_belajar_gab.png')}}">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 text-center">
+                                                <div class="notification-info">
+                                                    <a href="http://tve.kemdikbud.go.id/kihajar" target="_blank">
+                                                    <img src="{{asset('assets/img/logoanugerahkihajar.jpg')}}">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                        </li>
                     </ul>
                 </div>
             </div><!-- // row -->

@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use App\Model\Menu;
 use App\Model\Pivot;
 use App\Model\MenuPivot;
+use App\Model\SaungPivot;
 use App\Model\Users;
+use App\Model\Profile;
 use App\Model\KegiatanFasilitasi;
 use App\Model\MappingFasilitasi;
 use App\Model\PesertaFasilitasi;
+use App\Model\Notifikasi;
+use App\Model\Saung;
 use Auth;
 class MenuAktivasiController extends Controller
 {
@@ -35,6 +39,15 @@ class MenuAktivasiController extends Controller
         $ins=Menu::all();
         $mapping=MappingFasilitasi::where('user_id','=',Auth::user()->id)->where('flag','=',1)->get();
         $kegiatan=KegiatanFasilitasi::with('provinsi')->get();
+        $peserta=Users::whereIn('authorization_level',[2,3,4])->get();
+        $profile=Profile::all();
+
+        $prf=array();
+        foreach($profile as $i => $v)
+        {
+            $prf[$v->user_id]=$v;
+        }
+
         $menupiv=MenuPivot::all();
         $menupivot=array();
         foreach($menupiv as $i => $v)
@@ -44,7 +57,7 @@ class MenuAktivasiController extends Controller
         $map=array();
         foreach($mapping as $i => $v)
         {
-            $map[$v->user_id][$v->wilayah_id]=$v;
+            $map[$v->user_id][$v->wilayah_id][$v->fasilitasi_id]=$v;
         }
         
         $pes=PesertaFasilitasi::select('*','peserta_fasilitasis.id as idpf')->join('profile','profile.user_id','=','peserta_fasilitasis.user_id')
@@ -60,21 +73,25 @@ class MenuAktivasiController extends Controller
              return view('pages-admin.menu-aktivasi.data')
                ->with('page',$page)
                ->with('menu',$ins)
+               ->with('prf',$prf)
                ->with('map',$map)
                ->with('psrt',$psrt)
                ->with('menupivot',$menupivot)
                ->with('mapping',$mapping)
                ->with('kegiatan',$kegiatan)
+               ->with('peserta',$peserta)
                ->with('hal',$page);
         }
 
         return view('pages-admin.menu-aktivasi.index')
                 ->with('page',$page)
+                ->with('prf',$prf)
                 ->with('mapping',$mapping)  
                 ->with('psrt',$psrt)              
                 ->with('map',$map)              
                 ->with('kegiatan',$kegiatan)
                ->with('menupivot',$menupivot)                
+               ->with('peserta',$peserta)                
                 ->with('menu',$ins);
     }
 
@@ -99,5 +116,56 @@ class MenuAktivasiController extends Controller
             return response()->json([$create]);
         }
             // return response()->json(['fail']);
+    }
+
+    public function simpanpeserta(Request $request)
+    {
+        // echo '<pre>';
+        // print_r($request->all());
+        // echo '</pre>';
+        foreach($request->id_peserta as $k => $v)
+        {
+            $pes=new PesertaFasilitasi;
+            $pes->fasilitasi_id=$request->id_fasilitasi;
+            $pes->user_id=$v;
+            $pes->flag=1;
+            $pes->created_at=date('Y-m-d H:i:s');
+            $pes->updated_at=date('Y-m-d H:i:s');
+            $pes->save();
+        }
+        return redirect('menu-aktivasi')->with('status','Data Peserta Fasilitasi Berhasil Di Tambah');
+    }
+    
+    public function simpanpesertasaung(Request $request,$idsaung)
+    {
+        $saung=Saung::find($idsaung);
+        foreach($request->id_peserta as $k => $v)
+        {
+            $pes=new SaungPivot;
+            $pes->saung_id=$idsaung;
+            $pes->user_id=$v;
+            $pes->flag=0;
+            $pes->created_at=date('Y-m-d H:i:s');
+            $pes->updated_at=date('Y-m-d H:i:s');
+            $pes->save();
+
+            $notif=new Notifikasi;
+            $notif->video_id=$saung->video_id;
+            $notif->saung_id=$idsaung;
+            $notif->title="Anda Diundang untuk Mengikuti <b>".$saung->saung_name.'</b>';
+            $notif->url=url('gabung-saung/'.$idsaung.'/'.$saung->video_id);
+            $notif->from=Auth::user()->id;
+            $notif->to=$v;
+            $notif->created_at=date('Y-m-d H:i:s');
+            $notif->updated_at=date('Y-m-d H:i:s');
+            $notif->save();
+        }
+        return redirect('buka-saung/'.$saung->video->slug)->with('status','Data Peserta Saung Berhasil Di Tambah');
+    }
+
+    public function hapuspeserta($id)
+    {
+        PesertaFasilitasi::find($id)->delete();
+        return response()->json(['done']);
     }
 }

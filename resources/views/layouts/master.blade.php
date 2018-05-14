@@ -18,7 +18,7 @@
         </div>
 
 	    <div class="site-output" style="margin-top:55px;position:relative;">
-        <div id="sidebar-menu" class="no-padding-left no-padding-right hidden-lg hidden-md hidden-sm hidden-xs" style="position:fixed;width:22%;height:100%;z-index:20000;overflow:auto;background:#f8f8f8;padding-bottom:50px !important;">
+        <div id="sidebar-menu" alt="menu-sidebar" class="no-padding-left no-padding-right hidden-lg hidden-md hidden-sm hidden-xs" style="position:fixed;width:22%;height:100%;z-index:20000;overflow:auto;background:#f8f8f8;padding-bottom:50px !important;">
           @include('includes.sidebar')  
         </div>
         <div id="all-output" class="col-lg-12 col-md-12 all-output-m">
@@ -42,6 +42,36 @@
     
     
     $(document).ready(function(){
+    //   $(window).click(function( event ) {
+    //     var t=event.target.nodeName;
+    //     alert();
+    //   });
+      document.addEventListener("click", (evt) => {
+          const flyoutElement = document.getElementById("sidebar-menu");
+          let targetElement = evt.target; // clicked element
+
+          do {
+              if (targetElement == flyoutElement) {
+                  // Do nothing, just return.
+                  
+                  return;
+              }
+              // Go up the DOM.
+              targetElement = targetElement.parentNode;
+          } while (targetElement);
+          
+          // alert();
+          if(evt.target.getAttribute("id")!='2-icon-menu' && evt.target.getAttribute("id")!='icon-menu')
+          {
+            $('#latar').hide();
+                $('#hide-menu').val(0);
+                // $('#sidebar-menu').hide();
+                $('#sidebar-menu').removeClass();
+                $('#sidebar-menu').addClass("hidden-lg hidden-md hidden-sm hidden-xs");
+            }
+          // Do something useful here.
+          // document.getElementById("flyout-debug").textContent = "Clicked outside!";
+      });
       var height=$(window).height();
       $('#latar').hide();
       

@@ -14,6 +14,10 @@ use App\Model\MenuPivot;
 use App\Model\Saung;
 use App\Model\PesertaFasilitasi;
 use App\Model\Narsumfasilitasi;
+use App\Model\Postpretest;
+use App\Model\Testpesertaset;
+use App\Model\Nilaitespeserta;
+use App\Model\Evaluasipeserta;
 use Auth;
 class FasilitasiController extends Controller
 {
@@ -117,7 +121,15 @@ class FasilitasiController extends Controller
             $data['created_at']=date('Y-m-d H:i:s');
             $data['updated_at']=date('Y-m-d H:i:s');
         }
-        $create = KegiatanFasilitasi::create($data);
+
+        $data2=array();
+        foreach($data as $k=>$v)
+        {
+            $tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+            $message = preg_replace($tagsToStrip, '-', $v);
+            $data2[$k]=$message;
+        }
+        $create = KegiatanFasilitasi::create($data2);
         return response()->json([$create]);
     }
     public function update(Request $request,$id)
@@ -142,10 +154,17 @@ class FasilitasiController extends Controller
             $data['created_at']=date('Y-m-d H:i:s');
             $data['updated_at']=date('Y-m-d H:i:s');
         }
+        $data2=array();
+        foreach($data as $k => $v)
+        {
+            $tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+            $message = preg_replace($tagsToStrip, '-', $v);
+            $data2[$k]=$message;
+        }
         // echo '<pre>';
         // print_r($data);
         // echo '</pre>';
-       $update = KegiatanFasilitasi::find($id)->update($data);
+       $update = KegiatanFasilitasi::find($id)->update($data2);
        return response()->json([$update]);
     }
     public function status($id,$st)
@@ -215,24 +234,42 @@ class FasilitasiController extends Controller
                 }
             }
         }
+        $idfasil=$request->nama_fasilitasi;
         $cekpeserta=PesertaFasilitasi::where('user_id','=',$id)->where('fasilitasi_id','=',$idfasil)->get()->first();
         if(count($cekpeserta)==0)
         {
             $peserta['user_id']=$id;
             $peserta['fasilitasi_id']=$idfasil;
             $peserta['flag']=0;
-            PesertaFasilitasi::create($peserta);
+
+            $peserta2=validate_js($peserta);
+
+            PesertaFasilitasi::create($peserta2);
         }
 
         $saung=Saung::where('video_id','=',$request->video__id)->where('created_user_id','=',Auth::user()->id)->get()->where('flag','=',0)->first();
-        $saung->flag=1;
-        $saung->save();
+        if(count($saung)!=0)
+        {
+            $saung->flag=1;
+            $saung->save();
+        }
 
 
-        $create_users = Users::find($id)->update($users);
-        $create_profile = Profile::where('user_id',$id)->update($profile);
-        //return redirect('form-biodata/'.$id.'/'.$idfasil)->with('status', 'Form Biodata Berhasil Di Simpan, Akun Anda Akan Segera Di Verifikasi Oleh PIC Fasilitasi');
-        return redirect('buka-saung/'.$request->video__slug)->with('status', 'Selamat, Anda Sudah Berhasil Membuka Saung Diskusi Baru Untuk Video : '.$request->video__title);
+        $users2=validate_js($users);
+        $create_users = Users::find($id)->update($users2);
+
+        $profile2=validate_js($profile);
+        $create_profile = Profile::where('user_id',$id)->update($profile2);
+
+        if(count($saung)!=0)
+        {
+            return redirect('buka-saung/'.$request->video__slug)->with('status', 'Selamat, Anda Sudah Berhasil Membuka Saung Diskusi Baru Untuk Video : '.$request->video__title);
+        }
+        else
+        {
+
+            return redirect('form-biodata/'.$id.'/'.$idfasil)->with('status', 'Form Biodata Berhasil Di Simpan, Akun Anda Akan Segera Di Verifikasi Oleh PIC Fasilitasi');
+        }
     }
     public function biodata($idvid,$idfasil)
     {
@@ -271,9 +308,14 @@ class FasilitasiController extends Controller
             $video=Video::where('id','=',$idvid)->get()->first();
             $profile = Profile::where('user_id',$id)->get()->first();
             $province = Province::all();
-            
+            $fas=KegiatanFasilitasi::where('wilayah_id','=',$cekfasil->wilayah_id)
+                    ->where('flag',1)
+                    ->with('provinsi')
+                    ->get();
+
             return view('pages-admin.fasilitasi.form-biodata')
                 ->with('id',$id)
+                ->with('fas',$fas)
                 ->with('idfasil',$idfasil)
                 ->with('video',$video)
                 ->with('cekfasil',$cekfasil)
@@ -323,5 +365,95 @@ class FasilitasiController extends Controller
         $up['flag']=$st; 
         $update = PesertaFasilitasi::find($id)->update($up);
         return response()->json([$update]);
+    }
+
+    public function cetaksertifikat($idfasil)
+    {
+        $fasil=KegiatanFasilitasi::find($idfasil);
+        $pes=PesertaFasilitasi::where('fasilitasi_id','=',$idfasil)->with('user')->get();
+        return view('pages-admin.fasilitasi.cetak-sertifikat')
+                ->with('idfasil',$idfasil)
+                ->with('fas',$fasil)
+                ->with('pes',$pes);
+    }
+
+    public function cetak($iduser,$idfasil)
+    {
+        $pes=PesertaFasilitasi::where('fasilitasi_id','=',$idfasil)->where('user_id',$iduser)->with('fasilitasi')->with('user')->first();
+        return view('pages-admin.fasilitasi.sertifikat')
+                ->with('iduser',$iduser)
+                ->with('peserta',$pes)
+                ->with('idfasil',$idfasil);
+    }
+
+    public function pretest($iduser,$idfasil)
+    {
+        $fasil=KegiatanFasilitasi::find($idfasil);
+        $pes=PesertaFasilitasi::where('fasilitasi_id','=',$idfasil)->with('user')->get();
+        $soal=Postpretest::where('flag_pretest',1)->get();
+        $jawaban=Testpesertaset::where('user_id',Auth::user()->id)->where('fasilitasi_id',$idfasil)->where('jenis','pre')->get();
+        $jwb=array();
+
+        $ceknilai=Nilaitespeserta::where('jenis','=','pre')->where('fasilitasi_id',$idfasil)->where('user_id',$iduser)->first();
+
+        foreach($jawaban as $k => $v)
+        {
+            $jwb[$v->question_id]=$v;
+        }
+        return view('pages-admin.pre-post-test.index')
+                ->with('idfasil',$idfasil)
+                ->with('fas',$fasil)
+                ->with('soal',$soal)
+                ->with('ceknilai',$ceknilai)
+                ->with('jwb',$jwb)
+                ->with('jenis','pre')
+                ->with('iduser',$iduser)
+                ->with('pes',$pes);
+    }
+    public function postest($iduser,$idfasil)
+    {
+        $jawaban=Testpesertaset::where('user_id',Auth::user()->id)->where('fasilitasi_id',$idfasil)->where('jenis','post')->get();
+        $jwb=array();
+        foreach($jawaban as $k => $v)
+        {
+            $jwb[$v->question_id]=$v;
+        }
+        $ceknilai=Nilaitespeserta::where('jenis','=','post')->where('fasilitasi_id',$idfasil)->where('user_id',$iduser)->first();
+
+        $fasil=KegiatanFasilitasi::find($idfasil);
+        $pes=PesertaFasilitasi::where('fasilitasi_id','=',$idfasil)->with('user')->get();
+        $soal=Postpretest::where('flag_posttest',1)->get();
+
+        return view('pages-admin.pre-post-test.index')
+                ->with('idfasil',$idfasil)
+                ->with('fas',$fasil)
+                ->with('soal',$soal)
+                ->with('jenis','post')
+                ->with('jwb',$jwb)
+                ->with('ceknilai',$ceknilai)
+                ->with('iduser',$iduser)
+                ->with('pes',$pes);
+    }
+
+    public function penilaianfeedback($iduser,$idfasil)
+    {
+        $fasil=KegiatanFasilitasi::find($idfasil);
+        $eval=Evaluasipeserta::where('fasilitasi_id',$idfasil)->where('user_id',$iduser)->get();
+        $ev=$us=array();
+        foreach($eval as $k => $v)
+        {
+            $ev[$v->jenis][$v->nama_narasumber][$v->materi_fasilitasi][$v->jam_ke][$v->narasumber_id]=$v;
+        }
+        $user=Users::with('profile')->get();
+        foreach($user as $ks=>$vs)
+        {
+            $us[$vs->id]=$vs;
+        }
+        return view('pages-admin.evaluasi.index')
+                ->with('idfasil',$idfasil)
+                ->with('eval',$ev)
+                ->with('user',$us)
+                 ->with('fas',$fasil)
+                ->with('iduser',$iduser);
     }
 }

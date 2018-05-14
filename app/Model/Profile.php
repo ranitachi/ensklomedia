@@ -18,4 +18,9 @@ class Profile extends Model
         'phone_number','institute','educational_level','educational_level_detail','place_of_birth',
         'date_of_birth','deleted_at','created_at','updated_at'
     ];
+
+     public function provinsi()
+    {
+        return $this->belongsTo('App\Model\Province', 'province');
+    }
 }

@@ -89,7 +89,7 @@
                 <div class="col-md-8 hidden-sm hidden-xs">
                 	<div id="watch" style="">
                         @php
-                            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
+                            $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$video->image_path;
                             if(File::exists(public_path().'/uploadfiles/image/'.$video->image_path))
                             {
                                 $cv = 'uploadfiles/image/'.$video->image_path;
@@ -122,7 +122,7 @@
                         </h1>
 
                         <div class="video-share">
-                        	<ul class="like">
+                            <ul class="like">
                                 @php
                                     $waktu=\Carbon\Carbon::parse($video->created_at)->diffForHumans();
                                     $wkt=text_translate($waktu,'en','id');
@@ -130,9 +130,38 @@
                                 <li><a class="like" href="#"><i class="fa fa-eye"></i>&nbsp;&nbsp;{{($id==-1 ? 0 : $video->hit)}} views</i></a></li>
                                 <li><a class="like" href="#"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{date('d-m-Y',strtotime($video->created_at))}} :: {{($id==-1 ? 0 : $wkt)}}</i></a></li>
                             </ul>
+                            @php
+                                $urlvideo=url('watch'.$video->slug);
+                            @endphp
+                            <ul class="social_link">
+                                @if (Auth::check())
+                                    <li id="like-video-lg">
+                                        @if (count($like)!=0)
+                                        <a class="like" href="javascript:likes('{{$video->slug}}')" data-toggle="tooltip" title="Disike" style="color:blue;border:0px;"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
+                                        @else
+                                        <a class="like" href="javascript:likes('{{$video->slug}}')" data-toggle="tooltip" title="Like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
+                                        @endif
+                                    </li>
+                                @endif
+
+                                <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{$urlvideo}}" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a class="linkedin" href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{$urlvideo}}" data-toggle="tooltip" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li><a class="google" href="https://plus.google.com/share?url={{$urlvideo}}" data-toggle="tooltip" title="Google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a class="twitter" href="https://twitter.com/intent/tweet?text={{$video->title}}&amp;url={{$urlvideo}}" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a class="twitter" href="javascript:downloadvideo('{{$video->slug}}')" data-toggle="tooltip" title="Unduh Video"><i class="fa fa-download" aria-hidden="true"></i></a></li>
+                                @php
+                                    // $share=Share::page('http://jorenvanhocht.be', null, ['data-toggle' => 'tooltip', 'title' => 'my-id'], '<ul>', '</ul>')
+                                    //     ->facebook()
+                                    //     ->twitter()
+                                    //     ->googlePlus()
+                                    //     ->linkedin('Extra linkedin summary can be passed here');
+                                    // echo str_replace(array('<ul>','<ul class="social_link">','</ul>'),'',$share);
+                                @endphp
+                            </ul><!-- // Social -->
+                        
                             @if (Auth::check())
                                 @if (!isset($saung[$video->id][Auth::user()->id]))
-                                    <ul class="like pull-right">
+                                    <ul class="like pull-left">
                                         <li>
                                             <div>
                                                 {{-- <a href="{{url('buat-saung/'.$video->slug)}}" class="btn btn-sm btn-primary"><i class="fa fa-clone"></i>&nbsp;Buka Saung Diskusi</a> --}}
@@ -264,7 +293,7 @@
                                     
                                     <small class="time">{{$durasi}}</small>
                                     @php
-                                        $cover = "http://ensiklomedia.kemdikbud.go.id/uploads/images/".$related->image_path;
+                                        $cover = "http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$related->image_path;
                                         if (File::exists(public_path().'/uploadfiles/image/'.$related->image_path)) {
                                             $cover = url('uploadfiles/image/'.$related->image_path);
                                         }
@@ -317,6 +346,32 @@ $ecard=json_encode($endcards);
     <script src="{{asset('js/videojs.js')}}"></script>
     <script src='{{asset('js/videojs.endcard.js')}}'></script>
     <script>
+        function downloadvideo(slug)
+        {
+            location.href=APP_URL+'/download/'+slug;
+        }
+        function likes(slug)
+        {
+            // $('#like-video-lg').css({'border':'0px'});
+            
+            $.ajax({
+                url : APP_URL+'/like-video/'+slug,
+                cache: false,
+                success : function(a){
+                    // alert(a);
+                    if(a==1)
+                    {
+                        $('#like-video-lg a').css({'color':'blue','border':'0px'});
+                        $('#like-video-lg a').attr('data-original-title','Dislike');
+                    }
+                    else
+                    {
+                        $('#like-video-lg a').css({'color':'#777','border':'1px solid #333'});
+                        $('#like-video-lg a').attr('data-original-title','Like');
+                    }
+                }
+            });
+        }
         function bukasaung(slug,judul,idvid)
         {
             $('#content-body').html('<h1 style="color:#000">Apakah Anda Yakin ingin Membuka Saung Diskusi untuk Video : '+judul+' ?</h1>');

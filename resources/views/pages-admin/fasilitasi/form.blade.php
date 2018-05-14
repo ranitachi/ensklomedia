@@ -4,10 +4,7 @@
 		{{ method_field('PATCH') }}
 	@endif
     <div class="row">
-        {{-- <div class="col-md-12">
-            <label>Kegiatan Fasilitasi</label>
-            <input type="text" class="form-control" placeholder="Kegiatan Fasilitasi" name="nama_fasilitasi" value="{{($id!=-1 ? $det->nama_fasilitasi : '')}}">
-        </div> --}}
+        
         <div class="col-md-12">
             <label>Tanggal Pelaksanaan</label>
             <input type="text" class="form-control" id="tanggal" placeholder="Tanggal Kegiatan" name="start_date" value="{{($id!=-1 ? date('d/m/Y',strtotime($det->start_date)).' - '.date('d/m/Y',strtotime($det->end_date)) : '')}}">
@@ -29,6 +26,10 @@
             @endforeach
                 
             </select>
+        </div>
+        <div class="col-md-12">
+            <label>Lokasi</label>
+            <input type="text" class="form-control" placeholder="Lokasi" name="nama_fasilitasi" value="{{($id!=-1 ? $det->nama_fasilitasi : '')}}">
         </div>
         <div class="col-md-12">
             <label>Aktif</label>

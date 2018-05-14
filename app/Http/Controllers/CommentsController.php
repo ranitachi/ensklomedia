@@ -24,7 +24,11 @@ class CommentsController extends Controller
         $set->video_id = $get->id;
         $set->user_id = Auth::user()->id;
         $set->parent_id = 0;
-        $set->comment = $request->comment;
+
+        $tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+        $message = preg_replace($tagsToStrip, '-', $request->comment);
+        
+        $set->comment = $message;
         $set->save();
 
         return redirect()->route('watch', $request->slug)->with('message', 'Berhasil mengirimkan komentar.');

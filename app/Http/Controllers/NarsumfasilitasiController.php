@@ -12,6 +12,7 @@ class NarsumfasilitasiController extends Controller
        
         $data=$request->all();
         $data_fas=KegiatanFasilitasi::with('provinsi')->where('id','=',$request->narsumidfasilitasi)->get()->first();
+        $narsum1=$narsum2=0;
         if(count($request->id_narsum)==2)
         {
             $narsum1=$data['id_narsum'][0];
@@ -20,10 +21,10 @@ class NarsumfasilitasiController extends Controller
         else if(count($request->id_narsum)==1)
         {
             $narsum1=$data['id_narsum'][0];
-            $narsum2='';
+            $narsum2=0;
         }
         else
-            $narsum1=$narsum2='';
+            $narsum1=$narsum2=0;
 
         if($narsum1!='')
         {

@@ -14,7 +14,7 @@
                                     $no=1;
                                     foreach($video as $ixk => $vik)
                                     {
-                                        $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vik->image_path;
+                                        $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$vik->image_path;
                                         if(File::exists(public_path().'/uploadfiles/image/'.$vik->image_path))
                                         {
                                             $cv = 'uploadfiles/image/'.$vik->image_path;
@@ -25,7 +25,7 @@
                                         else
                                         {   
                                             //$handle=fopen($cover,'r');
-                                            $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vik->video_path;
+                                            $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$vik->video_path;
                                             $cover=$cover;
                                             // $fileExists = checkExternalFile($cover);
                                             // if($fileExists==200)
@@ -79,6 +79,8 @@
                                             $kategori=$vik->category->name;
                                         else
                                             $kategori='';
+
+                                        $nilai=getstar($vik->nilai_review);
                                 @endphp
                                     <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 margin-left-right-2 col-custom hidden-sm hidden-xs">
                                         <div class="video-item">
@@ -92,8 +94,12 @@
                                             </div>
                                             
                                             <div class="video-info">
-                                                {!!rating(0)!!}
 
+                                                @if(is_null($vik->approved_by))
+                                                    {!!rating(0)!!}
+                                                @else
+                                                    {!!rating($nilai)!!}
+                                                @endif
                                                 <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{(($vik->title))}}</a>
                                                 <a class="channel-name" href="#">{{$kategori}}</a>
                                                     <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>

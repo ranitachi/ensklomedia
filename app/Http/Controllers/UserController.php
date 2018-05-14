@@ -33,7 +33,12 @@ class UserController extends Controller
                     $hal=(0*10);
             }
         }
-
+        $prop=Province::all();
+        $pr=array();
+        foreach($prop as $k=>$v)
+        {
+            $pr[$v->id]=$v->name;
+        }
         if(isset($request->search))
         {
             $user = Users::join('profile','profile.user_id','=','users.id')
@@ -50,6 +55,7 @@ class UserController extends Controller
         if ($request->ajax()) {
              return view('pages-admin.user.data')
                 ->with('user',$user)
+                ->with('provinsi',$pr)
                 ->with('hal',$hal)
                 ->render();
         }
@@ -70,8 +76,10 @@ class UserController extends Controller
             $det = Users::join('profile','profile.user_id','=','users.id')
                 ->where('users.id','=',$id)->get()->first();
         }
+        $province = Province::all();
         return view('pages-admin.user.form')
             ->with('det',$det)
+            ->with('province',$province)
             ->with('level',$level)
             ->with('id',$id);
     }
@@ -120,10 +128,13 @@ class UserController extends Controller
                 }
             }
         }
-        $create_users = Users::create($users);
-        $profile['user_id']=$create_users->id;
 
-        $create_profile = Profile::create($profile);
+        $users2=validate_js($users);
+        $create_users = Users::create($users2);
+        $profile['user_id']=$create_users->id;
+        
+        $profile2=validate_js($profile);
+        $create_profile = Profile::create($profile2);
         return redirect('user')->with('status', 'Data Pengguna Baru Berhasil Di Simpan');
         // echo '<pre>';
         // print_r($users);
@@ -173,8 +184,11 @@ class UserController extends Controller
             }
         }
         // dd($users);
-        $create_users = Users::find($id)->update($users);
-        $create_profile = Profile::where('user_id',$id)->update($profile);
+        $users2=validate_js($users);
+        $create_users = Users::find($id)->update($users2);
+        
+        $profile2=validate_js($profile);
+        $create_profile = Profile::where('user_id',$id)->update($profile2);
         return redirect('user')->with('status', 'Data Pengguna Baru Berhasil Di Edit');
     }
 
@@ -238,45 +252,62 @@ class UserController extends Controller
                     if($dt[1]=='date_of_birth')
                         $profile['date_of_birth']=date('Y-m-d',strtotime($v));
                     
-                        if($dt[1]=='province')
+                    if($dt[1]=='province')
                     {
-                        $prov = Province::where('name','=',$v)->get()->first();
-                        $province=$prov->id;
-
-                        $cekfasilitasi=KegiatanFasilitasi::where('wilayah_id','=',$province)
-                                        ->where('flag','=',1)->get()->first();
-                        if(count($cekfasilitasi)!=0)
+                        if($v!='' )
                         {
-                            $m=Menu::where('title','like','%biodata%')->get()->first();
-                            if(count($m)!=0)
+                            if($v!='0')
                             {
 
-                                $menu=MenuPivot::where('fasilitasi_id','=',$cekfasilitasi->id)
-                                ->where('menu_id','=',$m->id)->get()->first();
-                                
-                                if(count($menu)!=0)
+                                $prov = Province::where('name','=',$v)->get()->first();
+                                $province=$prov->id;
+
+                                $cekfasilitasi=KegiatanFasilitasi::where('wilayah_id','=',$province)
+                                                ->where('flag','=',1)->get()->first();
+                                if(count($cekfasilitasi)!=0)
                                 {
-                                    if($menu->flag==1)
+                                    $m=Menu::where('title','like','%biodata%')->get()->first();
+                                    if(count($m)!=0)
                                     {
-                                        $st_biodata=1;
-                                        $url_biodata=trim($m->route).'/'.$id.'/'.$cekfasilitasi->id;
+
+                                        $menu=MenuPivot::where('fasilitasi_id','=',$cekfasilitasi->id)
+                                        ->where('menu_id','=',$m->id)->get()->first();
+                                        
+                                        if(count($menu)!=0)
+                                        {
+                                            if($menu->flag==1)
+                                            {
+                                                $st_biodata=1;
+                                                $url_biodata=trim($m->route).'/'.$id.'/'.$cekfasilitasi->id;
+                                            }
+                                            else
+                                            {
+                                                $st_biodata=0;
+                                                $url_biodata='';
+                                            }
+                                        }
+                                        else
+                                        {
+                                            $st_biodata=0;
+                                            $url_biodata='';
+                                        }
                                     }
                                     else
                                     {
                                         $st_biodata=0;
-                                        $url_biodata='';
+                                        $url_biodata='';   
                                     }
                                 }
                                 else
                                 {
                                     $st_biodata=0;
-                                    $url_biodata='';
+                                    $url_biodata='';  
                                 }
                             }
                             else
                             {
                                 $st_biodata=0;
-                                $url_biodata='';   
+                                $url_biodata='';  
                             }
                         }
                         else
@@ -292,13 +323,15 @@ class UserController extends Controller
             }
         }
         $create_users = Users::find($id)->update($users);
-        unset($profile['province']);
+        // unset($profile['province']);
         $create_profile = Profile::where('user_id',$id)->update($profile);
 
         $saung_pivot=SaungPivot::where('user_id','=',Auth::user()->id)->where('flag','=',0)->orderByRaw('RAND()')->limit(1)->get()->first();
 
         if(count($saung_pivot)!=0)
         {
+            
+
             $saung_pivot->flag=1;
             $saung_pivot->save();
             
@@ -307,6 +340,10 @@ class UserController extends Controller
         }
         else
         {
+            if ($st_biodata==1)
+            {
+                return redirect($url_biodata)->with('status', 'Data Profile Berhasil Di Edit, Silahkan Isi Form Biodata Berikut');
+            }
             return redirect('edit-profile')->with('status', 'Data Profile Berhasil Di Edit');
         }
         // $get_maping=MappingFasilitasi::where('user_id','=',Auth::user()->id)->where('wilayah_id','=',$province)->get();
@@ -332,5 +369,14 @@ class UserController extends Controller
         // $create_users = Users::find($id)->update($users);
         // $create_profile = Profile::where('user_id',$id)->update($profile);
         // return redirect('user')->with('status', 'Data Pengguna Baru Berhasil Di Edit');
+    }
+
+    public function leveluser($idlevel,$id)
+    {
+        $det=Users::find($id);
+        return view('pages-admin.user.pic')
+            ->with('idlevel',$idlevel)
+            ->with('det',$det)
+            ->with('id',$id);
     }
 }

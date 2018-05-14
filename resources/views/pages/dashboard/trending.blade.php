@@ -10,8 +10,8 @@
             <div class="col-lg-12 col-md-12 col-cm-12">&nbsp;</div>
         </div>
         <div class="row">
-            <div class="col-lg-1 col-md-1 col-sm-1">&nbsp;</div>
-                <div class="col-lg-10 col-md-10 col-sm-10">
+            <div class="col-md-1-dash col-sm-1">&nbsp;</div>
+                <div class="col-md-10-dash col-sm-10">
                     <div class="row">
                         <h1 class="new-video-title" style="padding-top:0px !important;padding-bottom:0px;"><span data-letters="V"> Video Favorit</h1>
                         @php
@@ -23,7 +23,7 @@
                             $eightdata = array_slice($video, 0, 12);
                             foreach($eightdata as $ixk => $vik)
                             {
-                                $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vik->image_path;
+                                $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$vik->image_path;
                                 if(File::exists($vik->image_path))
                                 {
                                     $cv = 'uploadfiles/image/'.$video->image_path;
@@ -34,7 +34,7 @@
                                 else
                                 {   
                                     //$handle=fopen($cover,'r');
-                                    $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vik->video_path;
+                                    $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$vik->video_path;
                                     $cover=$cover;
                                     //$fileExists = checkExternalFile($cover);
                                     /*if($fileExists==200)
@@ -136,7 +136,7 @@
                         @endphp
                       
                     </div>
-                <div class="col-lg-1 col-md-1 col-sm-1">&nbsp;</div>
+                <div class="col-md-1-dash col-sm-1">&nbsp;</div>
                 
             
             </div>

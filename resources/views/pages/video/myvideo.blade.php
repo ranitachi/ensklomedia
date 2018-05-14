@@ -39,7 +39,7 @@
                             // $eightdata = array_slice($video, 0, 12);
                             foreach($videos as $ixk => $vik)
                             {
-                                $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vik->image_path;
+                                $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$vik->image_path;
                                 if(File::exists($vik->image_path))
                                 {
                                     $cv = 'uploadfiles/image/'.$video->image_path;
@@ -50,7 +50,7 @@
                                 else
                                 {   
                                     //$handle=fopen($cover,'r');
-                                    $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vik->video_path;
+                                    $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$vik->video_path;
                                     $cover=$cover;
                                     //$fileExists = checkExternalFile($cover);
                                     /*if($fileExists==200)

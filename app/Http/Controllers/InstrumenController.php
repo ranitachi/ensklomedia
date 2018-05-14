@@ -26,7 +26,7 @@ class InstrumenController extends Controller
             }
         }
 
-        $ins=Instrumen::paginate($hal);
+        $ins=Instrumen::where('category_id','=','-1')->paginate($hal);
 
         if ($request->ajax()) {
              return view('pages-admin.instrumen.data')
@@ -62,12 +62,16 @@ class InstrumenController extends Controller
 
     public function store(Request $request)
     {
-       $create = Instrumen::create($request->all());
-       return response()->json([$create]);
+        $data=$request->all();
+        $data2=validate_js($data);
+        $create = Instrumen::create($data2);
+        return response()->json([$create]);
     }
     public function update(Request $request,$id)
     {
-       $update = Instrumen::find($id)->update($request->all());
+        $data=$request->all();
+        $data2=validate_js($data);
+       $update = Instrumen::find($id)->update($data2);
        return response()->json([$update]);
     }
     public function status($id,$st)

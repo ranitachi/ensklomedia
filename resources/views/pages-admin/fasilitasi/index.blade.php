@@ -70,6 +70,10 @@
             
         });
         var currentLocation = window.location;
+        function random(id)
+        {
+
+        }
         function changestatus(id,st)
         {
             var currentLocation = window.location;

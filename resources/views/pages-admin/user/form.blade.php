@@ -79,7 +79,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <label>Authorization Level</label>
-                                                <select name="users__authorization_level" class="form-control" data-placeholder="Authorization Level">
+                                                <select name="users__authorization_level" class="form-control" data-placeholder="Authorization Level" onchange="pilihlevel(this.value,{{$id}})">
                                                     <option value=""></option>
                                                     @foreach ($level as $k => $v)
                                                         @if ($id!=-1)
@@ -94,6 +94,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            <div id="div_level"></div>
                                             <div class="col-md-12">
                                                 <label>Alamat</label>
                                                 <textarea class="form-control" rows="4"  placeholder="Alamat" name="profile__address">{{$id!=-1 ? $det->address : ''}}</textarea>
@@ -108,10 +109,10 @@
                                                 <label>Profesi</label>
                                                 <input type="text" class="form-control" placeholder="Profesi" name="profile__profession" value="{{$id!=-1 ? $det->profession : ''}}">
                                             </div>
-                                            <div class="col-md-12">
+                                            {{-- <div class="col-md-12">
                                                 <label>Nama Channel Ensiklomedia</label>
                                                 <input type="text" class="form-control" placeholder="Nama Channel Ensiklomedia" name="profile__channel_name" value="{{$id!=-1 ? $det->channel_name : ''}}">
-                                            </div>
+                                            </div> --}}
                                             <div class="col-md-12">
                                                 <label>Nomor Telp/HP</label>
                                                 <input type="text" class="form-control" placeholder="Nomor Telp/HP" name="profile__phone_number" value="{{$id!=-1 ? $det->phone_number : ''}}">
@@ -125,9 +126,26 @@
                                                 <input type="text" class="form-control" placeholder="Pendidikan Terakhir" name="profile__educational_level" value="{{$id!=-1 ? $det->educational_level : ''}}">
                                             </div>
                                             <div class="col-md-12">
+                                                <label>Asal Wilayah</label>
+                                                <select name="profile__province" class="form-control" data-placeholder="Authorization Level">
+                                                    <option value=""></option>
+                                                    @foreach ($province as $k => $v)
+                                                        @if ($id!=-1)
+                                                            @if ($det->province==$v->id)
+                                                                <option value="{{$det->province}}" selected="selected">{{$v->name}}</option>    
+                                                            @else
+                                                                <option value="{{$v->id}}">{{$v->name}}</option>
+                                                            @endif
+                                                        @else
+                                                            <option value="{{$v->id}}">{{$v->name}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            {{-- <div class="col-md-12">
                                                 <label>Pilih Foto</label>
                                                 <input id="foto" type="file" class="foto" name="foto">
-                                            </div>
+                                            </div> --}}
                                              <div class="col-md-6">&nbsp;</div>
                                                 <div class="col-md-6">
                                                     <button type="submit" id="" class="btn btn-dm pull-right">{{$id!=-1 ? 'Edit' : 'Simpan'}}</button>
@@ -159,6 +177,21 @@
            $('#datetimepicker1').datetimepicker({
                format : 'DD-MM-YYYY',
            });
+
+           var pic='{{isset($det->authorization_level) ? $det->authorization_level : 0}}';
+        //    alert(pic);
+           if(pic==2)
+                pilihlevel(2,{{$id}});
         });
+
+        function pilihlevel(idlevel,id)
+        {
+            if(idlevel==2)
+            {
+                $('#div_level').load(APP_URL+'/level-user/'+idlevel+'/'+id);
+            }
+            else
+                $('#div_level').hide();
+        }
     </script>
 @endsection

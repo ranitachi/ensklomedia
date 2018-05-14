@@ -32,8 +32,8 @@ class SearchController extends Controller
             $update_hit->save();
 
             $myfile=public_path('uploadfiles/video').'/'.$vidd->video_path;
-            $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$vidd->video_path;
-            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$vidd->image_path;
+            $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$vidd->video_path;
+            $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$vidd->image_path;
             if(File::exists($myfile))
             {
                 $status='v2';

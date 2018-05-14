@@ -15,6 +15,8 @@ use App\Model\Category;
 use App\Model\Endcards;
 use App\Model\Topikturunan;
 use App\Model\Narsumfasilitasi;
+use App\Model\Users;
+use App\Model\Notifikasi;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Auth;
@@ -32,8 +34,9 @@ class SaungController extends Controller
             $id=$video->id;
 
             $myfile=public_path('uploadfiles/video').'/'.$video->video_path;
-            $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->video_path;
-            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
+            // $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$video->video_path;
+            $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$video->video_path;
+            $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$video->image_path;
             if(File::exists($myfile))
             {
                 $status='v2';
@@ -46,8 +49,9 @@ class SaungController extends Controller
 
             $endcards=Endcards::where('video_id','=',$id)->whereNotNull('link')->get();
             $saung=Saung::with('user')->with('reviewer')->where('video_id','=',$video->id)->get()->first();
-            $pesertasaung=SaungPivot::where('saung_id','=',$saung->id)->with('user')->get();
+            $pesertasaung=SaungPivot::where('saung_id','=',$saung->id)->where('flag','=','1')->with('user')->get();
         }
+        $peserta=Users::whereIn('authorization_level',[3,4])->get();
         $det=array();
         $idtopik='-1';
         $profil=Profile::all();
@@ -61,6 +65,7 @@ class SaungController extends Controller
         return view('pages-admin.saung.index')
                 ->with('id',$id)
                 ->with('idtopik',$idtopik)
+                ->with('peserta',$peserta)
                 ->with('status',$status)
                 ->with('pesertasaung',$pesertasaung)
                 ->with('saung',$saung)
@@ -91,6 +96,7 @@ class SaungController extends Controller
 
         $cek_pes=PesertaFasilitasi::where('user_id','=',Auth::user()->id)
                     ->where('flag','=','1')->get()->first();
+        $saung['reviewer_id']=0;
         if(count($cek_pes)!=0)
         {
             $saung['fasilitasi_id']=$cek_pes->fasilitasi_id;
@@ -147,5 +153,21 @@ class SaungController extends Controller
         $data['flag']=0;
         $create=SaungPivot::create($data);
         return response()->json([$create]);
+    }
+    
+    public function gabungsaung($idsaung,$idvid)
+    {
+        $saung=Saung::find($idsaung);
+        $pivot=SaungPivot::where('saung_id','=',$idsaung)->where('user_id','=',Auth::user()->id)->first();
+        $pivot->flag=1;
+        $pivot->save();
+
+        $notif=Notifikasi::where('saung_id','=',$idsaung)->where('to','=',Auth::user()->id)->first();
+        $notif->seen=date('Y-m-d H:i:s');
+        $notif->flag_active=0;
+        $notif->save();
+
+        return redirect('buka-saung/'.$saung->video->slug)->with('status', 'Anda Berhasil Ikut Bergabung Dalam Saung Diskusi Ini');
+        //return response()->json(['done']);
     }
 }

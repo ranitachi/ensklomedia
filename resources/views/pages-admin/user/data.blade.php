@@ -6,6 +6,8 @@
             <th>Email</th>
             <th>Profesi</th>
             <th>Alamat</th>
+            <th>Asal Wilayah</th>
+            <th>Tugas PIC</th>
             <th>Institusi</th>
             <th>Level</th>
             <th style="width:80px;">Aksi</th>
@@ -22,6 +24,8 @@
                 <td>{{$v->email}}</td>
                 <td>{{$v->profession}}</td>
                 <td>{{$v->address}}</td>
+                <td>{{isset($provinsi[$v->province]) ? $provinsi[$v->province] : 'n/a'}}</td>
+                <td>{!!$v->pic==1 ? '<span class="label label-success">Ya</span>' : ''!!}</td>
                 <td>{{$v->institute}}</td>
                 <td class="text-center"><span class="label label-success">{{leveluser($v->authorization_level)}}</span></td>
                 <td class="text-center">

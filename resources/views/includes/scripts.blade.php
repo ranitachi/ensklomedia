@@ -9,3 +9,4 @@
 <script src="{{ asset('js/chosen.jquery.js')}}"></script>
 <script src="{{ asset('js/notify.js')}}"></script>
 <script src="{{ asset('js/popcorn.js')}}"></script>
+<script src="{{ asset('js/share.js') }}"></script>

@@ -7,6 +7,7 @@ use App\Model\Instrumen;
 use App\Model\Video;
 use App\Model\Users;
 use App\Model\Penilaian;
+use App\Model\Nilaitespeserta;
 class PenilaianController extends Controller
 {
     public function simpan(Request $request, $videoid)
@@ -35,16 +36,21 @@ class PenilaianController extends Controller
                     $penilaian->save();
                 }
             }
+            $vid=Video::find($videoid);
+            $vid->nilai_review=$totalnilai;
+            $vid->save();
         }
+
         if($totalnilai!=0)
         {
-            return redirect('review')
+            return redirect('review/'.$videoid)
             ->with('message', 'Video Sudah Di Berikan Penilaian Dengan Nilai : '.$totalnilai);
         }
         else
         {
-            return redirect('review')
+            return redirect('review/'.$videoid)
             ->with('message', 'Anda Belum Memberikan Nilai Untuk Video Ini');
         }
     }
+    
 }

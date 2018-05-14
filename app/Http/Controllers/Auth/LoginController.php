@@ -10,6 +10,7 @@ use App\User;
 use App\Model\Profile;
 use Auth;
 use Socialite;
+use Storage;
 class LoginController extends Controller
 {
 
@@ -56,6 +57,17 @@ class LoginController extends Controller
 
             $user2 = Users::where(['email' => $userSocial->getEmail()])->first();
            
+        }
+        else
+        {
+            $id_user=$user->id;
+            $pr=Profile::where('user_id',$id_user)->first();
+            $pr->name=$userSocial->getName();
+            $pr->updated_at=date('Y-m-d H:i:s');
+            $pr->save();
+
+            //Storage::put('file.txt', serialize($userSocial));
+            // file_put_contents('file.txt', json_encode/($userSocial));
         }
 
         $usr = User::where(['email' => $userSocial->getEmail()])->first();

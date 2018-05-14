@@ -11,6 +11,7 @@ use App\Model\PetaMateri;
 use App\Model\Endcards;
 use App\Model\Instrumen;
 use App\Model\Penilaian;
+use App\Model\Notifikasi;
 use Auth;
 use File;
 class ReviewVideoController extends Controller
@@ -32,6 +33,8 @@ class ReviewVideoController extends Controller
                 ->with('videos', $getvideo);
         }
 
+
+        
         // return view('pages-admin.mapping-video.index')
         return view('pages-admin.setting.review-video.index')
             ->with('hal',$hal)
@@ -53,14 +56,14 @@ class ReviewVideoController extends Controller
         $mapel=array();
         foreach($pm as $k => $v)
         {
-            $mapel[$v->id]=$v;
+            $mapel[$v->category_id][$v->id]=$v;
         }
 
         $comments = Comments::where('video_id', $id)->with('video')->get();
             
         $myfile=public_path('uploadfiles/video').'/'.$video->video_path;
-        $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->video_path;
-        $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
+        $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$video->video_path;
+        $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$video->image_path;
         $status='';
         if(File::exists($myfile))
         {
@@ -94,6 +97,11 @@ class ReviewVideoController extends Controller
         {
             $pn[$v->instrumen_id]=$v->nilai;
         }
+
+        $upd['seen']=date('Y-m-d H:i:s');
+        $upd['flag_active']=0;
+        Notifikasi::where('video_id',$id)->where('to',Auth::user()->id)->update($upd);
+
         return view('pages-admin.setting.review-video.detail')
                 ->with('id',$id)
                 ->with('status',$status)
@@ -115,7 +123,7 @@ class ReviewVideoController extends Controller
             $vid->approved_by=Auth::user()->id;
             $vid->approved_at=date('Y-m-d H:i:s');
             $vid->save();
-            return redirect('review')
+            return redirect('review/'.$id)
                 ->with('message', 'Video Sudah Dikaji, dan siap Tayang');
         }
         else

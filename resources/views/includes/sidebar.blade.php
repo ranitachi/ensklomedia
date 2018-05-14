@@ -1,7 +1,7 @@
 		
 		{{--  <div class="col-md-2 no-padding-left no-padding-right hidden-sm hidden-xs" >  --}}
-        	<div class="left-sidebar">
-            	<div id="">
+        	<div class="left-sidebar" alt="menu-sidebar">
+            	<div>
             	<ul class="menu-sidebar" style="border-bottom:1px solid #dddddd;">
 					<li><a href="{{URL::to('/')}}"><i class="fa fa-home"></i>Home</a></li>
 					@if(Auth::check())
@@ -161,12 +161,12 @@
 					@endphp
 					@if (count($pes_fas)!=0)
 						<ul class="menu-sidebar" style="border-bottom:1px solid #dddddd;">
-							<ul class="accordion" id="accordion-setting">
+							<ul class="accordion" id="accordion-setting-peserta">
 								<li class="a-panel">
 									<div class="row">
-										<a data-toggle="collapse" data-parent="#accordion-setting" href="#linkawal">
+										<a data-toggle="collapse" data-parent="#accordion-setting-peserta" href="#linkawalpeserta">
 											<div class="col-lg-9 col-md-9">
-												<i class="fa fa-cogs"></i>Kegiatan Fasilitasi
+												<i class="fa fa-cogs"></i>Peserta Fasilitasi
 											</div>
 											<div class="col-lg-1 col-md-1">
 												<i class="fa fa-toggle-down"></i>
@@ -175,10 +175,10 @@
 										</a>
 									</div>
 								</li>
-								<ul id="linkawal" class="collapse" style="margin-left:10px !important;padding-top:10 !important;">
+								<ul id="linkawalpeserta" class="collapse" style="margin-left:10px !important;padding-top:10 !important;">
 									@foreach ($pes_fas as $item)
 										@if (isset($keg[$item->fasilitasi_id]))
-											<li class="color-1"><a href="{{url('kegiatan-fasilitasi/'.$item->fasilitasi_id)}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>{{$keg[$item->fasilitasi_id]->provinsi->name}}</a></li>	
+											<li class="color-1"><a href="{{url('kegiatan-fasilitasi/'.$item->fasilitasi_id)}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>{{$keg[$item->fasilitasi_id]->provinsi->name}} : {{$keg[$item->fasilitasi_id]->nama_fasilitasi}}</a></li>	
 										@endif
 										
 									@endforeach
@@ -210,6 +210,14 @@
 								@endphp
 									@foreach ($saung as $item)
 										<li class="color-1"><a href="{{url('buka-saung/'.$item->video->slug)}}" style="padding:0 0px 5px !important"><i class="fa fa-caret-right"></i>{{$item->video->title}}</a></li>	
+										
+									@endforeach
+								
+								@php
+									$pes_saung=App\Model\SaungPivot::with('saung')->with('user')->where('user_id','=',Auth::user()->id)->get();
+								@endphp
+									@foreach ($pes_saung as $item)
+										<li class="color-1"><a href="{{url('buka-saung/'.$item->saung->video->slug)}}" style="padding:0 0px 5px !important"><i class="fa fa-caret-right"></i>{{$item->saung->video->title}}</a></li>	
 										
 									@endforeach
 									

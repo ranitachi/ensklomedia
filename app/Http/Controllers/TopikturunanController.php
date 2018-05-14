@@ -16,8 +16,15 @@ class TopikturunanController extends Controller
         $topik=new Topikturunan;
         $topik->video_id=$request->video_id;
         $topik->user_created_id=Auth::user()->id;
-        $topik->topik=$request->topik;
-        $topik->penjelasan=$request->penjelasan;
+
+        $tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+        $m_topik = preg_replace($tagsToStrip, '-', $request->topik);
+        $topik->topik=$m_topik;
+        
+        $tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+        $m_penjelasan = preg_replace($tagsToStrip, '-', $request->penjelasan);
+        $topik->penjelasan=$m_penjelasan;
+        
         $topik->flag=$request->flag;
         $topik->created_at=date('Y-m-d H:i:s');
         $topik->updated_at=date('Y-m-d H:i:s');
@@ -27,7 +34,7 @@ class TopikturunanController extends Controller
         $activity=new SaungActivity;
         $activity->saung_id=$request->saung_id;
         $activity->user_id=Auth::user()->id;
-        $activity->activity='Guru Menambahkan Topik Turunan Baru : '.$request->topik;
+        $activity->activity='Guru Menambahkan Topik Turunan Baru : '.$m_topik;
         $activity->created_at=date('Y-m-d H:i:s');
         $activity->updated_at=date('Y-m-d H:i:s');
         $activity->save();
@@ -43,8 +50,15 @@ class TopikturunanController extends Controller
         $slug=$request->slug;
         $topik=Topikturunan::find($id);
         $topiklama=$topik->topik;
-        $topik->topik=$request->topik;
-        $topik->penjelasan=$request->penjelasan;
+
+        $tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+        $m_topik = preg_replace($tagsToStrip, '-', $request->topik);
+        $topik->topik=$m_topik;
+        
+        $tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+        $m_penjelasan = preg_replace($tagsToStrip, '-', $request->penjelasan);
+        $topik->penjelasan=$m_penjelasan;
+        
         $topik->flag=$request->flag;
         $topik->updated_at=date('Y-m-d H:i:s');
         $topik->save();
@@ -52,7 +66,7 @@ class TopikturunanController extends Controller
         $activity=new SaungActivity;
         $activity->saung_id=$request->saung_id;
         $activity->user_id=Auth::user()->id;
-        $activity->activity='Guru Mengedit Topik Turunan : #'.$topiklama.' Menjadi : '.$request->topik;
+        $activity->activity='Guru Mengedit Topik Turunan : #'.$topiklama.' Menjadi : '.$m_topik;
         $activity->created_at=date('Y-m-d H:i:s');
         $activity->updated_at=date('Y-m-d H:i:s');
         $activity->save();
@@ -97,5 +111,10 @@ class TopikturunanController extends Controller
                 ->with('idtopik',$idtopik)
                 ->with('data',$data);
     }
-       
+    public function hapusmateri($id)
+    {
+        $t=Topikturunan::find($id)->delete();
+        return response()->json(['done']);
+    }
+   
 }

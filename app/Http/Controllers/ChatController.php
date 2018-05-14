@@ -38,11 +38,24 @@ class ChatController extends Controller
             $nama_user='Reviewer';
         }
 
-        $data['chat']='<div class="msgl">['.date('H:i').'] <b>'.$nama_user.'</b>: '.$request->usermsg.'<br></div>';
+        $tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+        $message = preg_replace($tagsToStrip, '-', $request->usermsg);
+        $usermsg = $message;
+
+        $data['chat']='<div class="msgl">['.date('H:i').'] <b>'.$nama_user.'</b>: '.$usermsg.'<br></div>';
         $data['user_id']=$iduser;
         $data['saung_id']=$idsaung;
         $data['flag']=1;
-        $create=Chat::create($data);
+
+        $data2=array();
+        foreach($data as $k => $v)
+        {
+            $tagsToStrip2 = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+            $message2 = preg_replace($tagsToStrip2, '-', $v);
+            $data2[$k]=$message2;
+        }
+
+        $create=Chat::create($data2);
         return response()->json([$create]); 
     }
 }

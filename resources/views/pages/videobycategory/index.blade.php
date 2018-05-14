@@ -31,8 +31,8 @@
             </div>
             <h1 class="title"> <span data-letters="{{$first_letter}}"></span>&nbsp;{{ $category_name }}</h1>
             <ul class="category-info">
-                <li>97,174,199 Total Subscribers </li>
-                <li>255,525,456 Total Views</li>
+                {{-- <li>97,174,199 Total Subscribers </li>
+                <li>255,525,456 Total Views</li> --}}
             </ul>
         </div>
         <!-- // Category Cover Image -->
@@ -52,13 +52,13 @@
                             
                         </ul>
                         <br><br>
-                        <h1 class="title">Topik Tantangan</h1>
+                        {{-- <h1 class="title">Topik Tantangan</h1>
                         <ul class="social-link">
                             <li class="facebook"><a href="#"><i class="fa fa-facebook"></i> 11200 </a></li>
                             <li class="twitter"><a href="#"><i class="fa fa-twitter"></i> 514 </a></li>
                             <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i> 514 </a></li>
                             <li class="vimeo"><a href="#"><i class="fa fa-vimeo"></i> 155 </a></li>
-                        </ul>
+                        </ul> --}}
                     </div>
 
                 </div><!-- // col-md-2 -->
@@ -100,29 +100,36 @@
                                                 
                                                 $durasi="00:00";
                                             }
-                            
                                     @endphp
-                                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 margin-left-right-2 col-custom">
-                                            <div class="video-item">
-                                                <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;"> 
-                                                    <div class="hover-efect"></div>
-                                                    <small class="time">{{$durasi}}</small>
-                                                    @php
-                                                        $cover = "http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
-                                                        if (File::exists($video->image_path)) {
-                                                            $cover = url('uploadfiles/image/'.$video->image_path);
-                                                        }
-                                                    @endphp
-                                                    <a href="{{ route('watch', $video->slug) }}" onclick="addhit('{{$video->id}}')"><img class="custom-size" src="{{ $cover }}" alt=""></a>
-                                                </div>
-                                                <div class="video-info">
-                                                    <a href="{{ route('watch', $video->slug) }}" class="title">{{ ucwords(strtolower($video->title)) }}</a>
-                                                    <a class="channel-name" href="#" onclick="addhit('{{$video->id}}')">{{ $category_name }}    </a>
-                                                    <span class="views"><i class="fa fa-eye"></i>{{ $video->hit }} views </span>
-                                                    <span class="date"><i class="fa fa-clock-o"></i>{{$wkt}} </span>
+                                        @if ($durasi!='00:00')
+                                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 margin-left-right-2 col-custom">
+                                                <div class="video-item">
+                                                    <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;"> 
+                                                        <div class="hover-efect"></div>
+                                                        <small class="time">{{$durasi}}</small>
+                                                        @php
+
+                                                            $cover = "http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$video->image_path;
+                                                            if (File::exists(public_path().'/uploadfiles/image/'.$video->image_path)) {
+                                                                $cover = url('uploadfiles/image/'.$video->image_path);
+                                                            }
+                                                            else
+                                                            {
+                                                                $cv='assets/img/no-image-02.png';
+                                                                $cover=url($cv);
+                                                            }
+                                                        @endphp
+                                                        <a href="{{ route('watch', $video->slug) }}" onclick="addhit('{{$video->id}}')"><img class="custom-size" src="{{ $cover }}" alt=""></a>
+                                                    </div>
+                                                    <div class="video-info">
+                                                        <a href="{{ route('watch', $video->slug) }}" class="title">{{ ucwords(strtolower($video->title)) }}</a>
+                                                        <a class="channel-name" href="#" onclick="addhit('{{$video->id}}')">{{ $category_name }}    </a>
+                                                        <span class="views"><i class="fa fa-eye"></i>{{ $video->hit }} views </span>
+                                                        <span class="date"><i class="fa fa-clock-o"></i>{{$wkt}} </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     @endforeach
                                 @endforeach
                             </div><!-- // row -->

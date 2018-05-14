@@ -45,6 +45,32 @@
     
     
     $(document).ready(function(){
+      document.addEventListener("click", (evt) => {
+          const flyoutElement = document.getElementById("sidebar-menu");
+          let targetElement = evt.target; // clicked element
+
+          do {
+              if (targetElement == flyoutElement) {
+                  // Do nothing, just return.
+                  
+                  return;
+              }
+              // Go up the DOM.
+              targetElement = targetElement.parentNode;
+          } while (targetElement);
+          
+          // alert();
+          if(evt.target.getAttribute("id")!='2-icon-menu' && evt.target.getAttribute("id")!='icon-menu')
+          {
+            $('#latar').hide();
+                $('#hide-menu').val(0);
+                // $('#sidebar-menu').hide();
+                $('#sidebar-menu').removeClass();
+                $('#sidebar-menu').addClass("hidden-lg hidden-md hidden-sm hidden-xs");
+            }
+          // Do something useful here.
+          // document.getElementById("flyout-debug").textContent = "Clicked outside!";
+      });
       $('#latar').hide();
       $(".chosen-select").chosen();
 

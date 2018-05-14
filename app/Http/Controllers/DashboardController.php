@@ -10,6 +10,8 @@ use App\Model\Comments;
 use App\Model\PetaMateri;
 use App\Model\Endcards;
 use App\Model\Saung;
+use App\Model\Like;
+use App\Model\Download;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -18,6 +20,7 @@ use Carbon\Carbon;
 use Location;
 use FFMpeg;
 use DB;
+use Auth;
 class DashboardController extends Controller
 {
     public function index()
@@ -61,19 +64,22 @@ class DashboardController extends Controller
 
     public function watch($slug=-1)
     {
-        $video=$endcards=array();
+        $video=$endcards=$like=array();
         $id=-1;
         $status='v1';
         if($slug!=-1)
         {
-            $video = Video::where('slug','like',$slug)->get()->first();
-            $id=$video->id;
+            $video = Video::where('slug','like',$slug)->first();
+            
+            if(count($video)!=0)
+                $id=$video->id;
+            
 
             $comments = Comments::where('video_id', $id)->with('video')->get();
             
             $myfile=public_path('uploadfiles/video').'/'.$video->video_path;
-            $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->video_path;
-            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
+            $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$video->video_path;
+            $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$video->image_path;
             if(File::exists($myfile))
             {
                 $status='v2';
@@ -86,6 +92,8 @@ class DashboardController extends Controller
 
             $relatedvideo = Video::where('category_id', $video->category_id)->with('category')->orderByRaw("RAND()")->limit(10)->get();
             $endcards=Endcards::where('video_id','=',$id)->whereNotNull('link')->get();
+            if(Auth::check())
+                $like=Like::where('video_id','=',$id)->where('user_id','=',Auth::user()->id)->first();
         }
         $saung=Saung::where('flag','=',1)->get();
         $sn=array();
@@ -101,6 +109,7 @@ class DashboardController extends Controller
                 ->with('status',$status)
                 ->with('endcards',$endcards)
                 ->with('slug',$slug)
+                ->with('like',$like)
                 ->with('video',$video)
                 ->with('relatedvideo',$relatedvideo)
                 ->with('comments',$comments)
@@ -113,8 +122,8 @@ class DashboardController extends Controller
         $id=$video->id;
         $videosDir = base_path('public/uploadfiles/video');
         $myfile=public_path('uploadfiles/video').'/'.$video->video_path;
-        $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->video_path;
-        $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
+        $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$video->video_path;
+        $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$video->image_path;
         if(File::exists($myfile))
         {
                 $status='v2';
@@ -123,7 +132,7 @@ class DashboardController extends Controller
                 $vid=url($vv);
                 $cover=url($cv);
         }
-        // $vid='http://ensiklomedia.kemdikbud.go.id/uploads/videos/20170703-66BP5AE20160715_010744.mp4';
+        // $vid='http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video20170703-66BP5AE20160715_010744.mp4';
         $mime = "video/mp4";
         $title = $video->title;
         return view('pages.video.player')->with(compact('vid', 'mime', 'title'));
@@ -134,8 +143,8 @@ class DashboardController extends Controller
         $id=$video->id;
         $videosDir = base_path('public/uploadfiles/video');
         $myfile=public_path('uploadfiles/video').'/'.$video->video_path;
-        $vid="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$video->video_path;
-        $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
+        $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$video->video_path;
+        $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$video->image_path;
         if(File::exists($myfile))
         {
                 $status='v2';
@@ -144,7 +153,7 @@ class DashboardController extends Controller
                 $vid=url($vv);
                 $cover=url($cv);
         }
-        // $vid='http://ensiklomedia.kemdikbud.go.id/uploads/videos/20170703-66BP5AE20160715_010744.mp4';
+        // $vid='http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video20170703-66BP5AE20160715_010744.mp4';
         $mime = "video/mp4";
         $title = $video->title;
         return view('pages.video.player-std')->with(compact('vid', 'mime', 'title'));
@@ -157,7 +166,7 @@ class DashboardController extends Controller
         // $file = $getID3->analyze($filename);
         // $duration_string = $file['playtime_string'];
         // echo $duration_string;
-        // $file="http://ensiklomedia.kemdikbud.go.id/uploads/videos/20170906-221Tak%20berjudul%20640x360%200,94Mbps%202017-09-06%2010-41-20.mp4";
+        // $file="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video20170906-221Tak%20berjudul%20640x360%200,94Mbps%202017-09-06%2010-41-20.mp4";
         // $lokasi_ffpmeg=public_path();
         // echo $lokasi_ffpmeg.'/bin/ffmpeg';
         // $process = new Process('bin/ffmpeg -i '.$file.' 2>&1 | grep "Duration"');
@@ -173,7 +182,7 @@ class DashboardController extends Controller
         //     }
         //     echo $durasi;
         
-        $video='http://ensiklomedia.kemdikbud.go.id/uploads/videos/20171218-1312Sejarah%20G30SPKI.mp4';
+        $video='http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video20171218-1312Sejarah%20G30SPKI.mp4';
         // $cekfile=cekfile($video);
         // echo $cekfile;
         // $process = new Process('/usr/local/bin/ffprobe -i '.$video.' -sexagesimal -show_entries format=duration -v quiet -of csv="p=0"');
@@ -187,8 +196,8 @@ class DashboardController extends Controller
         $x=0;
         foreach($vid as $index => $val)
         {
-            $file="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".str_replace(' ','%20',$val->video_path);
-            // $file="http://ensiklomedia.kemdikbud.go.id/uploads/videos/".$val->video_path;
+            $file="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".str_replace(' ','%20',$val->video_path);
+            // $file="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$val->video_path;
             $cekfile=cekfile($file);
             if($cekfile)
             {
@@ -279,4 +288,51 @@ class DashboardController extends Controller
         }
         echo '</select>';
     }
+
+    public function likevideo($slug)
+    {
+        $vid=Video::where('slug','like',$slug)->first();
+        $like=Like::where('video_id','=',$vid->id)->where('user_id','=',Auth::user()->id)->first();
+        if(count($like)!=0)
+        {
+            $like->delete();
+            echo 0;
+        }
+        else
+        {
+            $l=new Like;
+            $l->video_id=$vid->id;
+            $l->user_id=Auth::user()->id;
+            $l->created_at=date('Y-m-d H:i:s');
+            $l->updated_at=date('Y-m-d H:i:s');
+            $l->save();
+            echo 1;
+        }
+    }
+
+    public function download($slug) {
+        $vid=Video::where('slug','like',$slug)->first();
+        $unduh=new Download;
+        $unduh->video_id=$vid->id;
+        $unduh->user_id=(Auth::check() ? Auth::user()->id : '-1');
+        $unduh->created_at=date('Y-m-d H:i:s');
+        $unduh->updated_at=date('Y-m-d H:i:s');
+        $unduh->save();
+
+        $dv=explode('.',$vid->video_path);
+        $ext=$dv[count($dv)-1];
+
+        // $file_path = url('uploadfiles/video/'.$vid->video_path);
+        // echo $file_path;
+        $file_path = 'http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video//'.$vid->video_path;
+        header('Content-Type: video/'.$ext);
+        header('Content-Disposition: attachment; filename="'.$vid->video_path.'"');
+
+        $file = fopen ($file_path, "r");
+
+        while (!feof ($file)) echo fgets ($file, 1024);
+
+        fclose($file);
+        
+  }
 }

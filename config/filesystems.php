@@ -60,6 +60,13 @@ return [
             'url' => env('APP_URL').'/public',
             'visibility' => 'public',
         ],
+        'ftp' => [
+            'driver'   => 'ftp',
+            'host'     => 'en-str1.ensiklomedia.id',
+            'username' => 'c02030518',
+            'password' => 'm7?Hdv88',
+            'root'     => 'video'
+        ],
 
         's3' => [
             'driver' => 's3',

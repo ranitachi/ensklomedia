@@ -24,15 +24,21 @@
             <tr>
                 <td class="text-center">{{++$idx}}</td>
                 <td class="text-left">{{$item->pertanyaan}}</td>
+                @php
+                    $nilai=($item->bobot / 5);
+                @endphp
                 @for ($i = 1; $i <= 5; $i++)
                     @php
-                        if(count($pn)!=0)
+                        $nl=($i*$nilai);
+                        if(isset($pn[$item->id]))
                         {
-                            if($pn[$item->id]==$i)
-                            {
+                            // if($pn[$item->id]==$nl)
+                            // {
+                            if (abs(($pn[$item->id]-$nl)/$nl) < 0.00001) {
                                 $checked='checked';
                             }
-                            else {
+                            else 
+                            {
                                 $checked='';
                             }
                         }
@@ -40,9 +46,10 @@
                         {
                             $checked='';
                         }
+                        
                     @endphp
                     <td class="text-center">
-                        <input type="radio" name="nilai[{{$item->id}}]" value="{{$i}}" {{$checked}}>
+                        <input type="radio" name="nilai[{{$item->id}}]" value="{{$nl}}" {{$checked}}>
                     </td>
                 @endfor
             </tr>

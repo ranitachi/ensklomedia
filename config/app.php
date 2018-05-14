@@ -163,6 +163,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Jorenvh\Share\Providers\ShareServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -180,6 +181,9 @@ return [
         Stevebauman\Location\LocationServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Pbmedia\LaravelFFMpeg\FFMpegServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        GrahamCampbell\Flysystem\FlysystemServiceProvider::class,
+        
     ],
 
     /*
@@ -231,7 +235,9 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Location' => Stevebauman\Location\Facades\Location::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class
+        'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class,
+        'Share' => Jorenvh\Share\ShareFacade::class,
+        'Flysystem' => GrahamCampbell\Flysystem\Facades\Flysystem::class,
     ],
     
 ];

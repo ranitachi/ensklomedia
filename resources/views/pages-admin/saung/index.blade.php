@@ -83,7 +83,7 @@
                 <div class="col-md-8 hidden-sm hidden-xs">
                 	<div id="watch" style="padding-right:0px;">
                         @php
-                            $cover="http://ensiklomedia.kemdikbud.go.id/uploads/images/".$video->image_path;
+                            $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$video->image_path;
                             if(File::exists(public_path().'/uploadfiles/image/'.$video->image_path))
                             {
                                 $cv = 'uploadfiles/image/'.$video->image_path;
@@ -127,22 +127,13 @@
                             <div class="col-md-7 text-right">
                                 @if (count($pesertasaung)!=0 )
                                     @foreach ($pesertasaung as $item)
-                                        <img src="{{asset('assets/img/user.png')}}" class="saung-img" data-toggle="tooltip" title="{{$profile[$item->user_id]->name}}">
+                                        <img src="{{asset('assets/img/user.png')}}" class="saung-img" data-toggle="tooltip" title="{{$profile[$item->user_id]->name == 'n/a' ? $item->user->email : $profile[$item->user_id]->name}}">
                                     @endforeach
                                 @else
                                     <i>Peserta Saung Belum Ada</i>
                                 @endif
-                                {{-- <img src="{{asset('assets/img/user.png')}}" class="saung-img" data-toggle="tooltip" title="Peserta Saung">
-                                <img src="{{asset('assets/img/user.png')}}" class="saung-img" data-toggle="tooltip" title="Peserta Saung">
-                                <img src="{{asset('assets/img/user.png')}}" class="saung-img" data-toggle="tooltip" title="Peserta Saung">
-                                <img src="{{asset('assets/img/user.png')}}" class="saung-img" data-toggle="tooltip" title="Peserta Saung">
-                                <img src="{{asset('assets/img/user.png')}}" class="saung-img" data-toggle="tooltip" title="Peserta Saung">
-                                <img src="{{asset('assets/img/user.png')}}" class="saung-img" data-toggle="tooltip" title="Peserta Saung">
-                                <img src="{{asset('assets/img/user.png')}}" class="saung-img gray" data-toggle="tooltip">
-                                <img src="{{asset('assets/img/user.png')}}" class="saung-img gray" data-toggle="tooltip">
-                                <img src="{{asset('assets/img/user.png')}}" class="saung-img gray" data-toggle="tooltip">
-                                <img src="{{asset('assets/img/user.png')}}" class="saung-img gray" data-toggle="tooltip"> --}}
-                                <img src="{{asset('assets/img/add-user.png')}}" class="saung-img" data-toggle="tooltip" title="Klik Untuk Mengundang Peserta" style="margin-left:10px;padding-top:5px;">
+                                
+                                <img src="{{asset('assets/img/add-user.png')}}" class="saung-img" data-toggle="tooltip" title="Klik Untuk Mengundang Peserta" style="margin-left:10px;padding-top:5px;" onclick="undangpeserta({{$saung->id}})">
                                 
                             </div>
                         </div>
@@ -184,7 +175,7 @@
                         </div>
                         @if (count($saung)!=0)
                             @if ($saung->flag==1)
-                                @if (Auth::user()->id==$saung->created_user_id)
+                                @if ($saung->fasilitasi_id==Auth::user()->id || $saung->reviewer_id==Auth::user()->id || Auth::user()->id==$saung->created_user_id)
                                     <div class="row">
                                         <div class="col-md-12">
                                             
@@ -198,27 +189,45 @@
                     @if (count($saung)!=0)
                         @if ($saung->flag==1)
                         <div class="rpp">
-                            <div class="row">
-                                    <div class="col-md-12 text-right"><h2>Materi Pendukung</h2></div>
-                                    <div id="topik-turunan"></div>
-                                    @if (Auth::user()->id==$saung->created_user_id)
-                                        
-                                        <center>
-                                            <button class="btn btn-xs btn-primary" onclick="tambahtopik('{{$video->id}}','-1','{{Auth::user()->id}}')">
-                                                    <i class="fa fa-plus-square"></i> Tambah Materi Pendukung
-                                            </button>
-                                        </center>
-                                    @endif
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="pill" href="#home">Materi Pendukung</a></li>
+                                <li><a data-toggle="pill" href="#div-topik-tantangan">Topik Tantangan</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="home" class="tab-pane fade in active">
+                                    
+                                        <div class="row">
+                                                {{-- <div class="col-md-12 text-right"><h2>Materi Pendukung</h2></div> --}}
+                                                <div id="topik-turunan"></div>
+                                                @if (Auth::user()->id==$saung->created_user_id)
+                                                    
+                                                    <center>
+                                                        <button class="btn btn-xs btn-primary" onclick="tambahtopik('{{$video->id}}','-1','{{Auth::user()->id}}')">
+                                                                <i class="fa fa-plus-square"></i> Tambah Materi Pendukung
+                                                        </button>
+                                                    </center>
+                                                @endif
+                                        </div>
+                                    
+                                </div>
+                                <div id="div-topik-tantangan" class="tab-pane fade">
+                                    <div class="row">
+                                        <div id="topik-tantangan"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        @if ($saung->fasilitasi_id==Auth::user()->id || $saung->reviewer_id==Auth::user()->id || Auth::user()->id==$saung->created_user_id)
+                            
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-12">
-                                <button class="btn btn-md btn-danger col-md-12">Topik Tantangan</button>
+                                <button class="btn btn-md btn-danger col-md-12" onclick="addtopiktantangan('{{$saung->id}}',-1)">Topik Tantangan</button>
                             </div>
                         </div>
+                        @endif
                         <div class="row" style="margin-top:3px;">
                             <div class="col-md-6">
-                                <button class="btn btn-md btn-primary col-md-12">Latihan</button>
+                                <button class="btn btn-md btn-primary col-md-12" onclick="latihan('{{$saung->id}}',-1)">Latihan</button>
                             </div>
                             <div class="col-md-6">
                                 <button class="btn btn-md btn-success col-md-12" id="chat"><i class="fa fa-comments-o"></i> Chat Saung</button>
@@ -274,17 +283,204 @@ $saungid= count($saung)!=0 ? $saung->id : 0;
     <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js')}}"></script>
     <script src="{{asset('/vendor/laravel-filemanager/js/lfm.js')}}"></script>
     <script>
+        function ikuttantangan(idsaung,idvideo,idtantangan)
+        {
+            location.href='{{url("ikut-tantangan")}}/'+idsaung+'/'+idvideo+'/'+idtantangan;
+        }
+        function undangpeserta(idsaung)
+        {
+            $('#modalPeserta').modal('show');
+            $('#ok-peserta').one('click',function(){
+                var peserta=$('#id_peserta').val();
+                if(peserta=='')
+                {
+                    var txt = "Peserta Saung Belum Dipilih";
+                        $.notify(txt,{
+                            elementPosition: 'bottom right',
+                            globalPosition: 'buttom right',
+                            className : 'error',
+                            z_index : 1500000
+                        });
+                }
+                else
+                {
+                    $('#add-peserta').submit();
+                }
+            });
+        }
+
+        function hapuslatihan(idsaung,id)
+        {
+            $('#content-body').html('<h1 style="color:#000">Anda yakin ingin Menghapus Data Latihan ini ?</h1>');
+            $('#modal_default').modal('show');
+            $('button#ok').html('<i class="fa fa-save"></i>&nbsp;Ya');
+            $('button#ok').one('click',function(){
+                $.ajax({
+                    url : APP_URL+'/latihan-hapus/'+id+'/'+idsaung,
+                    dataType: 'json'
+                }).done(function(data){
+                    $('#modal_default').modal('hide');
+                    $('#data-soal').load(APP_URL+'/latihan-data/'+idsaung);
+                    $('#content-body-ok').html('<h2 style="color:black">Data Latihan Berhasil Dihapus</h2>');
+                    $('#modal_ok').modal('show');
+                }).fail(function(data){
+                    var txt = "Hapus Data Latihan Tidak Berhasil";
+                        $.notify(txt,{
+                            elementPosition: 'bottom right',
+                            globalPosition: 'buttom right',
+                            className : 'error',
+                            z_index : 1500000
+                        });
+                });
+            });
+        }
+        function latihanform(idsaung,id)
+        {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+            $('#form').load(APP_URL+'/latihan-form/'+idsaung+'/'+id,function(){
+                $('#lfm').filemanager('image', {prefix: APP_URL+'/laravel-filemanager'});
+                var options = {
+                    filebrowserImageBrowseUrl: APP_URL+'/laravel-filemanager?type=Images',
+                    filebrowserImageUploadUrl: APP_URL+'/laravel-filemanager/upload?type=Images&_token=',
+                    filebrowserBrowseUrl: APP_URL+'/laravel-filemanager?type=Files',
+                    filebrowserUploadUrl: APP_URL+	'/laravel-filemanager/upload?type=Files&_token=',
+                    height: 130
+                };
+                CKEDITOR.replace('pertanyaan', options);
+                CKEDITOR.replace('jawaban1', options);
+                CKEDITOR.replace('jawaban2', options);
+                CKEDITOR.replace('jawaban3', options);
+                CKEDITOR.replace('jawaban4', options);   
+            });
+        }
+    
+       function latihan(idsaung,id)
+        {
+            $('.modal-title-lg').text('Latihan Saung');
+            $('#modal-body_latihan').load(APP_URL+'/latihan/'+idsaung,function(){
+
+                $('#data-soal').load(APP_URL+'/latihan-data/'+idsaung);
+                latihanform(idsaung,id);
+            });
+            $('#modal_besar_latihan').modal('show');
+        }
+        function lihatsoal(question_id,idsaung)
+        {
+            $('#detail').load(APP_URL+'/question/'+question_id+'/'+idsaung);
+        }
+        function simpantest(id,idsaung)
+        {
+            //form-latihan-test
+                var t_url = APP_URL+'/latihan-simpan/'+idsaung+'/'+id;
+                var t_method = 'POST';
+                //$('#form-category').submit();
+                for (instance in CKEDITOR.instances) {
+                    CKEDITOR.instances[instance].updateElement();
+                }
+                $.ajax({
+                    url : t_url,
+                    type : t_method,
+                    dataType: 'json',
+                    cache: false,
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    data: $('#form-latihan-test').serialize()
+                }).done(function(data){
+                    if(id==-1)
+                    {
+                         var ps="Data Latihan Berhasil Disimpan";
+                    }
+                    else
+                    {
+                        var ps="Data Latihan Berhasil Di Edit";
+                    }
+                    $.notify(ps, {
+                        elementPosition: 'bottom right',
+                        className : 'info',
+                        globalPosition: 'buttom right',
+                    });
+                    $('#modal-body_latihan').load(APP_URL+'/latihan/'+idsaung,function(){
+
+                        $('#data-soal').load(APP_URL+'/latihan-data/'+idsaung);
+                        latihanform(idsaung,-1);
+                    });
+                }).fail(function(data){
+                    var ps="Data Latihan Gagal Disimpan";
+                    $.notify(ps, {
+                        elementPosition: 'bottom right',
+                        className : 'error',
+                        globalPosition: 'buttom right',
+                    });
+                });
+        }
+        function addtopiktantangan(idsaung,id)
+        {
+            $('#content-body').load(APP_URL+'/tantangan-form/'+idsaung+'/'+id);
+            $('button#ok').html('<i class="fa fa-save"></i>&nbsp;Simpan');
+            $('#modal_default').modal('show');
+            $('button#ok').one('click',function(){
+                var tt=$('#tantangan').val();
+                if(tt=='')
+                {
+                    var txt = "Topik Tantangan Harus Di Isi";
+                    $.notify(txt,{
+                        elementPosition: 'bottom right',
+                        globalPosition: 'buttom right',
+                        className : 'error',
+                        z_index : 1500000
+                    });
+                }
+                else
+                {
+                    //form-tantangan
+                    var t_url = APP_URL+'/tantangan-simpan/{{$saung->id}}/'+id;
+                    var t_method = 'POST';
+                    $.ajax({
+                        url : t_url,
+                        type : t_method,
+                        dataType: 'json',
+                        cache: false,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        data: $('#form-tantangan').serialize()
+                    }).done(function(data){
+                        $('#topik-tantangan').load(APP_URL+'/tantangan-data/'+idsaung);
+                        $('.nav-tabs a[href="#div-topik-tantangan"]').tab('show');
+                        $('#modal_default').modal('hide');
+
+                        if(id==-1)
+                            var ps='<h3 style="color:black">Topik Tantangan Berhasil Disimpan</h3>';
+                        else
+                            var ps='<h3 style="color:black">Topik Tantangan Berhasil Di Edit</h3>';
+
+                        $('#content-body-ok').html(ps);
+                        $('#modal_ok').modal('show');
+
+                    }).fail(function(data){
+                        var txt = "Tambah Topik Tantangan Tidak Berhasil";
+                        $.notify(txt,{
+                            elementPosition: 'bottom right',
+                            globalPosition: 'buttom right',
+                            className : 'error',
+                            z_index : 1500000
+                        });
+                    });
+                }
+            });
+        }
+
         function loadchat()
         {
             $('#isichat').load(APP_URL+'/chat-data/{{$saung->id}}');
         }
-         $(document).ready(function(){
+         
+        $(document).ready(function(){
             loadchat();
             setInterval(function(){
                 loadchat();
             },900);
-
-            $('#submitmsg').click(function(){
+            $('#topik-tantangan').load(APP_URL+'/tantangan-data/{{$saung->id}}');
+            $('#submitmsg').one('click',function(){
                 var t_url = APP_URL+'/chat/{{$saung->id}}';
                 var t_method = 'POST';
                 $.ajax({
@@ -346,15 +542,15 @@ $saungid= count($saung)!=0 ? $saung->id : 0;
             });
 
         });
-            $(document).keyup(function(e) {
-                if (e.keyCode == 27) { // escape key maps to keycode `27`
-                    $('#normal').hide();
-                    $('#maximize').show();
-                    $('#minimize').show();
-                    $('#wrapper').css({'width':'30%','top':'unset','z-index':'10000'});
-                    $('#chatbox').css({'height':'200px'});  
-                }
-            });
+        $(document).keyup(function(e) {
+            if (e.keyCode == 27) { // escape key maps to keycode `27`
+                $('#normal').hide();
+                $('#maximize').show();
+                $('#minimize').show();
+                $('#wrapper').css({'width':'30%','top':'unset','z-index':'10000'});
+                $('#chatbox').css({'height':'200px'});  
+            }
+        });
         var widthvideo=$(document).width();
         var heightvideo=(parseInt(widthvideo) / 1.33);
         var ecard='{{$ecard}}';
@@ -431,6 +627,59 @@ $saungid= count($saung)!=0 ? $saung->id : 0;
         {
             $('#topik-turunan').load(APP_URL+'/topik-turunan-data/'+video_id+'/'+saung_id+'/'+user_id);
         }
+        function hapustopik(video_id,id,user_id)
+        {
+            $('#content-body').html('<h1 style="color:#000">Anda yakin ingin Menghapus Materi Pendukung ini ?</h1>');
+            $('#modal_default').modal('show');
+            $('button#ok').html('<i class="fa fa-save"></i>&nbsp;Ya');
+            $('button#ok').click(function(){
+                $.ajax({
+                    url : APP_URL+'/topik-turunan-hapus/'+id,
+                    dataType: 'json'
+                }).done(function(data){
+                     $('#modal_default').modal('hide');
+                    loadtopik(video_id,{{$saung->id}},user_id);
+                    $('.nav-tabs a[href="#home"]').tab('show');
+                    $('#content-body-ok').html('<h2 style="color:black">Data Materi Pendukung Berhasil Dihapus</h2>');
+                    $('#modal_ok').modal('show');
+                }).fail(function(data){
+                    var txt = "Hapus Materi Pendukung Tidak Berhasil";
+                        $.notify(txt,{
+                            elementPosition: 'bottom right',
+                            globalPosition: 'buttom right',
+                            className : 'error',
+                            z_index : 1500000
+                        });
+                });
+            });
+        }
+        function hapustantangan(video_id,id,user_id)
+        {
+            $('#content-body').html('<h1 style="color:#000">Anda yakin ingin Menghapus Topik Tantangan ini ?</h1>');
+            $('#modal_default').modal('show');
+            $('button#ok').html('<i class="fa fa-save"></i>&nbsp;Ya');
+            $('button#ok').click(function(){
+                $.ajax({
+                    url : APP_URL+'/tantangan-hapus/'+id,
+                    dataType: 'json'
+                }).done(function(data){
+                    $('#modal_default').modal('hide');
+                    $('#topik-tantangan').load(APP_URL+'/tantangan-data/{{$saung->id}}');
+                    $('.nav-tabs a[href="#div-topik-tantangan"]').tab('show');
+
+                    $('#content-body-ok').html('<h2 style="color:black">Data Topik Tantangan Berhasil Dihapus</h2>');
+                    $('#modal_ok').modal('show');
+                }).fail(function(data){
+                    var txt = "Hapus Topik Tantangan Tidak Berhasil";
+                        $.notify(txt,{
+                            elementPosition: 'bottom right',
+                            globalPosition: 'buttom right',
+                            className : 'error',
+                            z_index : 1500000
+                        });
+                });
+            });
+        }
         function tambahtopik(idvid,idtopik,user_id)
         {
             $('#form-topik').load(APP_URL+'/topik-turunan-form/'+idvid+'/'+idtopik+'/'+user_id+'/{{$saungid}}',function(){
@@ -445,7 +694,7 @@ $saungid= count($saung)!=0 ? $saung->id : 0;
 
                 $('.modal-title-lg').text('Form Topik Turunan');
                 $('#modal_besar').modal('show');
-                $('#ok-lg').click(function(){
+                $('#ok-lg').one('click',function(){
                     var topik=$('#topik').val();
                     var content = CKEDITOR.instances['penjelasan'].getData();
                     if(topik=='')
@@ -493,6 +742,15 @@ $saungid= count($saung)!=0 ? $saung->id : 0;
             /* margin: 0;
             padding: 0; */
         }
+        #modal_besar_latihan > .modal-dialog
+        {
+            width: 99%;
+            height: 100%;
+            margin-top:5px;
+            
+            /* margin: 0;
+            padding: 0; */
+        }
         .modal{
             z-index:10000 !important;
         }
@@ -500,7 +758,7 @@ $saungid= count($saung)!=0 ? $saung->id : 0;
         {
             z-index:15000 !important;
         }
-        #topik-turunan
+        #topik-turunan,#topik-tantangan
         {
             padding:10px;
             font-size: 14px;
@@ -532,3 +790,69 @@ $saungid= count($saung)!=0 ? $saung->id : 0;
         }
     </style>
 @endsection
+<div id="modal_besar_latihan" class="modal fade">
+	<div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title-lg"></h5>
+                </div>
+
+			    <div id="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" style="padding-top:10px;">
+                            <div id="modal-body_latihan"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                   
+                    <button type="button" class="btn btn-success" id="ok-lg_latihan" data-dismiss="modal"><i class="fa fa-check"></i>&nbsp;Tutup</button>
+                </div>
+            </div>
+    </div>
+</div>
+<div id="modalPeserta" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Pilih Peserta Saung</h5>
+                </div>
+
+                <form action="{{ url('add-peserta-to-saung/simpan/'.$saung->id) }}" method="post" id="add-peserta">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label for="">Silahkan pilih Peserta di bawah ini:</label>
+                                <input type="hidden" name="id_fasilitasi" id="id_fasilitasi">
+                                <select name="id_peserta[]" id="id_peserta" class="form-control chosen-select" multiple="multiple">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($peserta as $item)
+                                        @if (Auth::user()->id != $item->id)
+                                            <option value="{{ $item->id }}">{{ (isset($prf[$item->id]) ? $prf[$item->id]->name : '') }} [{{ $item->email }}]</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+                        <button type="button" class="btn btn-success" id="ok-peserta"><i class="fa fa-save"></i>&nbsp;Simpan</button>
+                    </div>
+                </form>                
+            </div>
+        </div>
+    </div>
+<style>
+    .table td,
+    .table th
+    {
+        font-size:13px !important;
+    }
+    .chosen-container
+    {
+        width:100% !important;
+    }
+</style>

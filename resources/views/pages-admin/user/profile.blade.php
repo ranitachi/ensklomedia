@@ -38,17 +38,17 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label>Nama</label>
-                                                            <input type="text" class="form-control" placeholder="Nama" name="profile__name" value="{{$id!=-1 ? $profile->name : ''}}">
+                                                            <input type="text" class="form-control" placeholder="Nama" name="profile__name" value="{{$id!=-1 ? (isset($profile->name) ? $profile->name: '') : ''}}">
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label>Tempat Lahir</label>
-                                                            <input type="text" class="form-control" placeholder="Tempat Lahir" name="profile__place_of_birth" value="{{$id!=-1 ? $profile->place_of_birth : ''}}">
+                                                            <input type="text" class="form-control" placeholder="Tempat Lahir" name="profile__place_of_birth" value="{{$id!=-1 ? (isset($profile->place_of_birth) ? $profile->place_of_birth: '') : ''}}">
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label>Tanggal Lahir</label>
                                                             <div class="form-group">
                                                                 <div class='input-group date' id='datetimepicker1'>
-                                                                    <input type="text" class="form-control" placeholder="Tanggal Lahir" name="profile__date_of_birth" value="{{$id!=-1 ? date('d/m/Y',strtotime($profile->date_of_birth)) : ''}}">
+                                                                    <input type="text" class="form-control" placeholder="Tanggal Lahir" name="profile__date_of_birth" value="{{$id!=-1 ? (isset($profile->date_of_birth) ? date('d/m/Y',strtotime($profile->date_of_birth)) : ''): ''}}">
                                                                     <span class="input-group-addon btn btn-primary">
                                                                         <span class="fa fa-calendar"></span>
                                                                     </span>
@@ -69,8 +69,15 @@
                                                             <select name="profile__gender" class="form-control" data-placeholder="Jenis Kelamin">
                                                                 <option value="0"></option>
                                                                 @if ($id!=-1)
-                                                                    <option value="L" {{$profile->gender=='L' ? 'selected="selected"' : ''}}>Laki-laki</option>
-                                                                    <option value="P" {{$profile->gender=='P' ? 'selected="selected"' : ''}}>Perempuan</option>
+                                                                    @if (isset($profile->gender))
+                                                                        
+                                                                        <option value="L" {{$profile->gender=='L' ? 'selected="selected"' : ''}}>Laki-laki</option>
+                                                                        <option value="P" {{$profile->gender=='P' ? 'selected="selected"' : ''}}>Perempuan</option>
+                                                                    @else
+                                                                        <option value="L">Laki-laki</option>
+                                                                        <option value="P">Perempuan</option>
+                                                                        
+                                                                    @endif
                                                                 @else
                                                                     <option value="L">Laki-laki</option>
                                                                     <option value="P">Perempuan</option>
@@ -80,7 +87,7 @@
                                                         
                                                         <div class="col-md-12">
                                                             <label>Alamat</label>
-                                                            <textarea class="form-control" rows="4"  placeholder="Alamat" name="profile__address">{{$id!=-1 ? $profile->address : ''}}</textarea>
+                                                            <textarea class="form-control" rows="4"  placeholder="Alamat" name="profile__address">{{$id!=-1 ? (isset($profile->address) ? $profile->address: '') : ''}}</textarea>
                                                         </div>
                                                         
                                                     
@@ -90,12 +97,12 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label>Profesi</label>
-                                                            <input type="text" class="form-control" placeholder="Profesi" name="profile__profession" value="{{$id!=-1 ? $profile->profession : ''}}">
+                                                            <input type="text" class="form-control" placeholder="Profesi" name="profile__profession" value="{{$id!=-1 ? (isset($profile->profession) ? $profile->profession: '') : ''}}">
                                                         </div>
                                                         
                                                         <div class="col-md-12">
                                                             <label>Nomor Telp/HP</label>
-                                                            <input type="text" class="form-control" placeholder="Nomor Telp/HP" name="profile__phone_number" value="{{$id!=-1 ? $profile->phone_number : ''}}">
+                                                            <input type="text" class="form-control" placeholder="Nomor Telp/HP" name="profile__phone_number" value="{{$id!=-1 ? (isset($profile->phone_number) ? $profile->phone_number: '') : ''}}">
                                                         </div>
                                                         
                                                        
@@ -105,11 +112,16 @@
                                                                 <option value="0"></option>
                                                                 @foreach ($province as $item)
                                                                     @if ($id!=-1)
-                                                                        @if ($profile->province==$item->name)
-                                                                            <option value="{{$profile->province}}" selected="selected">{{$profile->province}}</option>    
+                                                                        @if (isset($profile->province))
+                                                                            @if ($profile->province==$item->name)
+                                                                                <option value="{{$profile->province}}" selected="selected">{{$profile->province}}</option>    
+                                                                            @else
+                                                                                <option value="{{$item->name}}">{{$item->name}}</option>    
+                                                                            @endif
                                                                         @else
-                                                                            <option value="{{$item->name}}">{{$item->name}}</option>    
+                                                                             <option value="{{$item->name}}">{{$item->name}}</option>   
                                                                         @endif
+                                                                        
                                                                     @else
                                                                         <option value="{{$item->name}}">{{$item->name}}</option>    
                                                                     @endif

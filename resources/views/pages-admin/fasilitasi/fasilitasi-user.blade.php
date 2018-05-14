@@ -87,18 +87,53 @@
                                         {
                                             if($pes_fas->flag==1)
                                             {
-                                                $status='<span class="label label-success">Sudah Mengikuti Test</span>';
+                                                $status='<span class="label label-success">Sudah Bisa Mengikuti Test</span>';
                                             }
-                                            else {
-                                                $status='<span class="label label-primary">Belum Mengikuti Tes</span>';
+                                            else 
+                                            {
+                                                $status='<span class="label label-primary">Belum Bisa Mengikuti Tes</span>';
                                             }
                                         }
                                         else {
-                                            $status='<span class="label label-warning">Belum Mengikuti Test</span>';
+                                            $status='<span class="label label-warning">Belum Bisa Mengikuti Test</span>';
+                                        }
+
+                                        if(strpos($item->title,'Pre')!==false)
+                                        {
+                                            $ceknilai=\App\Model\Nilaitespeserta::where('fasilitasi_id',$fas->id)->where('user_id',Auth::user()->id)->where('jenis','=','pre')->first();
+                                            if(count($ceknilai)!=0)
+                                            {
+                                                $status='<span class="label" style="background-color:darkblue">Nilai Pretest Anda : '.$ceknilai->nilai.'</span>';
+                                            }
+                                        }
+                                        else if(strpos($item->title,'Post')!==false)
+                                        {
+                                            $ceknilai=\App\Model\Nilaitespeserta::where('fasilitasi_id',$fas->id)->where('user_id',Auth::user()->id)->where('jenis','=','post')->first();
+                                            if(count($ceknilai)!=0)
+                                            {
+                                                $status='<span class="label" style="background-color:darkblue">Nilai Posttest Anda : '.$ceknilai->nilai.'</span>';
+                                            }
+                                        }
+
+                                    }
+                                    else if(strpos($item->title,'Penilaian')!==false)
+                                    {
+                                        if(count($pes_fas)!=0)
+                                        {
+                                            if($pes_fas->flag==1)
+                                            {
+                                                $status='<span class="label label-success">Sudah Dapat Mengisi Penilaian</span>';
+                                            }
+                                            else {
+                                                $status='<span class="label label-primary">Belum Dapat Mengisi Penilaian</span>';
+                                            }
+                                        }
+                                        else {
+                                            $status='<span class="label label-warning">Belum Diaktivasi</span>';
                                         }
                                     }
                                     else {
-                                        $status='<span class="label label-warning">Belum Terdaftar</span>';
+                                        $status='<span class="label label-warning">Belum Bisa Terdaftar</span>';
                                     }
 
                                     if(isset($menu_pivot[$item->id]))
@@ -114,7 +149,9 @@
                                         $st_menu=0;
                                         $status='<span class="label label-warning">Menu Belum Diaktifkan Oleh PIC</span>';
                                     }
+                                    
                                 @endphp
+                                    @if($item->route!='cetak-sertifikat')
                                     <tr>
                                         <td class="text-center">{{$no}}</td>
                                         <td class="text-left">{{$item->title}}</td>
@@ -131,6 +168,7 @@
                                     @php
                                         $no++;
                                     @endphp
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>
@@ -149,6 +187,7 @@
             loadform(-1);
             
         });
+        
         var currentLocation = window.location;
         
     </script>

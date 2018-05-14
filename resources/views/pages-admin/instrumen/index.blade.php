@@ -137,7 +137,7 @@
                     headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                     data: $('#form-category').serialize()
                 }).done(function(data){
-                    loaddata(-1);
+                   
                     loadform(-1);
                     $('#modal_default').modal('hide');
                     if(id==-1)
@@ -150,6 +150,9 @@
                     }
                     $('#content-body-ok').html(ps);
                     $('#modal_ok').modal('show');
+                    var currentLocation = window.location;
+                    getPosts(currentLocation);
+
                 }).fail(function(data){
                     $('#modal_default').modal('hide');
                     var ps="<h3 style='color:black !important;'>Data Instrumen Gagal Disimpan</h3>";

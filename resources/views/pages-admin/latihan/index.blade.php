@@ -2,7 +2,8 @@
     @if (Auth::user()->id == $saung->created_user_id || Auth::user()->id == $saung->reviewer_id)
         <div class="row">
             <div class="col-md-5">
-                <div id="data"></div>
+                <div id="data-soal"></div>
+                <div id="detail"></div>
             </div>
             <div class="col-md-7">
                 <div id="form"></div>

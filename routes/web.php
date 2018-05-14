@@ -46,15 +46,22 @@ Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/watch/{slug}', 'DashboardController@watch')->name('watch');
 Route::get('/home', 'DashboardController@index')->name('home');
 Route::get('/trending', 'DashboardController@trending')->name('trending');
+Route::get('/like-video/{slug}', 'DashboardController@likevideo')->name('like');
+Route::get('/download/{name}', 'DashboardController@download')->name('like');
+
 
 Route::resource('category','CategoryController')->middleware('auth');;
 Route::get('/category-data/{id}','CategoryController@data')->name('category.data');
 Route::get('/category-form/{id}','CategoryController@show')->name('category.form');
 
-Route::resource('menu-aktivasi','MenuAktivasiController')->middleware('auth');;
-Route::get('/menu-aktivasi-data/{id}','MenuAktivasiController@data')->name('menu-aktivasi.data');
-Route::get('/menu-aktivasi-form/{id}','MenuAktivasiController@show')->name('menu-aktivasi.form');
-Route::get('/menu-aktivasi-change-status/{idfasil}/{idmenu}/{st}','MenuAktivasiController@status')->name('menu-aktivasi.status');
+Route::resource('menu-aktivasi','MenuAktivasiController')->middleware('auth');
+Route::get('/menu-aktivasi-data/{id}','MenuAktivasiController@data')->name('menu-aktivasi.data')->middleware('auth');
+Route::get('/menu-aktivasi-form/{id}','MenuAktivasiController@show')->name('menu-aktivasi.form')->middleware('auth');
+Route::get('/menu-aktivasi-change-status/{idfasil}/{idmenu}/{st}','MenuAktivasiController@status')->name('menu-aktivasi.status')->middleware('auth');
+Route::post('add-peserta-to-fasilitasi/simpan','MenuAktivasiController@simpanpeserta')->middleware('auth');
+Route::get('hapus-peserta-fasilitasi/{id}','MenuAktivasiController@hapuspeserta')->middleware('auth');
+
+Route::post('add-peserta-to-saung/simpan/{id}','MenuAktivasiController@simpanpesertasaung')->middleware('auth');
 
 Route::resource('instrumen','InstrumenController')->middleware('auth');;
 Route::get('/instrumen-data/{id}','InstrumenController@data')->name('instrumen.data');
@@ -62,13 +69,15 @@ Route::get('/instrumen-form/{id}','InstrumenController@show')->name('instrumen.f
 Route::get('/instrumen-change-status/{id}/{st}','InstrumenController@status')->name('instrumen.status');
 
 Route::resource('fasilitasi','FasilitasiController')->middleware('auth');;
-Route::get('/fasilitasi-data/{id}','FasilitasiController@data')->name('fasilitasi.data');
-Route::get('/fasilitasi-form/{id}','FasilitasiController@show')->name('fasilitasi.form');
-Route::get('/fasilitasi-change-status/{id}/{st}','FasilitasiController@status')->name('fasilitasi.status');
-Route::post('/fasilitasi-simpan','FasilitasiController@simpan')->name('mapping-to-fasilitasi.simpan');
-Route::get('/hapus-pic-fasilitasi/{id}','FasilitasiController@hapuspic')->name('hapus-pic-fasilitasi');
-Route::get('/kegiatan-fasilitasi/{id}','FasilitasiController@fasilitasiuser')->name('fasilitasi.user');
-Route::get('/aktivasi-peserta-change-status/{id}/{st}','FasilitasiController@aktivasipeserta')->name('fasilitasi.aktivasipeserta');
+Route::get('/fasilitasi-data/{id}','FasilitasiController@data')->name('fasilitasi.data')->middleware('auth');
+Route::get('/fasilitasi-form/{id}','FasilitasiController@show')->name('fasilitasi.form')->middleware('auth');
+Route::get('/fasilitasi-change-status/{id}/{st}','FasilitasiController@status')->name('fasilitasi.status')->middleware('auth');
+Route::post('/fasilitasi-simpan','FasilitasiController@simpan')->name('mapping-to-fasilitasi.simpan')->middleware('auth');
+Route::get('/hapus-pic-fasilitasi/{id}','FasilitasiController@hapuspic')->name('hapus-pic-fasilitasi')->middleware('auth');
+Route::get('/kegiatan-fasilitasi/{id}','FasilitasiController@fasilitasiuser')->name('fasilitasi.user')->middleware('auth');
+Route::get('/aktivasi-peserta-change-status/{id}/{st}','FasilitasiController@aktivasipeserta')->name('fasilitasi.aktivasipeserta')->middleware('auth');
+Route::get('cetak-sertifikat/{idfasilitas}','FasilitasiController@cetaksertifikat')->name('fasilitasi.cetaksertifikat')->middleware('auth');
+Route::get('cetak/{userid}/{idfasilitas}','FasilitasiController@cetak')->name('fasilitasi.cetaksertifikat')->middleware('auth');
 
 
 Route::post('narsum-to-fasilitasi','NarsumfasilitasiController@store')->name('narsum-to-fasilitasi.simpan')->middleware('auth');
@@ -79,9 +88,17 @@ Route::post('form-biodata-save/{id}/{idfasil}','FasilitasiController@biodatasave
 
 Route::get('pre-test/{id}/{idfasil}','FasilitasiController@pretest')->middleware('auth');
 Route::get('post-test/{id}/{idfasil}','FasilitasiController@postest')->middleware('auth');
+Route::get('penilaian-narasumber-dan-penyelenggaraan/{id}/{idfasil}','FasilitasiController@penilaianfeedback')->middleware('auth');
+Route::get('evaluasi/{jenis}/{idfasil}','Evaluasicontroller@form')->middleware('auth');
+Route::post('evaluasi-simpan/{jenis}/{idfasil}','Evaluasicontroller@simpan')->middleware('auth');
+Route::get('evaluasi-form/{jenis}/{iduser}/{idfasil}/{jam_ke}','Evaluasicontroller@evaluasi_from')->middleware('auth');
 
+Route::get('soal-detail/{jenis}/{idfasil}/{id}/{no}','PostpretestController@soal')->middleware('auth');
+Route::get('/jawab-soal/{idsoal}/{idjawaban}/{idfasil}/{jenis}', 'PostpretestController@jawabsoal')->middleware('auth');
+Route::get('/end-test/{jenis}/{idfasil}','PostpretestController@simpantest')->name('penilaian.simpantest');
 
 Route::post('/simpan-penilaian/{videoid}','PenilaianController@simpan')->name('penilaian.simpan');
+
 
 Route::resource('petamateri','PetaMateriController');
 Route::get('/petamateri-data/{id}','PetaMateriController@data')->name('petamateri.data');
@@ -127,6 +144,7 @@ Route::resource('upload','UploadController')->middleware('auth');
 Route::post('/videosave','UploadController@videosave')->name('upload.simpan')->middleware('auth');
 Route::post('/removefile/{id}','UploadController@removefile')->name('video.remove')->middleware('auth');
 Route::post('video-saya','UploadController@myvideo')->name('video.myvideo')->middleware('auth');
+
 
 Route::post('cari','SearchController@search')->name('search.cari');
 Route::get('autocomplete','SearchController@autocomplete')->name('search.auto');
@@ -186,8 +204,18 @@ Route::get('topik-saung-form/{idsaung}/{idtopik}','SaungController@topikform')->
 Route::get('tutup-saung/{idsaung}/{slug}','SaungController@tutupsaung')->middleware('auth');
 
 Route::get('join-saung/{idvid}','SaungController@joinsaung')->middleware('auth');
+Route::get('gabung-saung/{idsaung}/{idvid}','SaungController@gabungsaung')->middleware('auth');
+
+Route::get('tantangan-form/{idsaung}/{id}','TopiktantanganController@form')->middleware('auth');
+Route::post('tantangan-simpan/{idsaung}/{id}','TopiktantanganController@simpan')->middleware('auth');
+Route::get('tantangan-data/{idsaung}','TopiktantanganController@data')->middleware('auth');
+Route::get('tantangan-hapus/{id}','TopiktantanganController@hapusmateri')->middleware('auth');
+Route::get('ikut-tantangan/{idsaung}/{idvideo}/{idtantangan}','TopiktantanganController@ikuttantangan')->middleware('auth');
+Route::post('upload-tantangan/{idtantangan}/{idsaung}','TopiktantanganController@videotantangan')->name('video-tantangan.upload')->middleware('auth');
+
 
 Route::resource('topik-turunan','TopikturunanController')->middleware('auth');
+Route::get('topik-turunan-hapus/{id}','TopikturunanController@hapusmateri')->middleware('auth');
 Route::get('topik-turunan-data/{idvideo}/{idsaung}/{user_id}','TopikturunanController@data')->middleware('auth');
 Route::get('topik-turunan-form/{idvideo}/{idtopik}/{user_id}/{idsaung}','TopikturunanController@form')->middleware('auth');
 Route::get('topik-turunan-penjelasan/{idtopik}','TopikturunanController@penjelasan')->middleware('auth');
@@ -200,11 +228,18 @@ Route::post('/chat/{idsaung}', 'ChatController@store')->middleware('auth');
 /* ENDCHAT */
 
 /* LATIHAN */
-Route::get('/latihan/{idsaung}', 'LatihansaungController@index')->middleware('auth');
-Route::get('/latihan-data/{idsaung}', 'LatihansaungController@data')->middleware('auth');
-Route::get('/latihan-form/{idsaung}/{id}', 'LatihansaungController@show')->middleware('auth');
-Route::post('/latihan/{idsaung}/{id}', 'LatihansaungController@store')->middleware('auth');
+Route::get('latihan/{idsaung}', 'LatihansaungController@index')->middleware('auth');
+Route::get('latihan-data/{idsaung}', 'LatihansaungController@data')->middleware('auth');
+Route::get('latihan-form/{idsaung}/{id}', 'LatihansaungController@show')->middleware('auth');
+Route::post('latihan-simpan/{idsaung}/{id}', 'LatihansaungController@simpan')->middleware('auth');
+Route::get('latihan-hapus/{id}/{idsaung}', 'LatihansaungController@hapus')->middleware('auth');
+
+Route::get('/question/{id}/{idsaung}', 'LatihansaungController@question')->middleware('auth');
+
 /* END LATIHAN */
+
+Route::get('/level-user/{idlevel}/{id}','UserController@leveluser');
+
 Route::get('messages', 'ChatsController@fetch');
 Route::post('messages', 'ChatsController@sentMessage');
 
@@ -229,3 +264,7 @@ Route::get('editdataprofile',function () {
         }
     }
 });
+
+Route::get('home-ftp','HomeController@index');
+Route::post('upload-ftp','HomeController@simpan');
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

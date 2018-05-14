@@ -8,7 +8,10 @@
 @section('content')
              <div id="category" style="margin-top:20px;">
             	<div class="row">
-                    
+                    <div class="col-md-12">
+                        <a href="{{ url()->previous() }}" class="btn btn-primary btn-md pull-right">Kembali Ke Menu Sebelumnya</a>
+                        
+                    </div>
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6" >
@@ -34,9 +37,9 @@
                                     <center><h3>Form Biodata Belum Diaktifkan Oleh PIC Fasilitasi</h3></center>
                                 @else
                                     <form id="add-user" action="{{url('form-biodata-save/'.$id.'/'.$idfasil)}}" method="POST" enctype="multipart/form-data">
-                                        <input type="hidden" name="video__id" value="{{$video->id}}">
-                                        <input type="hidden" name="video__slug" value="{{$video->slug}}">
-                                        <input type="hidden" name="video__title" value="{{$video->title}}">
+                                        <input type="hidden" name="video__id" value="{{isset($video->id) ? $video->id : '-1'}}">
+                                        <input type="hidden" name="video__slug" value="{{isset($video->slug) ? $video->slug : ''}}">
+                                        <input type="hidden" name="video__title" value="{{isset($video->title) ? $video->title : ''}}">
                                         <div class="row" style="margin-top:10px;" id="upload">
                                             <div class="col-md-6" >
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -123,10 +126,20 @@
                                                             <label>Email</label>
                                                             <input type="email" class="form-control" name="users__email" placeholder="Email" id="email" value="{{$id!=-1 ? $user->email : ''}}">
                                                         </div>
+                                                        <div class="col-md-12">
+                                                            <label>Lokasi Fasilitasi</label>
+                                                            <select name="nama_fasilitasi" id="nama_fasilitasi" class="form-control" data-placeholder="Pilih Lokasi">
+                                                                <option value="-1">Pilih Lokasi</option>
+                                                            @foreach ($fas as $item)
+                                                                <option value="{{$item->id}}">{{$item->nama_fasilitasi}}</option>
+                                                            @endforeach
+                                                                
+                                                            </select>
+                                                        </div>
 
                                                         <div class="col-md-6">&nbsp;</div>
                                                             <div class="col-md-6">
-                                                                <button type="submit" id="" class="btn btn-dm pull-right">Simpan</button>
+                                                                <button type="button" id="simpan-biodata" class="btn btn-dm pull-right">Simpan</button>
                                                             </div>
                                                     </div>
                                                 </div>
@@ -158,6 +171,17 @@
     <script src="{{asset('assets/js/datepicker-min.js')}}"></script>
     <script>
         $(document).ready(function(){
+            $('#simpan-biodata').on('click',function(){
+                var fas=$('#nama_fasilitasi').val();
+                if(fas==-1)
+                {
+                    alert('Anda Belum Memilih Lokasi Fasilitasi');
+                }
+                else
+                {
+                    $('#add-user').submit();
+                }
+            });
            $('#datetimepicker1').datetimepicker({
                format : 'DD-MM-YYYY',
            });

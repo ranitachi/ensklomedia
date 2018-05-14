@@ -29,12 +29,16 @@ class PetaMateriController extends Controller
         // echo '</pre>';
         if($id==-1)
         {
-            $create = PetaMateri::create($request->all());
+            $data=$request->all();
+            $data2=validate_js($data);
+            $create = PetaMateri::create($data2);
             return response()->json([$create]);
         }
         else
         {
-            $update = PetaMateri::find($id)->update($request->all());
+            $data=$request->all();
+            $data2=validate_js($data);
+            $update = PetaMateri::find($id)->update($data2);
             return response()->json([$update]);
         }
     }
@@ -87,12 +91,16 @@ class PetaMateriController extends Controller
     {
         if($id==-1)
         {
-            $create = TopikMateri::create($request->all());
+            $data=$request->all();
+            $data2=validate_js($data);
+            $create = TopikMateri::create($data2);
             return response()->json([$create]);
         }
         else
         {
-            $update = TopikMateri::find($id)->update($request->all());
+            $data=$request->all();
+            $data2=validate_js($data);
+            $update = TopikMateri::find($id)->update($data2);
             return response()->json([$update]);
         }
     }
