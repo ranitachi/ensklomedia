@@ -14,6 +14,7 @@ use App\Model\MappingFasilitasi;
 use App\Model\PesertaFasilitasi;
 use App\Model\Notifikasi;
 use App\Model\Saung;
+use App\Model\Nilaitespeserta;
 use Auth;
 class MenuAktivasiController extends Controller
 {
@@ -61,7 +62,10 @@ class MenuAktivasiController extends Controller
         }
         
         $pes=PesertaFasilitasi::select('*','peserta_fasilitasis.id as idpf')->join('profile','profile.user_id','=','peserta_fasilitasis.user_id')
-            ->with('user')->get();
+            ->with('user')
+            ->orderBy('peserta_fasilitasis.flag','desc')
+            ->orderBy('profile.name','asc')
+            ->get();
             
         $psrt=array();
         foreach($pes as $i => $v)
@@ -69,10 +73,18 @@ class MenuAktivasiController extends Controller
             $psrt[$v->fasilitasi_id][]=$v;
         }
 
+        $nilai=Nilaitespeserta::all();
+        $n_ilai=array();
+        foreach($nilai as $k => $v)
+        {
+            $n_ilai[$v->user_id][$v->jenis]=$v->nilai;
+        }
+
         if ($request->ajax()) {
              return view('pages-admin.menu-aktivasi.data')
                ->with('page',$page)
                ->with('menu',$ins)
+               ->with('nilai',$n_ilai)
                ->with('prf',$prf)
                ->with('map',$map)
                ->with('psrt',$psrt)
@@ -86,6 +98,7 @@ class MenuAktivasiController extends Controller
         return view('pages-admin.menu-aktivasi.index')
                 ->with('page',$page)
                 ->with('prf',$prf)
+                 ->with('nilai',$n_ilai)
                 ->with('mapping',$mapping)  
                 ->with('psrt',$psrt)              
                 ->with('map',$map)              
@@ -167,5 +180,29 @@ class MenuAktivasiController extends Controller
     {
         PesertaFasilitasi::find($id)->delete();
         return response()->json(['done']);
+    }
+    public function lihat_biodata($idpf,$id)
+    {
+        $pes_fas=PesertaFasilitasi::find($idpf);
+        $user=Users::find($pes_fas->user_id);
+        $profile=Profile::find($pes_fas->user_id);
+        return view('pages-admin.menu-aktivasi.lihat-biodata')
+                ->with('pes_fas',$pes_fas)
+                ->with('user',$user)
+                ->with('profile',$profile)
+                ->with('idpf',$idpf)
+                ->with('id',$id);
+    }
+    public function hasil_pretest($idpf,$id)
+    {
+        return view('pages-admin.menu-aktivasi.hasil-pretest')
+                ->with('idpf',$idpf)
+                ->with('id',$id);
+    }
+    public function hasil_posttest($idpf,$id)
+    {
+        return view('pages-admin.menu-aktivasi.hasil-posttest')
+                ->with('idpf',$idpf)
+                ->with('id',$id);
     }
 }

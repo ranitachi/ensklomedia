@@ -11,7 +11,7 @@ use App\Model\Profile;
 use Auth;
 use Socialite;
 use Storage;
-class LoginController extends Controller
+class LoginControllerBack extends Controller
 {
 
 

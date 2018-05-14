@@ -41,151 +41,20 @@
 @endsection
 
 @section('content')
-        @if ($id==-1)
-            <div class="row margin-m-100">
-                <div class="col-lg-12 col-md-12 col-cm-12">&nbsp;</div>
-            </div>
-            <div class="row">
-                <div class="col-lg-1 col-md-1 col-sm-1">&nbsp;</div>
-                    <div class="col-lg-10 col-md-10 col-sm-10">
-                        <div class="row">
-                            <h1 class="new-video-title" style="padding-top:0px !important;padding-bottom:0px;"><span data-letters="S"> Hasil Pencarian : {{count($video)}} video</h1>
-                       @php
-                        if(isset($video))
-                        {
-                            //$no=1;
-                            // shuffle($video);
-
-                            // $eightdata = array_slice($video, 0, 12);
-                            foreach($video as $ixk => $vik)
-                            {
-                                $cover="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$vik->image_path;
-                                if(File::exists($vik->image_path))
-                                {
-                                    $cv = 'uploadfiles/image/'.$video->image_path;
-                                    $cover = url($cv);
-                                    $vv='uploadfiles/video/'.$video->video_path;
-                                    $vid=url($vv);
-                                }
-                                else
-                                {   
-                                    //$handle=fopen($cover,'r');
-                                    $vid="http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video/".$vik->video_path;
-                                    $cover=$cover;
-                                    //$fileExists = checkExternalFile($cover);
-                                    /*if($fileExists==200)
-                                    {
-                                        $cover=$cover;
-                                    }
-                                    else
-                                    {
-                                        $cv='assets/img/no-image-02.png';
-                                        $cover=url($cv);
-                                    }*/
-                                }
-                                $mime = "video/mp4";
-                                $waktu=\Carbon\Carbon::parse($vik->created_at)->diffForHumans();
-                                    $wkt=text_translate($waktu,'en','id');
-                                $durasi='00:00';
-                                    if($vik->duration!='00:00:00')
-                                    {
-                                        if($vik->duration!=-1)
-                                        {
-                                            if(strtok($vik->duration,':')=='00')
-                                            {
-                                                $durasi=substr($vik->duration,3,5);
-                                            }
-                                            else
-                                                $durasi=$vik->duration;
-                                        }
-                                        else if($vik->duration==0)
-                                        {
-                                            $durasi="00:00";
-                                        }
-                                        else {
-                                            $durasi="00:00";
-                                        }
-                                    }
-                                    else {
-                                        
-                                        $durasi="00:00";
-                                    }
-
-                                    if(isset($vik->category->name))
-                                        $kategori=$vik->category->name;
-                                    else
-                                        $kategori='';
-
-                                    if(is_null($vik->approved_by))
-                                    {
-                                        $cv = 'assets/img/belum-dikaji.jpg';
-                                        // $cover = url($cv);
-                                        // $durasi='';
-                                    }
-                                
-                        @endphp
-                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 margin-left-right-2 col-custom hidden-sm hidden-xs">
-                                    <div class="video-item">
-                                        <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
-                                            @if(is_null($vik->approved_by))
-                                                <div class="hover-efect ribbon"><i class="fa fa-info-circle" style="color:white !important"></i>&nbsp;&nbsp;Belum Dikaji</div>
-                                            @else
-                                                <div class="hover-efect"></div>
-                                            @endif
-                                                <small class="time">{{$durasi}}</small>
-                                            <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="height:118px;width:210px"></a>
-                                        </div>
-                                        
-                                        <div class="video-info">
-                                            <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{(($vik->title))}}</a>
-                                            <a class="channel-name" href="#">{{$kategori}}</a>
-                                                <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>
-                                                <span class="date"><i class="fa fa-clock-o"></i>{{trim($wkt)}}</span>
-                                         </div>
-                                    </div>
-                                </div>  
-                                
-                                <div class="col-sm-6 col-xs-6 padding-left-right-3 hidden-lg hidden-md">
-                                    <div class="video-item">
-                                        <div class="thumb" style="background:url(assets/img/no-image-02.png);background-size:90% 100%;background-position:center;border:1px solid #ccc;">
-                                            <div class="hover-efect"></div>
-                                            @if($durasi!='')
-                                                <small class="time">{{$durasi}}</small>
-                                            @endif
-                                            <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')"><img src="{{ $cover}}" alt="" style="width:100%"></a>
-                                        </div>
-                                        
-                                        <div class="video-info">
-                                            <a href="{{route('watch', $vik->slug)}}" onclick="addhit('{{$vik->id}}')" class="title">{{(($vik->title))}}</a>
-                                            <a class="channel-name" href="#">{{$kategori}}</a>
-                                            <span class="views"><i class="fa fa-eye"></i>{{$vik->hit}} views </span>
-                                            <span class="date"><i class="fa fa-clock-o"></i>{{$wkt}}</span>
-                                        </div>
-                                    </div>
-                                </div>  
-                        @php
-                            }
-                        }
-                        @endphp
-                      
-                    </div>
-                    <div class="col-lg-1 col-md-1 col-sm-1">&nbsp;</div>
-                    
-            </div>
-        @else                
             <div class="row margin-m-100"></div>
             <div class="row hidden-lg hidden-md">
-                <div class="col-xs-12 col-sm-12 no-padding-all">
-                    {{--  <video id="example_video_mobile" class="video-js vjs-default-skin vjs-big-play-centered hidden-lg hidden-md" preload="auto" controls height="300" width="100%">
-                        <source src="{{$vid}}" type="{{$mime}}" />
-                    </video>  --}}
+                <div class="col-xs-12 col-sm-12 no-padding-all margin-m-50">
                     <video class="hidden-lg hidden-md" preload="" controls="" style="width:100%;height:auto;">
                         <source src="{{$vid}}"/>
                     </video>
+                    {{--  <video id="playvid" style="width:100%;height:auto;" preload="" controls="">
+                        <source src="https://www.kemdikbud.go.id/main/uploads/default/videos/PPK.mp4">
+                    </video>  --}}
+                    {{--  <iframe src="https://www.kemdikbud.go.id/main/uploads/default/videos/PPK.mp4" style="width:100%;height:330px;border:0px "></iframe>  --}}
                 </div>
                 
                 <div class="col-xs-12 col-sm-12 no-padding-all" style="margin:0px !important">
-                    <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}}</h1>
+                <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}} {!!(is_null($video->approved_by) ? rating(0) : '')!!}</h1>
                     <div id="watch" style="padding:0px !important;margin:0px !important;">
                         <div class="chanel-item" style="margin-bottom:0px !important;">
                         		
@@ -226,6 +95,13 @@
                                 $cv = 'uploadfiles/image/'.$video->image_path;
                                 $cover = url($cv);
                             }
+
+                                    if(is_null($video->approved_by))
+                                    {
+                                        $cv = 'assets/img/belum-dikaji.jpg';
+                                        // $cover = url($cv);
+                                        $durasi='';
+                                    }
                         @endphp
                         <!-- Video Player -->
                         <div class="video-code">
@@ -236,19 +112,67 @@
                         </video>
                         <!--<iframe width="100%" height="415" src="https://www.youtube.com/embed/e452W2Kj-yg" frameborder="0" allowfullscreen></iframe>-->
                         </div><!-- // video-code -->
-                        <h1 class="video-title title-watch">{{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}}</h1>
+                        <h1 class="video-title title-watch">
+                            
+                            @if(is_null($video->approved_by))
+                                {!!rating(0)!!}
+                            @endif
+
+                            {{($id==-1 ? 'Video Tidak Tersedia' : ucwords(strtolower($video->title)))}} 
+                        </h1>
 
                         <div class="video-share">
-                        	<ul class="like">
-                            	<li><a class="like" href="#"><i class="fa fa-eye"></i>&nbsp;&nbsp;{{($id==-1 ? 0 : $video->hit)}} views</i></a></li>
+                            <ul class="like">
+                                @php
+                                    $waktu=\Carbon\Carbon::parse($video->created_at)->diffForHumans();
+                                    $wkt=text_translate($waktu,'en','id');
+                                @endphp
+                                <li><a class="like" href="#"><i class="fa fa-eye"></i>&nbsp;&nbsp;{{($id==-1 ? 0 : $video->hit)}} views</i></a></li>
+                                <li><a class="like" href="#"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{date('d-m-Y',strtotime($video->created_at))}} :: {{($id==-1 ? 0 : $wkt)}}</i></a></li>
                             </ul>
-                        	<ul class="like pull-right">
-                            	<li>
-                                    <div >
-                                        <a href="" class="btn btn-sm btn-primary"><i class="fa fa-clone"></i>&nbsp;Buat Saung Diskusi</a>
-                                    </div>
-                                </li>
-                            </ul>
+                            @php
+                                $urlvideo=url('watch'.$video->slug);
+                            @endphp
+                            <ul class="social_link">
+                                @if (Auth::check())
+                                    <li id="like-video-lg">
+                                        @if (count($like)!=0)
+                                        <a class="like" href="javascript:likes('{{$video->slug}}')" data-toggle="tooltip" title="Disike" style="color:blue;border:0px;"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
+                                        @else
+                                        <a class="like" href="javascript:likes('{{$video->slug}}')" data-toggle="tooltip" title="Like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
+                                        @endif
+                                    </li>
+                                @endif
+
+                                <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{$urlvideo}}" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a class="linkedin" href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{$urlvideo}}" data-toggle="tooltip" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li><a class="google" href="https://plus.google.com/share?url={{$urlvideo}}" data-toggle="tooltip" title="Google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a class="twitter" href="https://twitter.com/intent/tweet?text={{$video->title}}&amp;url={{$urlvideo}}" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a class="twitter" href="javascript:downloadvideo('{{$video->slug}}')" data-toggle="tooltip" title="Unduh Video"><i class="fa fa-download" aria-hidden="true"></i></a></li>
+                                @php
+                                    // $share=Share::page('http://jorenvanhocht.be', null, ['data-toggle' => 'tooltip', 'title' => 'my-id'], '<ul>', '</ul>')
+                                    //     ->facebook()
+                                    //     ->twitter()
+                                    //     ->googlePlus()
+                                    //     ->linkedin('Extra linkedin summary can be passed here');
+                                    // echo str_replace(array('<ul>','<ul class="social_link">','</ul>'),'',$share);
+                                @endphp
+                            </ul><!-- // Social -->
+                        
+                            @if (Auth::check())
+                                @if (!isset($saung[$video->id][Auth::user()->id]))
+                                    <ul class="like pull-left">
+                                        <li>
+                                            <div>
+                                                {{-- <a href="{{url('buat-saung/'.$video->slug)}}" class="btn btn-sm btn-primary"><i class="fa fa-clone"></i>&nbsp;Buka Saung Diskusi</a> --}}
+                                                <a href="javascript:gabungsaung('{{$video->slug}}','{{$video->title}}','{{$video->id}}')" class="btn btn-sm btn-success"><i class="fa fa-clone"></i>&nbsp;Gabung Saung Diskusi</a>
+
+                                                <a href="javascript:bukasaung('{{$video->slug}}','{{$video->title}}','{{$video->id}}')" class="btn btn-sm btn-primary"><i class="fa fa-clone"></i>&nbsp;Buka Saung Diskusi</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                @endif
+                            @endif
                         </div><!-- // video-share -->
                         <!-- // Video Player -->
 
@@ -266,7 +190,67 @@
 
 
                         <!-- Comments -->
-                        
+                        <div id="app">
+                            <div id="comments" class="post-comments">
+                                <h3 class="post-box-title"><span> {{ $comments->count() }} </span> Comments</h3>
+
+                                @foreach ($comments as $comment)
+                                    <ul class="comments-list">
+                                        <li>
+                                            <div class="post_author">
+                                                <div class="img_in">
+                                                    <a href="#"><img src="{{ asset('assets/demo_img/c1.jpg')}}" alt=""></a>
+                                                </div>
+                                                <a href="#" class="author-name">
+                                                    {{ isset($comment->user->profile->name) ? $comment->user->profile->name : '' }}
+                                                </a>
+                                                <time datetime="2017-03-24T18:18">{{date('d-m-Y H:i:s', strtotime($comment->created_at))}}</time>
+                                            </div>
+                                            <p>
+                                                {{ $comment->comment }}
+                                            </p>
+                                            {{--  <a class="reply">Reply</a>
+
+                                            <div style="margin-top:10px;" v-show="replybox">
+                                                <form>
+                                                    <textarea class="form-control" rows="2" id="Message" placeholder="COMMENT" v-model="replycomment"></textarea>
+                                                    <button type="button" id="contact_submit" class="btn btn-dm" v-on:click="postreplybox">Post Comment</button>
+                                                </form>
+                                            </div>
+                                            <br>
+
+                                            <ul class="children">
+                                                <li>
+                                                    <div class="post_author">
+                                                        <div class="img_in">
+                                                            <a href="#"><img src="{{ asset('assets/demo_img/c2.jpg')}}" alt=""></a>
+                                                        </div>
+                                                        <a href="#" class="author-name">Salam Ahmmed</a>
+                                                        <time datetime="2017-03-24T18:18">July 27, 2014 - 11:00 PM</time>
+                                                    </div>
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum</p>
+                                                </li>
+                                            </ul>  --}}
+
+                                        </li>
+                                    </ul>
+                                @endforeach
+        
+                                @if (Auth::check())
+                                    <h3 class="post-box-title">Add Comments</h3>
+
+                                    <form action="{{ route('comments.store') }}" method="post">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="slug" value="{{ $slug }}">
+                                        <textarea class="form-control" rows="8" id="Message" placeholder="COMMENT" v-model="maincomment" name="comment"></textarea>
+                                        <button type="submit" id="contact_submit" class="btn btn-dm" v-on:click="postmaincomment">Post Comment</button>
+                                    </form>
+                                @else
+                                    <a class="btn btn-dm" href="{{ route('login') }}">Please login first to post a comment</a>
+                                @endif
+
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -299,15 +283,14 @@
                                         
                                         $durasi="00:00";
                                     }
+                                
                             @endphp
                             <!-- video item -->
-                            <div class="related-video-item">
+                            <div class="related-video-item" style="margin-left:5px;">
                                 <div class="thumb">
-                                    @if(is_null($related->approved_by))
-                                    <div class="hover-efect ribbon"><i class="fa fa-info-circle" style="color:white !important"></i>&nbsp;&nbsp;Belum Dikaji</div>
-                                    @else
-                                        <div class="hover-efect"></div>
-                                    @endif
+                                    
+                                    <div class="hover-efect"></div>
+                                    
                                     <small class="time">{{$durasi}}</small>
                                     @php
                                         $cover = "http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/image/".$related->image_path;
@@ -319,8 +302,10 @@
                                     @endphp
                                     <a href="{{ route('watch', $related->slug) }}" onclick="addhit('{{$related->id}}')"><img class="custom-size" src="{{ $cover }}" alt=""></a>
                                 </div>
+                                {!!rating(0)!!}
+                                
                                 <a href="{{ route('watch', $related->slug) }}" class="title">{{ $related->title }}</a>
-                                <a class="channel-name" href="{{url('video/category',strtolower(isset($related->category->name) ? $related->category->name : ''))}}">
+                                <a class="channel-name" href="{{ isset($related->category->name) ? url('video/category',strtolower($related->category->name)) : ''}}">
                                     {{ isset($related->category->name) ? $related->category->name : 'No Category Name' }}
                                 </a>
                                 <span>
@@ -335,7 +320,7 @@
                 </div><!-- // col-md-4 -->
                 <!-- // Related Posts -->
             </div><!-- // row -->
-        @endif
+		
 @endsection
 @php
 $endcards=array();

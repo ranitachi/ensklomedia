@@ -60,6 +60,9 @@ Route::get('/menu-aktivasi-form/{id}','MenuAktivasiController@show')->name('menu
 Route::get('/menu-aktivasi-change-status/{idfasil}/{idmenu}/{st}','MenuAktivasiController@status')->name('menu-aktivasi.status')->middleware('auth');
 Route::post('add-peserta-to-fasilitasi/simpan','MenuAktivasiController@simpanpeserta')->middleware('auth');
 Route::get('hapus-peserta-fasilitasi/{id}','MenuAktivasiController@hapuspeserta')->middleware('auth');
+Route::get('lihat-biodata/{idpf}/{id}','MenuAktivasiController@lihat_biodata')->middleware('auth');
+Route::get('hasil-pretest/{idpf}/{id}','MenuAktivasiController@hasil_pretest')->middleware('auth');
+Route::get('hasil-posttest/{idpf}/{id}','MenuAktivasiController@hasil_posttest')->middleware('auth');
 
 Route::post('add-peserta-to-saung/simpan/{id}','MenuAktivasiController@simpanpesertasaung')->middleware('auth');
 
@@ -78,6 +81,7 @@ Route::get('/kegiatan-fasilitasi/{id}','FasilitasiController@fasilitasiuser')->n
 Route::get('/aktivasi-peserta-change-status/{id}/{st}','FasilitasiController@aktivasipeserta')->name('fasilitasi.aktivasipeserta')->middleware('auth');
 Route::get('cetak-sertifikat/{idfasilitas}','FasilitasiController@cetaksertifikat')->name('fasilitasi.cetaksertifikat')->middleware('auth');
 Route::get('cetak/{userid}/{idfasilitas}','FasilitasiController@cetak')->name('fasilitasi.cetaksertifikat')->middleware('auth');
+Route::get('saung-by-fasilitasi/{idfasilitas}','FasilitasiController@saung')->name('fasilitasi.saung')->middleware('auth');
 
 
 Route::post('narsum-to-fasilitasi','NarsumfasilitasiController@store')->name('narsum-to-fasilitasi.simpan')->middleware('auth');
@@ -202,6 +206,7 @@ Route::get('topik-saung-data/{idsaung}/{idtopik}','SaungController@topiksaung')-
 Route::get('topik-saung-keterangan/{idsaung}/{idtopik}','SaungController@keterangan')->middleware('auth');
 Route::get('topik-saung-form/{idsaung}/{idtopik}','SaungController@topikform')->middleware('auth');
 Route::get('tutup-saung/{idsaung}/{slug}','SaungController@tutupsaung')->middleware('auth');
+Route::get('hapus-saung-pic/{idsaung}','SaungController@destroy')->middleware('auth');
 
 Route::get('join-saung/{idvid}','SaungController@joinsaung')->middleware('auth');
 Route::get('gabung-saung/{idsaung}/{idvid}','SaungController@gabungsaung')->middleware('auth');

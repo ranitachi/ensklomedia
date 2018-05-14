@@ -153,10 +153,14 @@
             
         }
         var currentLocation = window.location;
+<<<<<<< HEAD
         function lihatform(jenis,iduser,idfasil,jam_ke)
         {
             $('#data').load(APP_URL+'/evaluasi-form/'+jenis+'/'+iduser+'/'+idfasil+'/'+jam_ke);
         }
+=======
+        
+>>>>>>> 3b0df9f5a5b1269706e795cfb0b4fb5b0b624902
     </script>
 @endsection
 

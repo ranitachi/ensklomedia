@@ -153,6 +153,10 @@ class DashboardController extends Controller
                 $vid=url($vv);
                 $cover=url($cv);
         }
+        else
+        {
+            $vid="http://en-str1.ensiklomedia.id/upload/video/".$video->location;
+        }
         // $vid='http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video20170703-66BP5AE20160715_010744.mp4';
         $mime = "video/mp4";
         $title = $video->title;

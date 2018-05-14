@@ -272,6 +272,25 @@
                 }
             });
         }
+        function lihatbiodata(idpf,id)
+        {
+            $('#modal-body_biodata').load(APP_URL+'/lihat-biodata/'+idpf+'/'+id);
+            $('#modal_besar_biodata').modal('show');
+        }
+        function lihatsaung(fasilitasi_id)
+        {
+            $('#content-body-ok').load(APP_URL+'/saung-by-fasilitasi/'+fasilitasi_id);
+            $('#modal_ok').modal('show');
+        }
+        function hapussaung(idsaung,idfasil)
+        {
+            $.ajax({
+                url : APP_URL+'/hapus-saung-pic/'+idsaung,
+                success : function(a){
+                    $('#content-body-ok').load(APP_URL+'/saung-by-fasilitasi/'+idfasil);
+                }
+            });
+        }
     </script>
 @endsection
 <div id="modalConfirm" class="modal fade">
@@ -305,6 +324,28 @@
             </div>
         </div>
     </div>
+<div id="modal_besar_biodata" class="modal fade">
+	<div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title-lg"></h5>
+                </div>
+
+			    <div id="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" style="padding-top:10px;">
+                            <div id="modal-body_biodata"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                   
+                    <button type="button" class="btn btn-success" id="ok-lg_latihan" data-dismiss="modal"><i class="fa fa-check"></i>&nbsp;Tutup</button>
+                </div>
+            </div>
+    </div>
+</div>
 <style>
     .table td,
     .table th
@@ -315,4 +356,22 @@
     {
         width:100% !important;
     }
+        #modal_besar_biodata > .modal-dialog
+        {
+            width: 99%;
+            height: 100%;
+            margin-top:5px;
+            
+            /* margin: 0;
+            padding: 0; */
+        }
+        #modal_ok > .modal-dialog
+        {
+            width: 60%;
+            /* margin: 0;
+            padding: 0; */
+        }
+        .modal{
+            z-index:10000 !important;
+        }
 </style>

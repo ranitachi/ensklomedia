@@ -170,4 +170,8 @@ class SaungController extends Controller
         return redirect('buka-saung/'.$saung->video->slug)->with('status', 'Anda Berhasil Ikut Bergabung Dalam Saung Diskusi Ini');
         //return response()->json(['done']);
     }
+    public function destroy($idsaung)
+    {
+        Saung::find($idsaung)->delete();
+    }
 }

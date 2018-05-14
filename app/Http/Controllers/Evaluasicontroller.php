@@ -95,7 +95,6 @@ class Evaluasicontroller extends Controller
         {
             $i=Evaluasipenyelenggara::where('flag',1)->get();
             $item=array();
-
             foreach($i as $k=>$v)
             {
                 $item[$v->id_parent][$v->id]=$v;

@@ -6,7 +6,7 @@
             {{-- <th rowspan="2" class="text-center">Pertanyaan</th> --}}
             <th rowspan="2" class="text-center">Lokasi</th>
             <th rowspan="2" class="text-center">Waktu Pelaksaaan</th>
-            <th colspan="{{ count($menu) }}" class="text-center">Menu</th>
+            <th colspan="{{ count($menu)+1 }}" class="text-center">Menu</th>
             <th rowspan="2" class="text-center">Peserta</th>
             <th rowspan="2" class="text-center">Tambah Peserta</th>
             
@@ -59,7 +59,12 @@
                 </td>
             @endif
             @endforeach
-           <td>
+            <td class="text-center">
+                <a href="javascript:lihatsaung('{{$v->id}}')" class="btn btn-xs btn-primary">
+                    <i class="fa fa-search"></i> Lihat Saung
+                </a>
+            </td>
+           <td style="width:350px;">
 
             @if (!isset($psrt[$v->id]))
                  <i>Peserta Belum Ada</i>
@@ -71,16 +76,34 @@
                     @foreach ($psrt[$v->id] as $item)
                         <div class="row" style="margin-bottom:10px;">
                             @if ($item->flag==0)
-                                <div class="col-md-2 text-right" style="padding-right:1px;">
+                               
+                                <div class="col-md-12" style="color:red" data-toggle="tooltip" title="Peserta Belum Aktif">
                                     <i class="fa fa-check" style="color:green;cursor:pointer" data-toggle="tooltip" title="Aktifkan Peserta" onclick="aktifkanpeserta('{{$item->idpf}}','1')"></i>
                                     <i class="fa fa-trash" style="color:red;cursor:pointer" data-toggle="tooltip" title="Hapus Peserta" onclick="hapuspeserta('{{$item->idpf}}')"></i>
-                                </div>
-                                <div class="col-md-9 text-left" style="padding-left:5px;color:red" data-toggle="tooltip" title="Peserta Belum Aktif"><b>{{$item->name=='n/a'||$item->name=='' ? $item->user->email : $item->name}}</b></div>
+                                    <b>{{$item->name=='n/a'||$item->name=='' ? $item->user->email : $item->name}}</b></div>
                             @else
-                                <div class="col-md-2 text-right" style="padding-right:1px;"><i class="fa fa-close" style="color:purple;cursor:pointer" data-toggle="tooltip" title="Non Aktifkan Peserta" onclick="aktifkanpeserta('{{$item->idpf}}','0')"></i>
-                                 <i class="fa fa-trash" style="color:red;cursor:pointer" data-toggle="tooltip" title="Hapus Peserta" onclick="hapuspeserta('{{$item->idpf}}')"></i>
-                                </div>    
-                                <div class="col-md-9 text-left" style="padding-left:5px;color:green"><b><span class="label label-success" style="font-size:12px;">{{$item->name=='n/a'||$item->name=='' ? $item->user->email : $item->name}}</span></b></div>
+                                @php
+                                    if(isset($nilai[$item->user_id]['pre']))
+                                        $n_pre=$nilai[$item->user_id]['pre'];
+                                    else
+                                        $n_pre=0;
+
+                                    if(isset($nilai[$item->user_id]['post']))
+                                        $n_post=$nilai[$item->user_id]['post'];
+                                    else
+                                        $n_post=0;
+                                @endphp
+                                <div class="col-md-12" style="color:green">
+                                    <div style="margin-bottom:5px;">
+                                        <i class="fa fa-close" style="color:purple;cursor:pointer" data-toggle="tooltip" title="Non Aktifkan Peserta" onclick="aktifkanpeserta('{{$item->idpf}}','0')"></i>
+                                        <i class="fa fa-trash" style="color:red;cursor:pointer" data-toggle="tooltip" title="Hapus Peserta" onclick="hapuspeserta('{{$item->idpf}}')"></i>
+                                        &nbsp;&nbsp;
+
+                                        <a href="javascript:lihatbiodata('{{$item->idpf}}','{{$v->id}}')" target="_blank" data-toggle="tooltip" title="Bidata Peserta"><i class="fa fa-user" style="color:blue;cursor:pointer" ></i></a>
+                                        <a href="{{url('pre-test/'.$item->user_id.'/'.$v->id)}}" target="_blank" data-toggle="tooltip" title="Hasil Pre Test" ><span class="label label-primary" style="border-radius:15px">{{$n_pre}}</span></a>
+                                        <a href="{{url('post-test/'.$item->user_id.'/'.$v->id)}}" target="_blank" data-toggle="tooltip" title="Hasil Post Test"><span class="label label-success" style="border-radius:15px">{{$n_post}}</span></a><br>
+                                    </div>
+                                    <b><div class="label label-success" style="font-size:12px;margin-top:10px;" data-toggle="tooltip" title="{{$item->user->email}}">{{$item->name=='n/a'||$item->name=='' ? $item->user->email : ucwords(strtolower($item->name))}}</div></b></div>
                             @endif
                         </div>
                     @endforeach
@@ -88,9 +111,9 @@
             @endif
                     
            </td>
-           <td>
+           <td style="width:70px;">
                <div class="row">
-                        <div class="col-md-10" style="color:green"><b><span class="label label-primary" style="font-size:12px;cursor:pointer;" onclick="addpeserta('{{$v->id}}')"><i class="fa fa-plus-square" style="cursor:pointer" data-toggle="tooltip" title="Tambah Peserta Fasilitasi" ></i> Tambah Peserta Fasilitasi</span></b></div>
+                        <div class="col-md-10" style="color:green"><b><span class="label label-primary" style="font-size:12px;cursor:pointer;" onclick="addpeserta('{{$v->id}}')"><i class="fa fa-plus-square" style="cursor:pointer" data-toggle="tooltip" title="Tambah Peserta Fasilitasi" ></i> Tambah Peserta </span></b></div>
                     </div>
            </td>
         </tr>

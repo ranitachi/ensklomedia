@@ -9,7 +9,8 @@
             	<div class="row">
 
                     <div class="col-md-12">
-                        <a href="{{url('kegiatan-fasilitasi/'.$fas->id)}}" class="btn btn-primary btn-md pull-right">Kembali Ke Menu Fasilitasi</a>
+                        {{-- <a href="{{url('kegiatan-fasilitasi/'.$fas->id)}}" class="btn btn-primary btn-md pull-right">Kembali Ke Menu Fasilitasi</a> --}}
+                        <a href="{{ URL::previous() }}" class="btn btn-primary btn-md pull-right">Kembali Ke Menu Fasilitasi</a>
                         
                     </div>
                     <div class="col-md-12">

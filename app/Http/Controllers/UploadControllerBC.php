@@ -36,7 +36,7 @@ class UploadController extends Controller
     {
         $dir='';
         if( $request->hasFile('file') ) {
-                $name=date('Ymd').'-'.$request->file('file')->getClientOriginalName();
+                $name=date('Ymd').'-'.str_slug($request->file('file')->getClientOriginalName(),'-').'.'.$request->file('file')->getClientOriginalExtension();
             // $mime = $request->file('file')->getMimeType();
             // if ($mime == "video/x-flv" || $mime == "video/mp4" || $mime == "application/x-mpegURL" || $mime == "video/MP2T" || $mime == "video/3gpp" || $mime == "video/quicktime" || $mime == "video/x-msvideo" || $mime == "video/x-ms-wmv") 
             // {
