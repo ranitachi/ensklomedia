@@ -46,8 +46,10 @@ class SearchController extends Controller
                 $cover=url($cv);
             }
             $slug=$vidd->slug;
+            $like=array();
             if(Auth::check())
                 $like=Like::where('video_id','=',$id)->where('user_id','=',Auth::user()->id)->first();
+            
             return view('pages.video.search')
                     ->with('video',$vidd)
                     ->with('id',$id)
