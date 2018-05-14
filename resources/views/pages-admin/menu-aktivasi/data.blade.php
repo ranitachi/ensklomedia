@@ -41,7 +41,7 @@
                     <a class="btn btn-xs btn-primary" href="{{url($vv->route)}}/{{$v->id}}"><i class="fa fa-print"></i> {{$vv->title}}</a>
                 </td>
             @else
-                <td class="text-center" style="width:100px;">
+                <td class="text-center" style="width:130px;">
                     @if (isset($menupivot[$vv->id][$v->id]))  
                         @php
                             $det=$menupivot[$vv->id][$v->id];
