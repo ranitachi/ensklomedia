@@ -17,6 +17,7 @@ use App\Model\Narsumfasilitasi;
 use App\Model\Postpretest;
 use App\Model\Testpesertaset;
 use App\Model\Nilaitespeserta;
+use App\Model\Evaluasipeserta;
 use Auth;
 class FasilitasiController extends Controller
 {
@@ -233,6 +234,7 @@ class FasilitasiController extends Controller
                 }
             }
         }
+        $idfasil=$request->nama_fasilitasi;
         $cekpeserta=PesertaFasilitasi::where('user_id','=',$id)->where('fasilitasi_id','=',$idfasil)->get()->first();
         if(count($cekpeserta)==0)
         {
@@ -306,9 +308,14 @@ class FasilitasiController extends Controller
             $video=Video::where('id','=',$idvid)->get()->first();
             $profile = Profile::where('user_id',$id)->get()->first();
             $province = Province::all();
-            
+            $fas=KegiatanFasilitasi::where('wilayah_id','=',$cekfasil->wilayah_id)
+                    ->where('flag',1)
+                    ->with('provinsi')
+                    ->get();
+
             return view('pages-admin.fasilitasi.form-biodata')
                 ->with('id',$id)
+                ->with('fas',$fas)
                 ->with('idfasil',$idfasil)
                 ->with('video',$video)
                 ->with('cekfasil',$cekfasil)
@@ -431,19 +438,22 @@ class FasilitasiController extends Controller
     public function penilaianfeedback($iduser,$idfasil)
     {
         $fasil=KegiatanFasilitasi::find($idfasil);
+        $eval=Evaluasipeserta::where('fasilitasi_id',$idfasil)->where('user_id',$iduser)->get();
+        $ev=$us=array();
+        foreach($eval as $k => $v)
+        {
+            $ev[$v->jenis][$v->nama_narasumber][$v->materi_fasilitasi][$v->jam_ke][$v->narasumber_id]=$v;
+        }
+        $user=Users::with('profile')->get();
+        foreach($user as $ks=>$vs)
+        {
+            $us[$vs->id]=$vs;
+        }
         return view('pages-admin.evaluasi.index')
                 ->with('idfasil',$idfasil)
+                ->with('eval',$ev)
+                ->with('user',$us)
                  ->with('fas',$fasil)
                 ->with('iduser',$iduser);
-    }
-
-    public function saung($idfasil)
-    {
-        $fasil=KegiatanFasilitasi::find($idfasil);
-        $saung=Saung::where('fasilitasi_id',$idfasil)->with('user')->with('video')->get();
-        return view('pages-admin.fasilitasi.saung')
-                ->with('idfasil',$idfasil)
-                 ->with('fas',$fasil)
-                ->with('saung',$saung);
     }
 }

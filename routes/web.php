@@ -90,11 +90,12 @@ Route::get('hapus-narsum-fasilitasi/{idnarsum}/{index}','NarsumfasilitasiControl
 Route::get('form-biodata/{idvid}/{idfasil}','FasilitasiController@biodata')->middleware('auth');
 Route::post('form-biodata-save/{id}/{idfasil}','FasilitasiController@biodatasave')->middleware('auth');
 
-Route::get('pre-test/{iduser}/{idfasil}','FasilitasiController@pretest')->middleware('auth');
-Route::get('post-test/{iduser}/{idfasil}','FasilitasiController@postest')->middleware('auth');
+Route::get('pre-test/{id}/{idfasil}','FasilitasiController@pretest')->middleware('auth');
+Route::get('post-test/{id}/{idfasil}','FasilitasiController@postest')->middleware('auth');
 Route::get('penilaian-narasumber-dan-penyelenggaraan/{id}/{idfasil}','FasilitasiController@penilaianfeedback')->middleware('auth');
 Route::get('evaluasi/{jenis}/{idfasil}','Evaluasicontroller@form')->middleware('auth');
 Route::post('evaluasi-simpan/{jenis}/{idfasil}','Evaluasicontroller@simpan')->middleware('auth');
+Route::get('evaluasi-form/{jenis}/{iduser}/{idfasil}/{jam_ke}','Evaluasicontroller@evaluasi_from')->middleware('auth');
 
 Route::get('soal-detail/{jenis}/{idfasil}/{id}/{no}','PostpretestController@soal')->middleware('auth');
 Route::get('/jawab-soal/{idsoal}/{idjawaban}/{idfasil}/{jenis}', 'PostpretestController@jawabsoal')->middleware('auth');

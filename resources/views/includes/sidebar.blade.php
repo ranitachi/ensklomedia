@@ -178,7 +178,7 @@
 								<ul id="linkawalpeserta" class="collapse" style="margin-left:10px !important;padding-top:10 !important;">
 									@foreach ($pes_fas as $item)
 										@if (isset($keg[$item->fasilitasi_id]))
-											<li class="color-1"><a href="{{url('kegiatan-fasilitasi/'.$item->fasilitasi_id)}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>{{$keg[$item->fasilitasi_id]->provinsi->name}}</a></li>	
+											<li class="color-1"><a href="{{url('kegiatan-fasilitasi/'.$item->fasilitasi_id)}}" style="padding:10px 0px 5px !important"><i class="fa fa-caret-right"></i>{{$keg[$item->fasilitasi_id]->provinsi->name}} : {{$keg[$item->fasilitasi_id]->nama_fasilitasi}}</a></li>	
 										@endif
 										
 									@endforeach

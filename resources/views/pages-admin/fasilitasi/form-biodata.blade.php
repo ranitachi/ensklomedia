@@ -126,10 +126,20 @@
                                                             <label>Email</label>
                                                             <input type="email" class="form-control" name="users__email" placeholder="Email" id="email" value="{{$id!=-1 ? $user->email : ''}}">
                                                         </div>
+                                                        <div class="col-md-12">
+                                                            <label>Lokasi Fasilitasi</label>
+                                                            <select name="nama_fasilitasi" id="nama_fasilitasi" class="form-control" data-placeholder="Pilih Lokasi">
+                                                                <option value="-1">Pilih Lokasi</option>
+                                                            @foreach ($fas as $item)
+                                                                <option value="{{$item->id}}">{{$item->nama_fasilitasi}}</option>
+                                                            @endforeach
+                                                                
+                                                            </select>
+                                                        </div>
 
                                                         <div class="col-md-6">&nbsp;</div>
                                                             <div class="col-md-6">
-                                                                <button type="submit" id="" class="btn btn-dm pull-right">Simpan</button>
+                                                                <button type="button" id="simpan-biodata" class="btn btn-dm pull-right">Simpan</button>
                                                             </div>
                                                     </div>
                                                 </div>
@@ -161,6 +171,17 @@
     <script src="{{asset('assets/js/datepicker-min.js')}}"></script>
     <script>
         $(document).ready(function(){
+            $('#simpan-biodata').on('click',function(){
+                var fas=$('#nama_fasilitasi').val();
+                if(fas==-1)
+                {
+                    alert('Anda Belum Memilih Lokasi Fasilitasi');
+                }
+                else
+                {
+                    $('#add-user').submit();
+                }
+            });
            $('#datetimepicker1').datetimepicker({
                format : 'DD-MM-YYYY',
            });

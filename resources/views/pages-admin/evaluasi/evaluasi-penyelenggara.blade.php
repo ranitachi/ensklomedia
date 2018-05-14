@@ -32,8 +32,24 @@
                         @if (count($pilihan)>1)
                             @foreach ($pilihan as $ii)                            
                             <td class="text-center" style="font-weight:bold">
-                                 <div style="height:35px;font-size:10px;">{{str_replace('__','/',$ii)}}</div>
-                                <input type="radio" name="pilihan[{{$v->id}}]" value="{{$ii}}">
+                                @php
+                                    if (isset($eval[$v->id]))
+                                    {
+                                        if($eval[$v->id]->pilihan==$ii)
+                                        {
+                                            $check='checked="checked"';
+                                        }
+                                        else
+                                            $check='';
+
+                                    }    
+                                    else
+                                    {
+                                        $check='';
+                                    }
+                                @endphp
+                                <div style="height:35px;font-size:10px;">{{str_replace('__','/',$ii)}}</div>
+                                <input type="radio" name="pilihan[{{$v->id}}]" value="{{$ii}}" {{$check}}>
                             </td>
                             @endforeach
                         @else
@@ -41,7 +57,16 @@
                         @endif                        
                         <td class="text-center" style="font-size:10px;font-weight:bold">
                             @if (count($pilihan)>1)
-                                <textarea name="saran[{{$v->id}}]" style="height:35px" class="form-control"></textarea>
+                                @php
+                                if (isset($eval[$v->id]))
+                                {
+                                    $saran=$eval[$v->id]->saran;
+                                }
+                                else {
+                                    $saran='';
+                                }
+                                @endphp
+                                <textarea name="saran[{{$v->id}}]" style="height:35px" class="form-control">{{$saran}}</textarea>
                             @endif
                         </td>
                     </tr>
@@ -60,8 +85,24 @@
                             @if (count($pilihan)>1)
                                 @foreach ($pilihan as $ii)                            
                                 <td class="text-center">
+                                    @php
+                                    if (isset($eval[$it->id]))
+                                    {
+                                        if($eval[$it->id]->pilihan==$ii)
+                                        {
+                                            $check='checked="checked"';
+                                        }
+                                        else
+                                            $check='';
+                                    }    
+                                    else
+                                    {
+                                        $check='';
+                                    }
+                                    @endphp
+
                                     <div style="height:35px;font-size:10px;">{{str_replace('__','/',$ii)}}</div>
-                                    <input type="radio" name="pilihan[{{$it->id}}]" value="{{$ii}}">
+                                    <input type="radio" name="pilihan[{{$it->id}}]" value="{{$ii}}" {{$check}}>
                                 </td>
                                 @endforeach
                             @else
@@ -69,7 +110,16 @@
                             @endif                        
                             <td class="text-center" style="font-size:10px;">
                                 @if (count($pilihan)>1)
-                                    <textarea name="saran[{{$it->id}}]" style="height:35px" class="form-control"></textarea>
+                                    @php
+                                    if (isset($eval[$it->id]))
+                                    {
+                                        $saran=$eval[$it->id]->saran;
+                                    }
+                                    else {
+                                        $saran='';
+                                    }
+                                    @endphp
+                                    <textarea name="saran[{{$it->id}}]" style="height:35px" class="form-control">{{$saran}}</textarea>
                                 @endif
                             </td>
                             @php
@@ -86,5 +136,7 @@
             
         </tbody>
     </table>
-    <button class="btn btn-md btn-success pull-right" type="button" onclick="endevaluasipenyelenggara('{{ucwords($jenis)}}','{{$idfasil}}')"><i class="fa fa-save"></i> &nbsp;&nbsp;End Test</button>
+    @if (count($eval)==0)
+        <button class="btn btn-md btn-success pull-right" type="button" onclick="endevaluasipenyelenggara('{{ucwords($jenis)}}','{{$idfasil}}')"><i class="fa fa-save"></i> &nbsp;&nbsp;Simpan Evaluasi</button>
+    @endif
 </form>

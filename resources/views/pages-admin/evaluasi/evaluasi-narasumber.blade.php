@@ -4,7 +4,13 @@
     <div class="form-group">
         <label class="control-label col-md-2">Nama Narasumber</label>
         <div class="col-sm-6">    
-            <input type="text" class="form-control" name="nama_narasumber" placeholder="Nama Narasumber" id="nama_narasumber">
+            {{-- <input type="text" class="form-control" name="nama_narasumber" placeholder="Nama Narasumber" id="nama_narasumber"> --}}
+            <select name="nama_narasumber" id="nama_narasumber" class="form-control" data-placeholder="Nama Narasumber" style="margin-bottom:5px">
+            @foreach ($d_narsum as $kid=>$im)
+                <option value="{{$kid}}__{{ucwords($im)}}">{{ucwords($im)}}</option>
+            @endforeach
+                
+            </select>
         </div>
         
     </div>
@@ -37,20 +43,47 @@
                     $no=1;
                 @endphp
                 @foreach ($item as $k=>$v)
+                    @php
+                        $a=$b=$c=$d='';
+                        if(isset($evl[$v->id]))
+                        {
+                            if($evl[$v->id]->pilihan=='60-70')
+                            {
+                                $a='checked="checked"';
+                            }
+                            else if($evl[$v->id]->pilihan=='71-80')
+                            {
+                                $b='checked="checked"';
+                            }
+                            else if($evl[$v->id]->pilihan=='81-90')
+                            {
+                                $c='checked="checked"';
+                            }
+                            else if($evl[$v->id]->pilihan=='91-100')
+                            {
+                                $d='checked="checked"';
+                            }
+                        }
+                        else 
+                        {
+                            $a=$b=$c=$d='';
+                            // echo 'aa';
+                        }
+                    @endphp
                     <tr>
                         <td class="text-center">{{$no}}</td>
                         <td class="text-left">{{$v->butir_penilaian}}</td>
                         <td class="text-center">
-                            <input type="radio" name="butir[{{$v->id}}]" value="60-70">
+                            <input type="radio" name="butir[{{$v->id}}]" value="60-70" {{$a}}>
                         </td>
                         <td class="text-center">
-                            <input type="radio" name="butir[{{$v->id}}]" value="71-80">
+                            <input type="radio" name="butir[{{$v->id}}]" value="71-80" {{$b}}>
                         </td>
                         <td class="text-center">
-                            <input type="radio" name="butir[{{$v->id}}]" value="81-90">
+                            <input type="radio" name="butir[{{$v->id}}]" value="81-90" {{$c}}>
                         </td>
                         <td class="text-center">
-                            <input type="radio" name="butir[{{$v->id}}]" value="91-100">
+                            <input type="radio" name="butir[{{$v->id}}]" value="91-100" {{$d}}>
                         </td>
                     </tr>
                 @php
@@ -61,5 +94,7 @@
             
         </tbody>
     </table>
-    <button class="btn btn-md btn-success pull-right" type="button" onclick="endevaluasinarasumber('{{ucwords($jenis)}}','{{$idfasil}}')"><i class="fa fa-save"></i> &nbsp;&nbsp;End Test</button>
+    @if (count($evl)==0)
+        <button class="btn btn-md btn-success pull-right" type="button" onclick="endevaluasinarasumber('{{ucwords($jenis)}}','{{$idfasil}}')"><i class="fa fa-save"></i> &nbsp;&nbsp;Simpan Evaluasi</button>
+    @endif
 </form>

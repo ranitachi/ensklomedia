@@ -40,6 +40,24 @@
                         <br>
                         <a href="javascript:loadform('narasumber',{{$idfasil}})" class="btn btn-sm btn-primary" style="margin-bottom:10px;"><i class="fa fa-chevron-circle-right"></i>&nbsp;&nbsp;Evaluasi Narasumber</a><br>
                         <a href="javascript:loadform('penyelenggara',{{$idfasil}})" class="btn btn-sm" style="background-color:darkblue;color:white"><i class="fa fa-chevron-circle-right"></i>&nbsp;&nbsp;Evaluasi Penyelenggaraan</a>
+
+                        <br>
+                        <br>
+                        <legend>Narasumber yang Sudah Di Evaluasi</legend>
+                        <ul style="margin-left:25px;color:#000;">
+                        @foreach ($eval['narasumber'] as $key => $item)
+                            <li><b style="font-size:15px;">{{isset($user[$key]) ? $user[$key]->profile->name : $key}}</b></li>
+                            <ul>
+                                <li style="list-style:none;">Materi Fasilitasi:</li>
+                                @foreach ($item as $k1 => $v1)
+                                    @foreach ($v1 as $k2 => $v2)
+                                        <li style="margin-left:25px;"><a href="javascript:lihatform('narasumber','{{$iduser}}','{{$idfasil}}','{{$k2}}')" style="color:blue">{{$k1}}</a></li>
+                                    @endforeach
+                                @endforeach    
+                                <li style="list-style:none;border-bottom:1px dotted #ccc;"></li>
+                            <ul>
+                        @endforeach
+                        </ul>
                     </div>
                     <div class="col-md-8">
                         
@@ -135,7 +153,14 @@
             
         }
         var currentLocation = window.location;
+<<<<<<< HEAD
+        function lihatform(jenis,iduser,idfasil,jam_ke)
+        {
+            $('#data').load(APP_URL+'/evaluasi-form/'+jenis+'/'+iduser+'/'+idfasil+'/'+jam_ke);
+        }
+=======
         
+>>>>>>> 3b0df9f5a5b1269706e795cfb0b4fb5b0b624902
     </script>
 @endsection
 
