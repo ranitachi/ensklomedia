@@ -63,8 +63,14 @@
                 <a href="javascript:lihatsaung('{{$v->id}}')" class="btn btn-xs btn-primary">
                     <i class="fa fa-search"></i> Lihat Saung
                 </a>
+                <a href="javascript:lihatevaluasi('narasumber','{{$v->id}}')" class="btn btn-xs btn-primary" style="margin-top:5px;">
+                    <i class="fa fa-search"></i> Eval. Narasumber
+                </a>
+                <a href="javascript:lihatevaluasi('penyelenggara','{{$v->id}}')" class="btn btn-xs btn-primary" style="margin-top:5px;">
+                    <i class="fa fa-search"></i> Eval. Penyelenggaraan
+                </a>
             </td>
-           <td style="width:350px;">
+           <td style="width:300px;">
 
             @if (!isset($psrt[$v->id]))
                  <i>Peserta Belum Ada</i>

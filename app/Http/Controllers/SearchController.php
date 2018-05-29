@@ -16,16 +16,20 @@ class SearchController extends Controller
         $data=$request->input('video-search');
         $idvideo=$request->input('video_id');
         $video = Video::where("id",'=',"{$idvideo}")->get();
-        
+        // echo $idvideo;
+        // dd($video);
         $status='v1';
         $mime = "video/mp4";
+        $like=$comments=array();
         // echo '<pre>';
         // print_r($data);
         // print_r($video);
         // echo '</pre>';
+        $slug='';
+        $vid='';
         $relatedvideo = Video::where('category_id', $video[0]->category_id)->orderByRaw("RAND()")->limit(10)->get();
         $endcards=Endcards::where('video_id','=',$idvideo)->whereNotNull('link')->get();
-        if(strtolower($data)==strtolower($video[0]->title))
+        if(strtolower(trim($data))==strtolower(trim($video[0]->title)))
         {
             $vidd=$video[0];
             $id=$vidd->id;
@@ -45,8 +49,12 @@ class SearchController extends Controller
                 $vid=url($vv);
                 $cover=url($cv);
             }
+            else
+            {
+                $vid="http://en-str1.ensiklomedia.id/upload/video/".$vidd->location;
+            }
             $slug=$vidd->slug;
-            $like=array();
+            
             if(Auth::check())
                 $like=Like::where('video_id','=',$id)->where('user_id','=',Auth::user()->id)->first();
             
@@ -64,7 +72,9 @@ class SearchController extends Controller
         else
         {
             $vidd = Video::where("title","LIKE","%{$data}%")->get();
-            $id=-1;
+            // $id=-1;
+            // dd();
+            // echo $data;
             return view('pages.video.search')
                     ->with('id',$id)
                     ->with('status',$status)
@@ -73,7 +83,8 @@ class SearchController extends Controller
                     ->with('endcards',$endcards)
                     ->with('comments',$comments)
                     ->with('slug',$slug)
-                    ->with('video',$vidd);
+                    ->with('video',$vidd)
+                    ->with(compact('vid', 'mime','cover'));
         }
         
         

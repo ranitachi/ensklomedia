@@ -93,7 +93,7 @@ class SaungController extends Controller
     {
         $video=Video::find($idvid);
         $saung['fasilitasi_id']=0;
-
+        $id_notif=-1;
         $cek_pes=PesertaFasilitasi::where('user_id','=',Auth::user()->id)
                     ->where('flag','=','1')->get()->first();
         $saung['reviewer_id']=0;
@@ -120,16 +120,45 @@ class SaungController extends Controller
             else
                 $n=$reviewer_id=0;
 
-            $saung['reviewer_id']=$reviewer_id;
         }
+        else
+        {
+            $getreviewer=Users::where('authorization_level',3)->orderByRaw('RAND()')->limit(1)->first();
+            $n=$reviewer_id=$getreviewer->id;
+            
+            $notif=new Notifikasi;
+            $notif->video_id=$idvid;
+            $notif->saung_id='-1';
+            $notif->title="-";
+            $notif->url="-";
+            $notif->from=Auth::user()->id;
+            $notif->to=$reviewer_id;
+            $notif->created_at=date('Y-m-d H:i:s');
+            $notif->updated_at=date('Y-m-d H:i:s');
+            $notif->save();
 
-        $saung['saung_name']='Saung : '.$video->title;
+            $id_notif=$notif->id;
+        }
+        $saung['reviewer_id']=$reviewer_id;
+        $saung['saung_name']= $namasaung= 'Saung : '.$video->title;
         $saung['video_id']=$idvid;
         $saung['created_user_id']=Auth::user()->id;
         $saung['flag']=0;
         $saung['updated_at']=date('Y-m-d H:i:s');
         $saung['created_at']=date('Y-m-d H:i:s');
         $create=Saung::create($saung);
+        $idsg=$create->id;
+
+        if($id_notif!=-1)
+        {   
+            
+            $upd_notif=Notifikasi::find($id_notif);
+            $upd_notif->title="Anda Menjadi Reviewer untuk Saung <b>:".$video->title.'</b>';
+            $upd_notif->saung_id=$idsg;
+            $upd_notif->url=url('buka-saung/'.str_slug($video->title));
+            $upd_notif->updated_at=date('Y-m-d H:i:s');
+            $upd_notif->save();
+        }
 
         return response()->json([$create]);
 
@@ -141,7 +170,8 @@ class SaungController extends Controller
         $data['flag']=0;
         $data['deleted_at']=date('Y-m-d H:i:s');
         $update=Saung::find($idsaung)->update($data);
-        return redirect('buka-saung/'.$slug)->with('status', 'Anda Berhasil Menutup Saung Diskusi');
+        // return redirect('buka-saung/'.$slug)->with('status', 'Anda Berhasil Menutup Saung Diskusi');
+        return redirect('watch/'.$slug)->with('status', 'Anda Berhasil Menutup Saung Diskusi');
     }
 
     public function joinsaung($idvid)

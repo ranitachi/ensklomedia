@@ -276,6 +276,8 @@ class FasilitasiController extends Controller
             $id=Auth::user()->id;
 
             $cekfasil=KegiatanFasilitasi::find($idfasil);
+            $nama_lokasi='';
+            
         // if(count($cekfasil)!=0)
         // {
             $m=Menu::where('title','like','%biodata%')->get()->first();
@@ -308,15 +310,37 @@ class FasilitasiController extends Controller
             $video=Video::where('id','=',$idvid)->get()->first();
             $profile = Profile::where('user_id',$id)->get()->first();
             $province = Province::all();
-            $fas=KegiatanFasilitasi::where('wilayah_id','=',$cekfasil->wilayah_id)
+
+            if($idfasil==-1)
+            {
+                $pes_fas=PesertaFasilitasi::where('user_id',Auth::user()->id)->where('flag',1)->first();
+                $fas=array();
+                if(count($pes_fas)!=0)
+                {
+
+                    $idfasil=$pes_fas->fasilitasi_id;
+                    $nama_lokasi=$pes_fas->fasilitasi->nama_fasilitasi;
+                    $fas=KegiatanFasilitasi::where('id',$idfasil)->get();
+                }
+                else
+                {
+                    $nama_lokasi='';
+                    $idfasil=-1;
+                }
+            }
+            else
+            {
+                $fas=KegiatanFasilitasi::where('wilayah_id','=',$cekfasil->wilayah_id)
                     ->where('flag',1)
                     ->with('provinsi')
                     ->get();
+            }
 
             return view('pages-admin.fasilitasi.form-biodata')
                 ->with('id',$id)
                 ->with('fas',$fas)
                 ->with('idfasil',$idfasil)
+                ->with('nama_lokasi',$nama_lokasi)
                 ->with('video',$video)
                 ->with('cekfasil',$cekfasil)
                 ->with('profile',$profile)
@@ -455,5 +479,50 @@ class FasilitasiController extends Controller
                 ->with('user',$us)
                  ->with('fas',$fasil)
                 ->with('iduser',$iduser);
+    }
+
+    public function saung($idfasil)
+    {
+        $fasil=KegiatanFasilitasi::find($idfasil);
+        $saung=Saung::where('fasilitasi_id',$idfasil)->with('user')->with('video')->get();
+        return view('pages-admin.fasilitasi.saung')
+                ->with('idfasil',$idfasil)
+                 ->with('fas',$fasil)
+                ->with('saung',$saung);
+    }
+    public function evaluasi_by_fasilitasi($jenis,$idfasil)
+    {
+        $fasil=KegiatanFasilitasi::find($idfasil);
+        $user=Users::all();
+        $us=array();
+        foreach($user as $ku=>$vu)
+        {
+            $us[$vu->id]=$vu;
+        }
+        $d_eval=array();
+        if($jenis=='narasumber')
+        {
+            $eval=Evaluasipeserta::where('fasilitasi_id',$idfasil)->where('jenis','narasumber')->get();
+            foreach($eval as $k=>$v)
+            {
+                $d_eval[$v->user_id][$v->nama_narasumber]=$v;
+            }
+        }
+        elseif($jenis=='penyelenggara')
+        {
+            $eval=Evaluasipeserta::where('fasilitasi_id',$idfasil)->where('jenis','penyelenggara')->get();
+            foreach($eval as $k=>$v)
+            {
+                $d_eval[$v->user_id][]=$v;
+            }
+        }
+
+        $saung=Saung::where('fasilitasi_id',$idfasil)->with('user')->with('video')->get();
+        return view('pages-admin.evaluasi.'.$jenis)
+                ->with('idfasil',$idfasil)
+                 ->with('fas',$fasil)
+                 ->with('user',$us)
+                 ->with('d_eval',$d_eval)
+                ->with('saung',$saung);
     }
 }

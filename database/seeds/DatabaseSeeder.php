@@ -23,7 +23,12 @@ class DatabaseSeeder extends Seeder
         // $profile = resolve('App\Services\RestructureProfile');
         // $profile->run();
 
-        $endcards = resolve('App\Services\RestructureEndcards');
-        $endcards->run();
+        // $endcards = resolve('App\Services\RestructureEndcards');
+        // $endcards->run();
+        // Eloquent::unguard();
+
+        // $path = public_path('kecamatan/db_gebrak.sql');
+        // DB::unprepared(file_get_contents($path));
+        // $this->command->info('Table Usulan seeded!');
     }
 }

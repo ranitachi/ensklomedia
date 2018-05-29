@@ -12,6 +12,7 @@ use App\Model\Endcards;
 use App\Model\Saung;
 use App\Model\Like;
 use App\Model\Download;
+use App\Tracker;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -25,6 +26,11 @@ class DashboardController extends Controller
 {
     public function index()
     {   
+        // echo '<pre>';
+        // print_r(view());
+        // echo '<pre>';
+        // $pages=$view_name;
+        Tracker::hit();
         $cat=Category::orderBy('name')->get();
         $vid=Video::where('duration','!=','-1')->orderByRaw("RAND()")->get();
         $video=array();
@@ -88,6 +94,10 @@ class DashboardController extends Controller
                 $vid=url($vv);
                 $cover=url($cv);
             }
+            else
+            {
+                $vid='http://en-str1.ensiklomedia.id/upload/video/'.$video->location;
+            }
             $mime = "video/mp4";
 
             $relatedvideo = Video::where('category_id', $video->category_id)->with('category')->orderByRaw("RAND()")->limit(10)->get();
@@ -131,6 +141,10 @@ class DashboardController extends Controller
                 $cv = 'uploadfiles/image/'.$video->image_path;
                 $vid=url($vv);
                 $cover=url($cv);
+        }
+        else
+        {
+            $vid='http://en-str1.ensiklomedia.id/upload/video/'.$video->location;
         }
         // $vid='http://ensiklomedia.tve.kemdikbud.go.id/uploadfiles/video20170703-66BP5AE20160715_010744.mp4';
         $mime = "video/mp4";

@@ -6,7 +6,7 @@
 	<body onLoad="window.print()">
 		<div style="padding:300px 50px 0px 50px;" class="body">
 			<center>
-				Nomor : ___________________
+				Nomor : ___________________/{{date('Y')}}
 				<br>
 				<br>
 				<br>
@@ -27,7 +27,7 @@
 				Dalam Kegiatan <B><i>Fasilitasi Guru Terampil dalam Memanfaatkan TIK Berbasis Radio,
 Televisi, dan Film untuk Pendidikan Tahun {{date('Y')}}</i></B> yang dilaksanakan oleh Pusat Teknologi
 Informasi dan Komunikasi Pendidikan dan Kebudayaan (PUSTEKKOM) Kementerian
-Pendidikan dan Kebudayaan pada tanggal {{$tgl1.' '.getBulan($bln1)}} s.d. {{$tgl2.' '.getBulan($bln2)}} {{$thn1}}, {{ucwords(strtolower($peserta->fasilitasi->provinsi->name))}}.
+Pendidikan dan Kebudayaan pada tanggal {{$tgl1.' '.getBulan($bln1)}} s.d. {{$tgl2.' '.getBulan($bln2)}} {{$thn1}} {{ucwords($peserta->fasilitasi->nama_fasilitasi)}} , {{ucwords(strtolower($peserta->fasilitasi->provinsi->name))}}.
 			</p>
 		
 			<div style="float:left;width:50%">

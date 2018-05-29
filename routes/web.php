@@ -82,6 +82,7 @@ Route::get('/aktivasi-peserta-change-status/{id}/{st}','FasilitasiController@akt
 Route::get('cetak-sertifikat/{idfasilitas}','FasilitasiController@cetaksertifikat')->name('fasilitasi.cetaksertifikat')->middleware('auth');
 Route::get('cetak/{userid}/{idfasilitas}','FasilitasiController@cetak')->name('fasilitasi.cetaksertifikat')->middleware('auth');
 Route::get('saung-by-fasilitasi/{idfasilitas}','FasilitasiController@saung')->name('fasilitasi.saung')->middleware('auth');
+Route::get('evaluasi-by-fasilitasi/{jenis}/{idfasilitas}','FasilitasiController@evaluasi_by_fasilitasi')->name('fasilitasi.evaluasi')->middleware('auth');
 
 
 Route::post('narsum-to-fasilitasi','NarsumfasilitasiController@store')->name('narsum-to-fasilitasi.simpan')->middleware('auth');

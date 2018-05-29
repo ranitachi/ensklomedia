@@ -291,6 +291,11 @@
                 }
             });
         }
+        function lihatevaluasi(jenis,fasilitasi_id)
+        {
+            $('#content-body-ok').load(APP_URL+'/evaluasi-by-fasilitasi/'+jenis+'/'+fasilitasi_id);
+            $('#modal_ok').modal('show');
+        }
     </script>
 @endsection
 <div id="modalConfirm" class="modal fade">
