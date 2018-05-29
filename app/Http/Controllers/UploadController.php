@@ -11,7 +11,7 @@ use App\Model\Pesertatantangan;
 use File;
 use Auth;
 use FFMpeg;
-class UploadController extends Controller
+class UploadController2 extends Controller
 {
     public function index()
     {

@@ -18,7 +18,7 @@ use App\Model\Postpretest;
 use App\Model\Testpesertaset;
 use App\Model\Nilaitespeserta;
 use Auth;
-class FasilitasiController extends Controller
+class fasilitasi extends Controller
 {
     public function index(Request $request)
     {

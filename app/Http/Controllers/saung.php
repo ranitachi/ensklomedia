@@ -21,7 +21,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Auth;
 use File;
-class SaungController extends Controller
+class saung2 extends Controller
 {
     public function buatsaung($slug)
     {
